@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLogin } from '../apis/queries';
 import AuthLayout from '../authLayout';
 
-import routePaths from '@/route/routePaths';
+import routePaths from '@/router/routePaths';
 
 const Login: FC = () => {
   const formProps = useForm({});

@@ -107,12 +107,12 @@ importers:
       '@nestjs/throttler':
         specifier: ^6.4.0
         version: 6.4.0(@nestjs/common@11.1.6(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.6)(reflect-metadata@0.2.2)
+      '@pawhaven/backend-core':
+        specifier: workspace:*
+        version: link:../../../packages/backend-core
       '@pawhaven/eslint-config':
         specifier: workspace:*
         version: link:../../../libs/configs/eslint-config
-      '@pawhaven/shared-backend':
-        specifier: workspace:*
-        version: link:../../../packages/shared-backend
       '@pawhaven/tsconfig':
         specifier: workspace:*
         version: link:../../../libs/configs/tsconfig
@@ -276,12 +276,12 @@ importers:
       '@nestjs/throttler':
         specifier: ^6.4.0
         version: 6.4.0(@nestjs/common@11.1.6(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.6)(reflect-metadata@0.2.2)
+      '@pawhaven/backend-core':
+        specifier: workspace:*
+        version: link:../../../packages/backend-core
       '@pawhaven/eslint-config':
         specifier: workspace:*
         version: link:../../../libs/configs/eslint-config
-      '@pawhaven/shared-backend':
-        specifier: workspace:*
-        version: link:../../../packages/shared-backend
       '@pawhaven/tsconfig':
         specifier: workspace:*
         version: link:../../../libs/configs/tsconfig
@@ -626,12 +626,12 @@ importers:
       '@nestjs/throttler':
         specifier: ^6.4.0
         version: 6.4.0(@nestjs/common@11.1.6(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.6)(reflect-metadata@0.2.2)
+      '@pawhaven/backend-core':
+        specifier: workspace:*
+        version: link:../../../packages/backend-core
       '@pawhaven/eslint-config':
         specifier: workspace:*
         version: link:../../../libs/configs/eslint-config
-      '@pawhaven/shared-backend':
-        specifier: workspace:*
-        version: link:../../../packages/shared-backend
       '@pawhaven/tsconfig':
         specifier: workspace:*
         version: link:../../../libs/configs/tsconfig
@@ -756,18 +756,18 @@ importers:
       '@mui/material':
         specifier: ^7.3.4
         version: 7.3.4(@emotion/react@11.14.0(@types/react@19.2.2)(react@19.2.0))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.2)(react@19.2.0))(@types/react@19.2.2)(react@19.2.0))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      '@pawhaven/design-system':
+        specifier: workspace:*
+        version: link:../../../packages/design-system
       '@pawhaven/eslint-config':
         specifier: workspace:*
         version: link:../../../libs/configs/eslint-config
+      '@pawhaven/frontend-core':
+        specifier: workspace:*
+        version: link:../../../packages/frontend-core
       '@pawhaven/i18n':
         specifier: workspace:*
         version: link:../../../packages/i18n
-      '@pawhaven/shared-frontend':
-        specifier: workspace:*
-        version: link:../../../packages/shared-frontend
-      '@pawhaven/theme':
-        specifier: workspace:*
-        version: link:../../../packages/theme
       '@pawhaven/tsconfig':
         specifier: workspace:*
         version: link:../../../libs/configs/tsconfig
@@ -947,19 +947,7 @@ importers:
         specifier: ^1.1.1
         version: 1.1.1(rollup@4.52.4)(vite@7.1.9(@types/node@24.7.1)(jiti@2.6.1)(lightningcss@1.30.1)(terser@5.44.0)(yaml@2.8.1))
 
-  packages/i18n:
-    dependencies:
-      '@pawhaven/shared-frontend':
-        specifier: workspace:*
-        version: link:../shared-frontend
-      i18next:
-        specifier: ^25.6.0
-        version: 25.6.0(typescript@5.9.3)
-      react-i18next:
-        specifier: ^16.0.0
-        version: 16.0.0(i18next@25.6.0(typescript@5.9.3))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3)
-
-  packages/shared-backend:
+  packages/backend-core:
     dependencies:
       '@nestjs/axios':
         specifier: ^4.0.1
@@ -1125,7 +1113,22 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
-  packages/shared-frontend:
+  packages/design-system:
+    dependencies:
+      '@mui/material':
+        specifier: ^7.3.4
+        version: 7.3.4(@emotion/react@11.14.0(@types/react@19.2.2)(react@19.2.0))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.2)(react@19.2.0))(@types/react@19.2.2)(react@19.2.0))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      '@pawhaven/eslint-config':
+        specifier: workspace:*
+        version: link:../../libs/configs/eslint-config
+      tailwindcss:
+        specifier: ^4.1.14
+        version: 4.1.14
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
+  packages/frontend-core:
     dependencies:
       '@emotion/react':
         specifier: ^11.14.0
@@ -1204,17 +1207,17 @@ importers:
         specifier: ^4.2.2
         version: 4.2.2
 
-  packages/theme:
+  packages/i18n:
     dependencies:
-      '@mui/material':
-        specifier: ^7.3.4
-        version: 7.3.4(@emotion/react@11.14.0(@types/react@19.2.2)(react@19.2.0))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.2)(react@19.2.0))(@types/react@19.2.2)(react@19.2.0))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
-      tailwindcss:
-        specifier: ^4.1.14
-        version: 4.1.14
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
+      '@pawhaven/frontend-core':
+        specifier: workspace:*
+        version: link:../frontend-core
+      i18next:
+        specifier: ^25.6.0
+        version: 25.6.0(typescript@5.9.3)
+      react-i18next:
+        specifier: ^16.0.0
+        version: 16.0.0(i18next@25.6.0(typescript@5.9.3))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3)
 
   packages/ui:
     dependencies:
@@ -1233,12 +1236,12 @@ importers:
       '@mui/x-date-pickers-pro':
         specifier: ^8.14.0
         version: 8.14.0(@emotion/react@11.14.0(@types/react@19.2.2)(react@19.2.0))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.2)(react@19.2.0))(@types/react@19.2.2)(react@19.2.0))(@mui/material@7.3.4(@emotion/react@11.14.0(@types/react@19.2.2)(react@19.2.0))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.2)(react@19.2.0))(@types/react@19.2.2)(react@19.2.0))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@mui/system@7.3.3(@emotion/react@11.14.0(@types/react@19.2.2)(react@19.2.0))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.2)(react@19.2.0))(@types/react@19.2.2)(react@19.2.0))(@types/react@19.2.2)(react@19.2.0))(@types/react@19.2.2)(dayjs@1.11.18)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      '@pawhaven/design-system':
+        specifier: workspace:*
+        version: link:../design-system
       '@pawhaven/eslint-config':
         specifier: workspace:*
         version: link:../../libs/configs/eslint-config
-      '@pawhaven/theme':
-        specifier: workspace:*
-        version: link:../theme
       '@pawhaven/tsconfig':
         specifier: workspace:*
         version: link:../../libs/configs/tsconfig

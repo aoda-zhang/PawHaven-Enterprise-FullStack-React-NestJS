@@ -4,8 +4,9 @@ import { useMemo } from 'react';
 import type { RouteObject } from 'react-router-dom';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
+import routerElementMapping from './routerElementMapping';
+
 import { useFetchGlobalRouters } from '@/layout/RootLayoutAPI';
-import routerElementMapping from '@/route/routerElementMapping';
 import { useGlobalState } from '@/store/globalReducer';
 
 export interface RouteMetaType {
@@ -39,12 +40,10 @@ const routesMapping = (routesFromAPI: any[]): RouteObject[] => {
 };
 
 const AppRouterProvider = () => {
-  const {
-    profile: { baseUserInfo },
-  } = useGlobalState();
+  const { profile } = useGlobalState();
   const { data: globalRouters = [] } = useFetchGlobalRouters(
-    baseUserInfo?.userID,
-    baseUserInfo?.globalRouterUpdateAt,
+    profile?.baseUserInfo?.userID,
+    profile?.baseUserInfo?.globalRouterUpdateAt,
   );
   const router = useMemo(() => {
     const mappedRoutes = routesMapping(globalRouters);

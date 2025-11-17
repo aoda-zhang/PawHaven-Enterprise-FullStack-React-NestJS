@@ -5,7 +5,7 @@ import { Module } from '@nestjs/common';
 // import { APP_GUARD } from '@nestjs/core';
 // import SharedModule from '@pawhaven/shared.module';
 // import { DocumentModule } from '@modules/Document/document.module';
-// import { EnvConstant } from '@pawhaven/shared-backend/constants/constant';
+// import { EnvConstant } from '@pawhaven/backend-core/constants/constant';
 // import { JwtModule } from '@nestjs/jwt';
 // import { SignGuard } from '@modules/Auth/guards/Sign.guard';
 // import { JWTGuard } from '@modules/Auth/guards/JWT.guard';
@@ -43,4 +43,4 @@ import { Module } from '@nestjs/common';
     // }
   ],
 })
-export class AppModule {}
+export class AppModule { }

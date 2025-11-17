@@ -7,7 +7,7 @@
     "pnpm": ">=10"
   },
   "dependencies": {
-    "@pawhaven/shared-frontend": "workspace:*",
+    "@pawhaven/frontend-core": "workspace:*",
     "i18next": "^25.6.0",
     "react-i18next": "^16.0.0"
   }

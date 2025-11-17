@@ -1,5 +1,5 @@
 {
-  "name": "@pawhaven/shared-frontend",
+  "name": "@pawhaven/frontend-core",
   "version": "1.0.0",
   "private": true,
   "engines": {

@@ -29,9 +29,7 @@
   },
   "tailwindCSS.emmetCompletions": true,
   "tailwindCSS.experimental.classRegex": [
-    ["className\\s*=\\s*\"([^\"]*)", 1],
-    ["className\\s*=\\s*{`([^`]*)", 1],
-    ["class\\s*=\\s*\"([^\"]*)", 1]
+    ["className\\s*:\\s*['\"]([^'\"]*)['\"]"]
   ],
   "tailwindCSS.experimental.configFile": "packages/theme/globalTailwind.css",
   "tailwindCSS.includeLanguages": {
@@ -49,8 +47,8 @@
   // --- 🧭 Path Autocomplete: alias path completions ---
   "path-autocomplete.pathMappings": {
     "@pawhaven/ui/*": "${workspaceFolder}/packages/ui/*",
-    "@pawhaven/shared-frontend/*": "${workspaceFolder}/packages/shared-frontend/*",
-    "@pawhaven/shared-backend/*": "${workspaceFolder}/packages/shared-backend/*"
+    "@pawhaven/frontend-core/*": "${workspaceFolder}/packages/shared-frontend/*",
+    "@pawhaven/backend-core/*": "${workspaceFolder}/packages/shared-backend/*"
   },
   "path-autocomplete.extensionOnImport": true
 }

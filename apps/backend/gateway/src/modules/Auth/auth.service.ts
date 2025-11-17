@@ -1,8 +1,8 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import type { ClientProxy } from '@nestjs/microservices';
-import { MSClientNames } from '@pawhaven/shared-backend/constants/constant';
-import AuthMessagePattern from '@pawhaven/shared-backend/constants/MSMessagePatterns/auth.messagePattern';
-import type CreateUserDTO from '@pawhaven/shared-backend/DTO/Auth/create-user.dto';
+import { MSClientNames } from '@pawhaven/backend-core/constants/constant';
+import AuthMessagePattern from '@pawhaven/backend-core/constants/MSMessagePatterns/auth.messagePattern';
+import type CreateUserDTO from '@pawhaven/backend-core/DTO/Auth/create-user.dto';
 import type { Schema } from 'mongoose';
 
 @Injectable()
@@ -10,7 +10,7 @@ export class AuthService {
   constructor(
     @Inject(MSClientNames.MS_AUTH)
     private readonly authClient: ClientProxy,
-  ) {}
+  ) { }
 
   register = async (userInfo: CreateUserDTO) => {
     try {

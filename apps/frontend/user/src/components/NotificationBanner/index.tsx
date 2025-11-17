@@ -1,4 +1,5 @@
 import { Alert, AlertTitle, Link, Collapse, IconButton } from '@mui/material';
+import clsx from 'clsx';
 import { X } from 'lucide-react';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -12,6 +13,7 @@ export interface BannerMessage {
   linkUrl?: string;
   dismissible?: boolean;
   variant?: 'standard' | 'filled' | 'outlined';
+  bannerWrapClassNames?: string;
 }
 
 export const NotificationBanner: React.FC<{ banner: BannerMessage }> = ({
@@ -26,14 +28,10 @@ export const NotificationBanner: React.FC<{ banner: BannerMessage }> = ({
       <Alert
         severity={banner.type ?? 'info'}
         variant={banner?.variant ?? 'standard'}
-        sx={{
-          borderRadius: 0,
-          justifyContent: 'left',
-          padding: '6.25rem',
-          textAlign: 'left',
-          fontSize: '0.95rem',
-          py: 1.2,
-        }}
+        className={clsx([
+          'rounded-none justify-start text-left text-[0.95rem] py-4 px-4 lg:px-20 bg-info',
+          banner?.bannerWrapClassNames,
+        ])}
         action={
           banner.dismissible ? (
             <IconButton size="small" onClick={() => setOpen(false)}>
@@ -43,12 +41,7 @@ export const NotificationBanner: React.FC<{ banner: BannerMessage }> = ({
         }
       >
         {banner.title && (
-          <AlertTitle
-            sx={{
-              fontSize: '1.25rem',
-              textAlign: 'left',
-            }}
-          >
+          <AlertTitle className="text-2xl text-left">
             {t(banner.title)}
           </AlertTitle>
         )}

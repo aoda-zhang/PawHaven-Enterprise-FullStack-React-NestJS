@@ -1,4 +1,4 @@
-import createApiClient from '@pawhaven/shared-frontend/cores/http';
+import createApiClient from '@pawhaven/frontend-core/cores/http';
 
 import envConfig from '@/config';
 

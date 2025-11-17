@@ -1,4 +1,4 @@
-import useRouterInfo from '@pawhaven/shared-frontend/hooks/useRouterInfo';
+import useRouterInfo from '@pawhaven/frontend-core/hooks/useRouterInfo';
 import type { NavigateFunction, UIMatch } from 'react-router-dom';
 import { Outlet, useNavigate } from 'react-router-dom';
 
@@ -17,13 +17,10 @@ export interface LayoutProps {
 }
 
 const RootLayout = () => {
-  const {
-    profile: { baseUserInfo },
-    isSysMaintain,
-  } = useGlobalState();
+  const { profile, isSysMaintain } = useGlobalState();
   const { data: globalMenuItems = [] } = useFetchGlobalMenu(
-    baseUserInfo?.userID,
-    baseUserInfo?.globalMenuUpdateAt,
+    profile?.baseUserInfo?.userID,
+    profile?.baseUserInfo?.globalMenuUpdateAt,
   );
   const navigate = useNavigate();
   const currentRouterInfo = useRouterInfo<RouterInfoType>();

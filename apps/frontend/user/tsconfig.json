@@ -5,7 +5,7 @@
     "types": ["node", "vite/client", "@modyfi/vite-plugin-yaml/modules"],
     "paths": {
       "@/*": ["./src/*"],
-      "@pawhaven/shared-frontend": ["../../../packages/shared-frontend/*"],
+      "@pawhaven/frontend-core": ["../../../packages/frontend-core/*"],
       "@pawhaven/ui": ["../../../packages/ui/*"]
     }
   }

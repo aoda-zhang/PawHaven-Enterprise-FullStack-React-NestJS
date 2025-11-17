@@ -53,7 +53,7 @@ To enable IntelliSense and autocomplete for TypeScript path aliases (e.g., `@paw
 {
   "path-autocomplete.pathMappings": {
     "@pawhaven/ui/*": "${workspaceFolder}/packages/ui/*",
-    "@pawhaven/shared-frontend/*": "${workspaceFolder}/packages/shared-frontend/*"
+    "@pawhaven/frontend-core/*": "${workspaceFolder}/packages/shared-frontend/*"
   },
   "path-autocomplete.extensionOnImport": true
 }

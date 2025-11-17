@@ -19,7 +19,7 @@
     "@nestjs/common": "^11.1.6",
     "@nestjs/config": "^4.0.2",
     "@pawhaven/eslint-config": "workspace:*",
-    "@pawhaven/shared-backend": "workspace:*",
+    "@pawhaven/backend-core": "workspace:*",
     "@pawhaven/tsconfig": "workspace:*",
     "@nestjs/core": "^11.1.6",
     "@nestjs/jwt": "^11.0.1",

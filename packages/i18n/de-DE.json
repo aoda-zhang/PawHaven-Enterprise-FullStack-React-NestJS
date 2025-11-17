@@ -43,7 +43,7 @@
     "globalMN": "Das System wird derzeit gewartet. Bitte versuchen Sie es später erneut.",
     "scheduledMN": "Eine geplante Wartung findet am {{time}} statt. Einige Funktionen sind vorübergehend nicht verfügbar.",
     "partialMN": "Einige Funktionen werden derzeit gewartet. Vielen Dank für Ihre Geduld.",
-    "mockDataWarning": "🐾 Diese Seite befindet sich in schneller Entwicklung, um die Rettung von Straßentieren zu unterstützen. Alle angezeigten Daten sind Mock-Daten. Danke für Ihr Verständnis!"
+    "mockDataWarning": "Diese Seite befindet sich in schneller Entwicklung, um die Rettung von Straßentieren zu unterstützen. Alle angezeigten Daten sind Mock-Daten. Danke für Ihr Verständnis!"
   },
   "auth": {
     "login": "ANMELDEN",

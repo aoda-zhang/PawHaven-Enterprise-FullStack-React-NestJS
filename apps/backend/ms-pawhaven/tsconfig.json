@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@pawhaven/shared-frontend": ["../../../packages/shared-backend/*"],
+      "@pawhaven/frontend-core": ["../../../packages/shared-backend/*"],
       "@modules/*": ["src/modules/*"]
     }
   },

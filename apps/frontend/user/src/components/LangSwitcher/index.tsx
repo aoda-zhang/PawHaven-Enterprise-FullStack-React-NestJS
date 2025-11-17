@@ -1,5 +1,5 @@
 import { Popover } from '@mui/material';
-import storageTool from '@pawhaven/shared-frontend/utils/storage';
+import storageTool from '@pawhaven/frontend-core/utils/storage';
 import { ChevronDown, Globe } from 'lucide-react';
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';

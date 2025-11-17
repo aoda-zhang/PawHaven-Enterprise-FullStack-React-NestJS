@@ -1,5 +1,5 @@
-import LocaleKeys from '@pawhaven/shared-frontend/constants/localeKey';
-import storageTool from '@pawhaven/shared-frontend/utils/storage';
+import LocaleKeys from '@pawhaven/frontend-core/constants/localeKey';
+import storageTool from '@pawhaven/frontend-core/utils/storage';
 import { createSlice } from '@reduxjs/toolkit';
 
 import { useReduxSelector } from '../hooks/reduxHooks';

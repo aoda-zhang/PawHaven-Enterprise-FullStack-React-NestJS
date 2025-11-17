@@ -2,8 +2,8 @@
 
 import { PawhavenModule } from '@modules/Pawhaven/pawhaven.module';
 import { Module } from '@nestjs/common';
-// import { EnvConstant } from '@pawhaven/shared-backend/constants/constant';
-// import SharedModule from '@pawhaven/shared-backend/shared.module';
+// import { EnvConstant } from '@pawhaven/backend-core/constants/constant';
+// import SharedModule from '@pawhaven/backend-core/shared.module';
 
 // const currentEnv = process.env.NODE_ENV ?? 'uat';
 // const configFilePath = path.resolve(
@@ -19,4 +19,4 @@ import { Module } from '@nestjs/common';
   ],
   providers: [],
 })
-export class AppModule {}
+export class AppModule { }

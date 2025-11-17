@@ -16,8 +16,8 @@
     "@mui/material": "^7.3.4",
     "@pawhaven/eslint-config": "workspace:*",
     "@pawhaven/i18n": "workspace:*",
-    "@pawhaven/shared-frontend": "workspace:*",
-    "@pawhaven/theme": "workspace:*",
+    "@pawhaven/frontend-core": "workspace:*",
+    "@pawhaven/design-system": "workspace:*",
     "@pawhaven/tsconfig": "workspace:*",
     "@pawhaven/ui": "workspace:*",
     "@reduxjs/toolkit": "^2.9.0",
@@ -56,7 +56,7 @@
     "zod": "^4.1.12"
   },
   "scripts": {
-    "dev": "vite --mode dev --port 5191",
+    "dev": "vite --mode dev --port 4008",
     "uat": "vite --mode uat",
     "build:prod": "tsc && vite build --mode prod",
     "build:uat": "tsc && vite build --mode uat",

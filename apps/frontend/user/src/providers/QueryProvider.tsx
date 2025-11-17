@@ -1,4 +1,4 @@
-import getRequestQueryOptions from '@pawhaven/shared-frontend/cores/react-query';
+import getRequestQueryOptions from '@pawhaven/frontend-core/cores/react-query';
 import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister';
 import { QueryClient } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';

@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@pawhaven/shared-backend",
+  "name": "@pawhaven/backend-core",
   "version": "1.0.0",
   "engines": {
     "node": ">=22",

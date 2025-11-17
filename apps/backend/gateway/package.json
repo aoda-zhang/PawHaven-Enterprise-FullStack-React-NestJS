@@ -22,7 +22,7 @@
     "@nestjs/jwt": "^11.0.1",
     "@nestjs/microservices": "^11.1.6",
     "@pawhaven/eslint-config": "workspace:*",
-    "@pawhaven/shared-backend": "workspace:*",
+    "@pawhaven/backend-core": "workspace:*",
     "@pawhaven/tsconfig": "workspace:*",
     "@nestjs/mongoose": "^11.0.3",
     "@nestjs/passport": "^11.0.5",

@@ -1,8 +1,7 @@
 import type { FC } from 'react';
 
-import AppRouterProvider from '../route/AppRouterProvider';
-
-import AppProvider from './AppProvider';
+import AppProvider from './providers/AppProvider';
+import AppRouterProvider from './router/AppRouterProvider';
 
 const App: FC = () => {
   return (

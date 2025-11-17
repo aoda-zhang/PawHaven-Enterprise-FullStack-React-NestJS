@@ -1,4 +1,4 @@
-import designTokens from '@pawhaven/theme/designTokens';
+import designTokens from '../../design-system/designTokens';
 import type { ReactElement } from 'react';
 import React from 'react';
 import type { ToastOptions } from 'react-hot-toast';
