@@ -11,7 +11,9 @@ import { Controller, useFormContext } from 'react-hook-form';
 
 import type { BaseFormType, BaseSelectType } from '../formBase.type';
 
-const FormSelect: React.FC<BaseFormType & BaseSelectType & SelectProps> = ({
+export const FormSelect: React.FC<
+  BaseFormType & BaseSelectType & SelectProps
+> = ({
   name,
   label,
   options,
@@ -50,5 +52,3 @@ const FormSelect: React.FC<BaseFormType & BaseSelectType & SelectProps> = ({
     />
   );
 };
-
-export default FormSelect;

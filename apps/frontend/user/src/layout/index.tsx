@@ -1,11 +1,11 @@
-import useRouterInfo from '@pawhaven/frontend-core/hooks/useRouterInfo';
+import { useRouterInfo } from '@pawhaven/frontend-core/hooks';
 import { NotificationBanner, Toast } from '@pawhaven/ui';
 import type { NavigateFunction, UIMatch } from 'react-router-dom';
 import { Outlet, useNavigate } from 'react-router-dom';
 
 import { useFetchGlobalMenu } from './RootLayoutAPI';
-import RootLayoutFooter from './RootLayoutFooter';
-import RootLayoutMenu from './RootLayoutMenu';
+import { RootLayoutFooter } from './RootLayoutFooter';
+import { RootLayoutMenu } from './RootLayoutMenu';
 
 import { useGlobalState } from '@/store/globalReducer';
 import type { MenuItemType, RouterInfoType } from '@/types/LayoutType';
@@ -16,7 +16,7 @@ export interface LayoutProps {
   routerMatches: Array<UIMatch<unknown, unknown>>;
 }
 
-const RootLayout = () => {
+export const RootLayout = () => {
   const { profile, isSysMaintain } = useGlobalState();
   const { data: globalMenuItems = [] } = useFetchGlobalMenu(
     profile?.baseUserInfo?.userID,
@@ -60,5 +60,3 @@ const RootLayout = () => {
     </div>
   );
 };
-
-export default RootLayout;

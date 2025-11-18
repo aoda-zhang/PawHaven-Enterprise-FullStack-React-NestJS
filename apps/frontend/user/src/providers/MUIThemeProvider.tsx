@@ -1,13 +1,12 @@
 import GlobalStyles from '@mui/material/GlobalStyles';
 import { StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
-import MUITheme from '@pawhaven/design-system/MUI-theme';
+import { MUITheme } from '@pawhaven/design-system/MUI-theme';
 
-const MUIThemeProvider = ({ children }: { children: React.ReactNode }) => {
-  // const muiTheme = useMemo(() => {
-  //   return getMUITheme();
-  // }, []);
-
-  // if (!muiTheme) return null;
+export const MUIThemeProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   return (
     <StyledEngineProvider>
       <GlobalStyles styles="@layer theme, base, mui, components, utilities;" />
@@ -15,4 +14,3 @@ const MUIThemeProvider = ({ children }: { children: React.ReactNode }) => {
     </StyledEngineProvider>
   );
 };
-export default MUIThemeProvider;

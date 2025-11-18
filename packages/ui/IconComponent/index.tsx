@@ -12,7 +12,7 @@ type IconProps = {
   children?: React.ReactNode;
 };
 
-const IconComponent: React.FC<IconProps> = ({
+export const IconComponent: React.FC<IconProps> = ({
   name,
   className = '',
   size = 24,
@@ -34,5 +34,3 @@ const IconComponent: React.FC<IconProps> = ({
     </div>
   );
 };
-
-export default IconComponent;

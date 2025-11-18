@@ -66,9 +66,11 @@ module.exports = {
     ],
     'import/newline-after-import': ['error', { count: 1 }],
     'import/no-duplicates': 'error',
-    'import/default': 'off',
-    'import/no-named-as-default': 'off',
-    'import/no-named-as-default-member': 'off',
+    'import/default': 'error',
+    'import/no-named-as-default': 'error',
+    'import/no-named-as-default-member': 'error',
+    'import/no-default-export': 'error',
+    'import/prefer-default-export': 'off',
 
     // ----------------------------
     // TypeScript rules

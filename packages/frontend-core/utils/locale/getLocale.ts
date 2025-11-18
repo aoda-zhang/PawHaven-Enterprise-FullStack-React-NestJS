@@ -1,8 +1,7 @@
-import LocaleKeys from '../constants/localeKey';
+import { LocaleKeys } from '../../constants/localeKey';
+import { storageTool } from '../storage/storageTool';
 
-import storageTool from './storage';
-
-const getLocale = (
+export const getLocale = (
   defaultLanguage: string = LocaleKeys['en-US'],
   supportLanguages: string[] = [],
 ) => {
@@ -22,4 +21,3 @@ const getLocale = (
 
   return defaultLanguage;
 };
-export default getLocale;

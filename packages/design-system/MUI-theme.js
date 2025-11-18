@@ -1,55 +1,43 @@
 import { createTheme } from '@mui/material/styles';
 
-export function getCssVar(name) {
-  if (typeof window === 'undefined') return '';
-  return getComputedStyle(document.documentElement)
-    .getPropertyValue(name)
-    .trim();
-}
+import designTokens from './designTokens';
 
-const MUITheme = createTheme({
+export const MUITheme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: getCssVar('--color-primary'),
-      light: getCssVar('--color-primary-light'),
-      dark: getCssVar('--color-primary-dark'),
+      main: designTokens.colors.primary,
+      light: designTokens.colors.primaryLight,
+      dark: designTokens.colors.primaryDark,
       contrastText: '#ffffff',
     },
     secondary: {
-      main: getCssVar('--color-primary'),
-      light: getCssVar('--color-primary-light'),
-      dark: getCssVar('--color-primary-dark'),
+      main: designTokens.colors.secondary,
+      light: designTokens.colors.secondaryLight,
+      dark: designTokens.colors.secondaryDark,
       contrastText: '#ffffff',
     },
     background: {
-      default: getCssVar('--color-background'),
-      paper: getCssVar('--color-surface'),
+      default: designTokens.colors.background,
+      paper: designTokens.colors.surface,
     },
     text: {
-      primary: getCssVar('--color-text'),
-      secondary: getCssVar('--color-text-secondary'),
+      primary: designTokens.colors.textPrimary,
+      secondary: designTokens.colors.textSecondary,
     },
-    divider: getCssVar('--color-border'),
+    divider: designTokens.colors.divider,
     error: {
-      main: getCssVar('--color-error'),
+      main: designTokens.colors.error,
     },
     success: {
-      main: getCssVar('--color-success'),
-      light: getCssVar('--color-success'),
-      dark: getCssVar('--color-success'),
+      main: designTokens.colors.success,
     },
-    // warning: {
-    //   main: getCssVar('--color-warning'),
-    // },
-    // info: {
-    //   main: getCssVar('--color-accent'),
-    // },
+    warning: {
+      main: designTokens.colors.warning,
+    },
+    info: {
+      main: designTokens.colors.accent,
+    },
   },
-  // colorSchemes: {
-  //   light: { palette: {} },
-  // },
-  spacing: getCssVar('--spacing-4'),
+  spacing: designTokens.spacing.base,
 });
-
-export default MUITheme;

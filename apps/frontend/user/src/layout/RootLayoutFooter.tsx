@@ -1,9 +1,9 @@
-import myPersonal from '@pawhaven/frontend-core/constants/myPerson';
+import { myPersonal } from '@pawhaven/frontend-core/constants';
 import { useTranslation } from 'react-i18next';
 
 // import { Link } from 'react-router-dom';
 
-const RootLayoutFooter = () => {
+export const RootLayoutFooter = () => {
   const { t } = useTranslation();
   return (
     <div className="flex justify-between gap-2 text-center items-center flex-col lg:flex-row px-4 lg:px-16 py-6 bg-slate-900 text-white">
@@ -47,5 +47,3 @@ const RootLayoutFooter = () => {
     </div>
   );
 };
-
-export default RootLayoutFooter;

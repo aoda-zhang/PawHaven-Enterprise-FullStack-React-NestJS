@@ -6,10 +6,10 @@ import axios, {
   type InternalAxiosRequestConfig,
 } from 'axios';
 
-import getLocale from '../../utils/getLocale';
+import { getLocale } from '../utils/locale/getLocale';
 
 import { generateSign, getUTCTimestamp } from './encrypt';
-import normalizeHttpError from './errorHandle';
+import { normalizeHttpError } from './errorHandle';
 import type { ApiClientOptions } from './types';
 
 /**
@@ -19,7 +19,7 @@ import type { ApiClientOptions } from './types';
 /**
  * Factory function to create a reusable API client with common interceptors and headers.
  */
-const createApiClient = (options: ApiClientOptions) => {
+export const createApiClient = (options: ApiClientOptions) => {
   const {
     baseURL,
     timeout = 20000,
@@ -113,5 +113,3 @@ const createApiClient = (options: ApiClientOptions) => {
     },
   };
 };
-
-export default createApiClient;

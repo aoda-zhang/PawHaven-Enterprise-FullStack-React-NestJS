@@ -13,7 +13,7 @@ interface FormRadioProps {
   options: Option[];
 }
 
-const FormRadio: FC<BaseFormType & FormRadioProps> = ({
+export const FormRadio: FC<BaseFormType & FormRadioProps> = ({
   name,
   label,
   options,
@@ -54,5 +54,3 @@ const FormRadio: FC<BaseFormType & FormRadioProps> = ({
     </div>
   );
 };
-
-export default FormRadio;

@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
-const Hero = () => {
+export const Hero = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -36,5 +36,3 @@ const Hero = () => {
     </div>
   );
 };
-
-export default Hero;

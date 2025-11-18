@@ -5,7 +5,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 
 import type { BaseFormType, BaseTextFieldType } from '../formBase.type';
 
-const FormInput: React.FC<
+export const FormInput: React.FC<
   BaseFormType & TextFieldProps & BaseTextFieldType
 > = ({
   name,
@@ -40,5 +40,3 @@ const FormInput: React.FC<
     />
   );
 };
-
-export default FormInput;

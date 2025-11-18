@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { useFetchLatestRescuesByNumber } from '../apis/queries';
-import { RescueItemType } from '../types';
+import type { RescueItemType } from '../types';
 
 import getStatusColorByPrefix from '@/utils/getStatusColorByPrefix';
 
@@ -59,7 +59,7 @@ const RescueItem = ({
   );
 };
 
-const LatestRescue = () => {
+export const LatestRescue = () => {
   const { t } = useTranslation();
   const { data: rescues } = useFetchLatestRescuesByNumber();
 
@@ -103,5 +103,3 @@ const LatestRescue = () => {
     </div>
   );
 };
-
-export default LatestRescue;

@@ -35,7 +35,6 @@ module.exports = {
     '@typescript-eslint/no-var-requires': 'off', // Allow require() in Node.js scripts
     'no-useless-constructor': 'off',
     'no-empty-function': ['error', { allow: ['constructors'] }], // Allow empty constructors for dependency injection
-    'import/prefer-default-export': 'off', // Use named exports for Controller/Service/Module/DTO
     '@typescript-eslint/no-useless-constructor': 'off', // Allow constructors with only dependency injection
     '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }], // Ignore unused variables starting with _
     '@typescript-eslint/no-explicit-any': 'warn', // Warn on use of any

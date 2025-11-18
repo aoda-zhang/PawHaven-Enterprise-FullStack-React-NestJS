@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Brand from '@/components/Brand';
 
-const AuthLayout: FC<{ children: React.ReactNode }> = ({ children }) => {
+export const AuthLayout: FC<{ children: React.ReactNode }> = ({ children }) => {
   const navigate = useNavigate();
   return (
     <div className="flex flex-col w-dvw h-dvh p-4 lg:p-10 rounded-xl bg-background shadow-md">
@@ -14,4 +14,3 @@ const AuthLayout: FC<{ children: React.ReactNode }> = ({ children }) => {
     </div>
   );
 };
-export default AuthLayout;

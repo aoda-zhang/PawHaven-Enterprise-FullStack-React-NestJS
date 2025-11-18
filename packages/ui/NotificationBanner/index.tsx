@@ -15,7 +15,7 @@ export interface BannerMessage {
   bannerWrapClassNames?: string;
 }
 
-const NotificationBanner: React.FC<{ banner: BannerMessage }> = ({
+export const NotificationBanner: React.FC<{ banner: BannerMessage }> = ({
   banner,
 }) => {
   const [open, setOpen] = useState(true);
@@ -53,4 +53,3 @@ const NotificationBanner: React.FC<{ banner: BannerMessage }> = ({
     </Collapse>
   );
 };
-export default NotificationBanner;

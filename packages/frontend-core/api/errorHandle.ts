@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // @ts-nocheck
-import { HTTP_STATUS } from '../../constants/httpReqStatus';
+import { HTTP_STATUS } from '../constants/httpReqStatus';
 
 import { HttpBusinessMappingCode, httpRequestErrors } from './types';
 
@@ -154,7 +154,7 @@ const mapErrorToType = (errorRes: ErrorResponse) => {
 /**
  * Normalize various axios error shapes into a unified format
  */
-const normalizeHttpError = (error: any) => {
+export const normalizeHttpError = (error: any) => {
   let errorType = httpRequestErrors.UNKNOWN;
   let errorStatus = error?.status ?? null;
   let errorCode = error?.code ?? null;
@@ -200,5 +200,3 @@ const normalizeHttpError = (error: any) => {
     raw: error,
   };
 };
-
-export default normalizeHttpError;

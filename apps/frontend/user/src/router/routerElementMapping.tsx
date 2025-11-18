@@ -4,16 +4,16 @@ import { lazy } from 'react';
 import ErrorFallback from '@/components/ErrorFallback';
 // import GuardRoute from '@/components/GuardRoute';
 import NotFund from '@/components/NotFund';
-import Login from '@/features/Auth/Login';
-import Register from '@/features/Auth/Register';
-import Home from '@/features/Home';
-import RootLayout from '@/layout';
+import { Login } from '@/features/Auth/Login';
+import { Register } from '@/features/Auth/Register';
+import { Home } from '@/features/Home';
+import { RootLayout } from '@/layout';
 
 const ReportStray = lazy(() => import('@/features/ReportStray'));
 const ReportDetail = lazy(() => import('@/features/RescueDetail'));
 const RescueGuide = lazy(() => import('@/features/RescueGuide'));
 
-const routerElementMapping: Record<string, ReactElement> = {
+export const routerElementMapping: Record<string, ReactElement> = {
   // guardRoute: (
   //   <GuardRoute>
   //     <RootLayout />
@@ -29,5 +29,3 @@ const routerElementMapping: Record<string, ReactElement> = {
   notFund: <NotFund />,
   errorFallback: <ErrorFallback />,
 };
-
-export default routerElementMapping;

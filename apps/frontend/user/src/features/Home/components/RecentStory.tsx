@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
-const RecentStory = () => {
+export const RecentStory = () => {
   const { t } = useTranslation();
   return (
     <div className="px-4 lg:px-20">
@@ -10,5 +10,3 @@ const RecentStory = () => {
     </div>
   );
 };
-
-export default RecentStory;

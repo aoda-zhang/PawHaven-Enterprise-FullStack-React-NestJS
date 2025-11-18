@@ -1,4 +1,4 @@
-import I18nSwitch from '@pawhaven/frontend-core/components/I18nSwitch';
+import { I18nSwitch } from '@pawhaven/frontend-core/components';
 import clsx from 'clsx';
 import { cloneElement } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -21,7 +21,7 @@ const rootLayoutClassNames = {
   login:
     'px-3 py-2 rounded-sm bg-primary text-white m-4 lg:m-0 flex justify-center items-center cursor-pointer',
 };
-const RootLayoutMenuRender = (props: MenuRenderType) => {
+export const RootLayoutMenuRender = (props: MenuRenderType) => {
   const HeaderComponentMappings = {
     I18nSwitch: <I18nSwitch />,
   };
@@ -126,5 +126,3 @@ const RootLayoutMenuRender = (props: MenuRenderType) => {
     }
   });
 };
-
-export default RootLayoutMenuRender;

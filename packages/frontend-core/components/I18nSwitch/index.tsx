@@ -3,7 +3,7 @@ import { ChevronDown, Globe } from 'lucide-react';
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import storageTool from '../../utils/storage';
+import { storageTool } from '../../utils/storage/storageTool';
 
 const LanguageSelect = () => {
   const { i18n, t } = useTranslation();
@@ -30,7 +30,7 @@ const LanguageSelect = () => {
   );
 };
 
-const I18nSwitch = () => {
+export const I18nSwitch = () => {
   const { i18n, t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -84,4 +84,3 @@ const I18nSwitch = () => {
     </>
   );
 };
-export default I18nSwitch;

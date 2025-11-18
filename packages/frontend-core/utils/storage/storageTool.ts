@@ -1,4 +1,4 @@
-const storageTool = {
+export const storageTool = {
   set<T>(key: string, value: T): void {
     try {
       localStorage.setItem(key, JSON.stringify(value));
@@ -58,5 +58,3 @@ const storageTool = {
     }
   },
 };
-
-export default storageTool;

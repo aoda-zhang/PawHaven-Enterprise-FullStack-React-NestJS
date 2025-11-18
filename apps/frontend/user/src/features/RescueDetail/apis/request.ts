@@ -1,5 +1,5 @@
 import type { AnimalDetail, AnimalRescueStatus } from '@/types/AnimalType';
-import apiClient from '@/utils/apiClient';
+import { apiClient } from '@/utils/apiClient';
 
 export const getAnimalDetail = (id: string) => {
   // return http.get(`/animal/${id}`);

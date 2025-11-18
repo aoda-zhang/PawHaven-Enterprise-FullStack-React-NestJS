@@ -1,16 +1,11 @@
-export { default as Loading } from './Loading';
-export { default as FormInput } from './Form/FormInput';
-export { default as FormCheckbox } from './Form/FormCheckBox';
-export { default as FormDateRanger } from './Form/FormDateRanger';
-export { default as FormTextArea } from './Form/FormTextArea';
-export { default as FormRadio } from './Form/FormRadio';
-export { default as FormSelect } from './Form/FormSelect';
-export { default as SuspenseWrapper } from './SuspenseWrapper';
-export { default as Phase } from './Phase';
-export { default as NotificationBanner } from './NotificationBanner';
-export {
-  default as Toast,
-  showToast,
-  notificationType,
-  type ToastType,
-} from './Toast';
+export { Loading } from './Loading';
+export { FormInput } from './Form/FormInput';
+export { FormCheckbox } from './Form/FormCheckBox';
+export { FormDateRanger } from './Form/FormDateRanger';
+export { FormTextArea } from './Form/FormTextArea';
+export { FormRadio } from './Form/FormRadio';
+export { FormSelect } from './Form/FormSelect';
+export { SuspenseWrapper } from './SuspenseWrapper';
+export { Phase } from './Phase';
+export { NotificationBanner } from './NotificationBanner';
+export { Toast, showToast, notificationType, type ToastType } from './Toast';

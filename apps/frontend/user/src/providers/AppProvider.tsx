@@ -4,9 +4,9 @@ import { ErrorBoundary } from 'react-error-boundary';
 // Enable i18n for the entire app
 import '@pawhaven/i18n';
 
-import MUIThemeProvider from './MUIThemeProvider';
-import QueryProvider from './QueryProvider';
-import StoreProvider from './StoreProvider';
+import { MUIThemeProvider } from './MUIThemeProvider';
+import { QueryProvider } from './QueryProvider';
+import { StoreProvider } from './StoreProvider';
 
 import SystemError from '@/components/SystemError';
 
@@ -14,7 +14,7 @@ type AppProviderProps = {
   children: ReactNode;
 };
 
-const AppProvider = ({ children }: AppProviderProps) => {
+export const AppProvider = ({ children }: AppProviderProps) => {
   return (
     <MUIThemeProvider>
       <StoreProvider>
@@ -25,5 +25,3 @@ const AppProvider = ({ children }: AppProviderProps) => {
     </MUIThemeProvider>
   );
 };
-
-export default AppProvider;

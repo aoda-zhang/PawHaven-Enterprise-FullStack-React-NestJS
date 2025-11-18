@@ -1,4 +1,4 @@
-import createApiClient from '@pawhaven/frontend-core/cores/http';
+import { createApiClient } from '@pawhaven/frontend-core/api';
 
 import envConfig from '@/config';
 
@@ -13,5 +13,3 @@ export const apiClient = createApiClient({
   prefix: envConfig?.http?.prefix,
   privateKey: envConfig?.http?.privateKey,
 });
-
-export default apiClient;

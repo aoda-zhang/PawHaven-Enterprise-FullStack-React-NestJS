@@ -1,6 +1,6 @@
 import type { RescueItemType } from '../types';
 
-import apiClient from '@/utils/apiClient';
+import { apiClient } from '@/utils/apiClient';
 
 export const getLatestRescuesByNumber = (): Promise<RescueItemType[]> => {
   // return http.get(`/rescues/latest/${number}`);

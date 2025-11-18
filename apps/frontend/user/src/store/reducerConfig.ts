@@ -1,11 +1,11 @@
 // All reducers should be registered here for centralized management and scalability
 import storage from 'redux-persist/lib/storage';
 
-import globalReducer from './globalReducer';
+import { globalReducer } from './globalReducer';
 import reducerNames from './reducerNames';
 
 export const combinedReducers = {
-  [reducerNames.global]: globalReducer,
+  [reducerNames.global]: globalReducer.reducer,
 };
 
 // List of reducers to be persisted

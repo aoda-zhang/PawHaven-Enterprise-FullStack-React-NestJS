@@ -6,11 +6,11 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { useLogin } from '../apis/queries';
-import AuthLayout from '../authLayout';
+import { AuthLayout } from '../authLayout';
 
-import routePaths from '@/router/routePaths';
+import { routePaths } from '@/router/routePaths';
 
-const Login: FC = () => {
+export const Login: FC = () => {
   const formProps = useForm({});
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -70,4 +70,3 @@ const Login: FC = () => {
     </AuthLayout>
   );
 };
-export default Login;

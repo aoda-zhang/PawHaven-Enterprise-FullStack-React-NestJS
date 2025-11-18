@@ -10,7 +10,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 
 import type { BaseFormType } from '../formBase.type';
 
-const FormTextArea: React.FC<BaseFormType & TextareaAutosizeProps> = ({
+export const FormTextArea: React.FC<BaseFormType & TextareaAutosizeProps> = ({
   name,
   label,
 
@@ -48,5 +48,3 @@ const FormTextArea: React.FC<BaseFormType & TextareaAutosizeProps> = ({
     />
   );
 };
-
-export default FormTextArea;

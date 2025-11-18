@@ -35,5 +35,13 @@
   },
   "devDependencies": {
     "@types/crypto-js": "^4.2.2"
+  },
+  "exports": {
+    "./constants": "./constants/index.ts",
+    "./utils": "./utils/index.ts",
+    "./components": "./components/index.ts",
+    "./hooks": "./hooks/index.ts",
+    "./api": "./api/index.ts",
+    "./query": "./query/index.ts"
   }
 }

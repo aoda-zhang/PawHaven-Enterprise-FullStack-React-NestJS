@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-const useDoubleClick = (onDoubleClick: () => void) => {
+export const useDoubleClick = (onDoubleClick: () => void) => {
   useEffect(() => {
     const handleDoubleClick = () => {
       if (onDoubleClick) {
@@ -13,4 +13,3 @@ const useDoubleClick = (onDoubleClick: () => void) => {
     };
   }, [onDoubleClick]);
 };
-export default useDoubleClick;

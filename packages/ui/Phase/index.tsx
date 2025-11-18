@@ -10,7 +10,7 @@ interface Props {
   sections: SectionType[];
 }
 
-const Phase: FC<Props> = (props) => {
+export const Phase: FC<Props> = (props) => {
   const { title, sections } = props;
   return (
     <div className="border-b border-border pb-5 mb-3">
@@ -28,4 +28,3 @@ const Phase: FC<Props> = (props) => {
     </div>
   );
 };
-export default Phase;

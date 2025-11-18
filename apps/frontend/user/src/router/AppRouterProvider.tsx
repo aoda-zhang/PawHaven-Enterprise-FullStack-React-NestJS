@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import type { RouteObject } from 'react-router-dom';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import routerElementMapping from './routerElementMapping';
+import { routerElementMapping } from './routerElementMapping';
 
 import { useFetchGlobalRouters } from '@/layout/RootLayoutAPI';
 import { useGlobalState } from '@/store/globalReducer';
@@ -39,7 +39,7 @@ const routesMapping = (routesFromAPI: any[]): RouteObject[] => {
   return routes;
 };
 
-const AppRouterProvider = () => {
+export const AppRouterProvider = () => {
   const { profile } = useGlobalState();
   const { data: globalRouters = [] } = useFetchGlobalRouters(
     profile?.baseUserInfo?.userID,
@@ -58,5 +58,3 @@ const AppRouterProvider = () => {
   }
   return <Loading />;
 };
-
-export default AppRouterProvider;

@@ -9,7 +9,7 @@ type MultiFileUploaderProps = {
   onFilesChange?: (files: File[]) => void;
 };
 
-const MultiFileUploader: React.FC<MultiFileUploaderProps> = ({
+export const MultiFileUploader: React.FC<MultiFileUploaderProps> = ({
   accept = 'image/*',
   maxSizeMB = 5,
   multiple = true,
@@ -105,5 +105,3 @@ const MultiFileUploader: React.FC<MultiFileUploaderProps> = ({
     </Box>
   );
 };
-
-export default MultiFileUploader;

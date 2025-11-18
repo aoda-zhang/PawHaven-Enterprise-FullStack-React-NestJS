@@ -1,7 +1,7 @@
 import { Drawer } from '@mui/material';
 import type { NavigateFunction } from 'react-router-dom';
 
-import RootLayoutMenuRender from './RootLayoutMenuRender';
+import { RootLayoutMenuRender } from './RootLayoutMenuRender';
 
 import type { MenuItemType } from '@/types/LayoutType';
 
@@ -12,7 +12,7 @@ interface RootLayoutSidebarProps {
   onCloseSidebar: () => void;
 }
 
-const RootLayoutSidebar = ({
+export const RootLayoutSidebar = ({
   menuItems,
   isSidebarOpen,
   onCloseSidebar,
@@ -29,4 +29,3 @@ const RootLayoutSidebar = ({
     </Drawer>
   );
 };
-export default RootLayoutSidebar;

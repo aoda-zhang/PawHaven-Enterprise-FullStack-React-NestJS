@@ -1,10 +1,9 @@
 import { type FC } from 'react';
 
 type Props = {
-  userInfo: Record<string, any>;
+  userInfo: Record<string, unknown>;
 };
 
-const AvatarMenu: FC<Props> = () => {
+export const AvatarMenu: FC<Props> = () => {
   return <div>touxiang</div>;
 };
-export default AvatarMenu;

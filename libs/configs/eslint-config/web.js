@@ -61,7 +61,6 @@ module.exports = {
 
     // Import-related rules (reuse from base to avoid override)
     'import/order': baseEslintConfig.rules['import/order'],
-    'import/prefer-default-export': 'warn',
 
     // General JavaScript rules
     'no-console': 'warn',

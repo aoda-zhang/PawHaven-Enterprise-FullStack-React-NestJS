@@ -10,7 +10,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 
 import type { BaseFormType } from '../formBase.type';
 
-const FormCheckbox: FC<BaseFormType & CheckboxProps> = ({
+export const FormCheckbox: FC<BaseFormType & CheckboxProps> = ({
   name,
   label,
   defaultValue = false,
@@ -42,5 +42,3 @@ const FormCheckbox: FC<BaseFormType & CheckboxProps> = ({
     />
   );
 };
-
-export default FormCheckbox;

@@ -4,7 +4,7 @@ import i18n, { t } from 'i18next';
 import '@pawhaven/i18n';
 import type { ToastOptions } from 'react-hot-toast';
 
-import { type ApiErrorInfo, httpRequestErrors } from '../http/types';
+import { type ApiErrorInfo, httpRequestErrors } from '../api/types';
 
 interface RequestMeta {
   isNetworkError?: boolean;
@@ -92,7 +92,7 @@ const handleError = ({ queryOptions, errorInfo, meta }: ErrorHandleType) => {
   }
 };
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const getRequestQueryOptions = (queryOptions: QueryOptionsType) => {
+export const getRequestQueryOptions = (queryOptions: QueryOptionsType) => {
   const {
     refetchOnReconnect = true,
     refetchOnWindowFocus = false,
@@ -150,5 +150,3 @@ const getRequestQueryOptions = (queryOptions: QueryOptionsType) => {
     }),
   };
 };
-
-export default getRequestQueryOptions;

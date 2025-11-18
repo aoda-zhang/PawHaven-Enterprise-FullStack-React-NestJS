@@ -49,7 +49,7 @@ export const showToast = ({
   }
 };
 
-const Toast: React.FC<NotificationProps> = ({ success, error }) => {
+export const Toast: React.FC<NotificationProps> = ({ success, error }) => {
   return (
     <Toaster
       toastOptions={{
@@ -85,4 +85,3 @@ const Toast: React.FC<NotificationProps> = ({ success, error }) => {
     />
   );
 };
-export default Toast;

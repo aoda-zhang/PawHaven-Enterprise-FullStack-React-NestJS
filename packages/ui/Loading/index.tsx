@@ -1,7 +1,7 @@
 import { CircularProgress, Box } from '@mui/material';
 import React from 'react';
 
-const Loading: React.FC = () => (
+export const Loading: React.FC = () => (
   <Box
     sx={{
       position: 'fixed',
@@ -19,5 +19,3 @@ const Loading: React.FC = () => (
     <CircularProgress />
   </Box>
 );
-
-export default Loading;

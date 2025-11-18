@@ -1,14 +1,14 @@
-import useMatchBreakpoint from '../../../../../packages/design-system/useMatchBreakpoint';
+import useMatchBreakpoint from '@pawhaven/design-system/useMatchBreakpoint';
 import { AlignJustify } from 'lucide-react';
 import { useState } from 'react';
 
-import RootLayoutMenuRender from './RootLayoutMenuRender';
-import RootLayoutSidebar from './RootLayoutSidebar';
+import { RootLayoutMenuRender } from './RootLayoutMenuRender';
+import { RootLayoutSidebar } from './RootLayoutSidebar';
 
 import Brand from '@/components/Brand';
 import type { RootLayoutHeaderProps } from '@/types/LayoutType';
 
-const RootLayoutMenu = ({
+export const RootLayoutMenu = ({
   menuItems,
   navigate,
   currentRouterInfo,
@@ -42,5 +42,3 @@ const RootLayoutMenu = ({
     </header>
   );
 };
-
-export default RootLayoutMenu;

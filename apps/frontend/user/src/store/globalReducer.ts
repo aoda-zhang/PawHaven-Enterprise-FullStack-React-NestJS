@@ -1,5 +1,5 @@
-import LocaleKeys from '@pawhaven/frontend-core/constants/localeKey';
-import storageTool from '@pawhaven/frontend-core/utils/storage';
+import { LocaleKeys } from '@pawhaven/frontend-core/constants';
+import { storageTool } from '@pawhaven/frontend-core/utils';
 import { createSlice } from '@reduxjs/toolkit';
 
 import { useReduxSelector } from '../hooks/reduxHooks';
@@ -29,7 +29,7 @@ const initialState: GlobalStateType = {
   isSysMaintain: true,
 };
 
-const globalReducer = createSlice({
+export const globalReducer = createSlice({
   name: reducerNames.global,
   initialState,
   reducers: {
@@ -38,7 +38,6 @@ const globalReducer = createSlice({
     },
   },
 });
-export default globalReducer.reducer;
 
 export const { setProfile } = globalReducer.actions;
 export const useGlobalState = () => {

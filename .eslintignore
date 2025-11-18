@@ -22,3 +22,4 @@ logs/
 
 # Ignore specific monorepo folders that don't require linting
 libs/configs
+packages/i18n

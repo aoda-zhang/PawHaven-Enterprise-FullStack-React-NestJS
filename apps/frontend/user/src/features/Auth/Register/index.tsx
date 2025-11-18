@@ -6,11 +6,11 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { useRegister } from '../apis/queries';
-import AuthLayout from '../authLayout';
+import { AuthLayout } from '../authLayout';
 
-import routePaths from '@/router/routePaths';
+import { routePaths } from '@/router/routePaths';
 
-const Register: FC = () => {
+export const Register: FC = () => {
   const formProps = useForm({});
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -68,4 +68,3 @@ const Register: FC = () => {
     </AuthLayout>
   );
 };
-export default Register;
