@@ -7,9 +7,10 @@ export { default as FormRadio } from './Form/FormRadio';
 export { default as FormSelect } from './Form/FormSelect';
 export { default as SuspenseWrapper } from './SuspenseWrapper';
 export { default as Phase } from './Phase';
+export { default as NotificationBanner } from './NotificationBanner';
 export {
-  default as Notification,
-  showNotification,
+  default as Toast,
+  showToast,
   notificationType,
   type ToastType,
-} from './Notification';
+} from './Toast';

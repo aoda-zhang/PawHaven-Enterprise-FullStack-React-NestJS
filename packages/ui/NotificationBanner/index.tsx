@@ -2,7 +2,6 @@ import { Alert, AlertTitle, Link, Collapse, IconButton } from '@mui/material';
 import clsx from 'clsx';
 import { X } from 'lucide-react';
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 export interface BannerMessage {
   id: string;
@@ -16,10 +15,9 @@ export interface BannerMessage {
   bannerWrapClassNames?: string;
 }
 
-export const NotificationBanner: React.FC<{ banner: BannerMessage }> = ({
+const NotificationBanner: React.FC<{ banner: BannerMessage }> = ({
   banner,
 }) => {
-  const { t } = useTranslation();
   const [open, setOpen] = useState(true);
   if (!open) return null;
 
@@ -41,15 +39,13 @@ export const NotificationBanner: React.FC<{ banner: BannerMessage }> = ({
         }
       >
         {banner.title && (
-          <AlertTitle className="text-2xl text-left">
-            {t(banner.title)}
-          </AlertTitle>
+          <AlertTitle className="text-2xl text-left">{banner.title}</AlertTitle>
         )}
-        <p className="text-left">{t(banner.message)}</p>
+        <p className="text-left">{banner.message}</p>
         {banner.linkText && banner.linkUrl && (
           <>
             <Link href={banner.linkUrl} target="_blank" underline="hover">
-              {t(banner.linkText)}
+              {banner.linkText}
             </Link>
           </>
         )}
@@ -57,3 +53,4 @@ export const NotificationBanner: React.FC<{ banner: BannerMessage }> = ({
     </Collapse>
   );
 };
+export default NotificationBanner;

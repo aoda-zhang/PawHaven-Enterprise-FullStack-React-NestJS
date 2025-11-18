@@ -1,8 +1,8 @@
+import I18nSwitch from '@pawhaven/frontend-core/components/I18nSwitch';
 import clsx from 'clsx';
 import { cloneElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import LangSwitcher from '@/components/LangSwitcher';
 import {
   menuTypes,
   type MenuItemType,
@@ -23,7 +23,7 @@ const rootLayoutClassNames = {
 };
 const RootLayoutMenuRender = (props: MenuRenderType) => {
   const HeaderComponentMappings = {
-    LangSwitcher: <LangSwitcher />,
+    I18nSwitch: <I18nSwitch />,
   };
   const { menuItems, activePath, navigate } = props;
   const { t } = useTranslation();

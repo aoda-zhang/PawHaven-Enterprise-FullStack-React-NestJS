@@ -11,7 +11,6 @@ import useIsStableEnv from '@/hooks/useIsStableEnv';
 
 const QueryProvider = ({ children }: { children: ReactNode }) => {
   const IsStableEnv = useIsStableEnv();
-  // const navigate = useNavigate();
   const [queryClient] = useState(
     () =>
       new QueryClient(

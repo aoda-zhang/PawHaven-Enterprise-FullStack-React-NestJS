@@ -1,4 +1,4 @@
-import designTokens from '../../design-system/designTokens';
+import designTokens from '@pawhaven/design-system/designTokens';
 import type { ReactElement } from 'react';
 import React from 'react';
 import type { ToastOptions } from 'react-hot-toast';
@@ -23,7 +23,7 @@ interface ShowNotificationProps {
   notificationOption?: ToastOptions;
 }
 
-export const showNotification = ({
+export const showToast = ({
   type = notificationType.error,
   message,
   notificationOption,
@@ -49,7 +49,7 @@ export const showNotification = ({
   }
 };
 
-const Notification: React.FC<NotificationProps> = ({ success, error }) => {
+const Toast: React.FC<NotificationProps> = ({ success, error }) => {
   return (
     <Toaster
       toastOptions={{
@@ -85,4 +85,4 @@ const Notification: React.FC<NotificationProps> = ({ success, error }) => {
     />
   );
 };
-export default Notification;
+export default Toast;

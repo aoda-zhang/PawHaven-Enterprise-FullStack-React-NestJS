@@ -1,8 +1,4 @@
-import {
-  type ToastType,
-  notificationType,
-  showNotification,
-} from '@pawhaven/ui';
+import { type ToastType, notificationType, showToast } from '@pawhaven/ui';
 import { QueryCache, MutationCache } from '@tanstack/react-query';
 import i18n, { t } from 'i18next';
 import '@pawhaven/i18n';
@@ -38,7 +34,7 @@ const showErrorToast = (
   errorMessage: string,
   errorNotificationOptions?: { type: ToastType } & ToastOptions,
 ) => {
-  showNotification({
+  showToast({
     message: errorMessage,
     ...(errorNotificationOptions ?? {}),
   });

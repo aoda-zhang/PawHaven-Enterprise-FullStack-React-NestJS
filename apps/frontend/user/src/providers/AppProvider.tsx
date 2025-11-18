@@ -1,5 +1,4 @@
 import '@pawhaven/design-system/globalTailwind.css';
-import { Notification } from '@pawhaven/ui';
 import { type ReactNode } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 // Enable i18n for the entire app
@@ -20,10 +19,7 @@ const AppProvider = ({ children }: AppProviderProps) => {
     <MUIThemeProvider>
       <StoreProvider>
         <ErrorBoundary FallbackComponent={SystemError}>
-          <QueryProvider>
-            <Notification />
-            {children}
-          </QueryProvider>
+          <QueryProvider>{children}</QueryProvider>
         </ErrorBoundary>
       </StoreProvider>
     </MUIThemeProvider>

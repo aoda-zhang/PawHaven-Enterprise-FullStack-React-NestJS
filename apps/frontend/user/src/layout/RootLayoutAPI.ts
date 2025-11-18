@@ -48,7 +48,7 @@ const getDefaultDynamicMenu = async (): Promise<MenuItemType[]> => {
     },
     {
       label: 'common.language',
-      component: 'LangSwitcher',
+      component: 'I18nSwitch',
       type: 'component',
     },
   ];

@@ -1,4 +1,5 @@
 import useRouterInfo from '@pawhaven/frontend-core/hooks/useRouterInfo';
+import { NotificationBanner, Toast } from '@pawhaven/ui';
 import type { NavigateFunction, UIMatch } from 'react-router-dom';
 import { Outlet, useNavigate } from 'react-router-dom';
 
@@ -6,7 +7,6 @@ import { useFetchGlobalMenu } from './RootLayoutAPI';
 import RootLayoutFooter from './RootLayoutFooter';
 import RootLayoutMenu from './RootLayoutMenu';
 
-import { NotificationBanner } from '@/components/NotificationBanner';
 import { useGlobalState } from '@/store/globalReducer';
 import type { MenuItemType, RouterInfoType } from '@/types/LayoutType';
 
@@ -30,6 +30,7 @@ const RootLayout = () => {
   return (
     <div className="flex flex-col box-border min-h-dvh">
       <header className="sticky top-0 bg-background z-notification">
+        <Toast />
         {isSysMaintain && (
           <NotificationBanner
             banner={{

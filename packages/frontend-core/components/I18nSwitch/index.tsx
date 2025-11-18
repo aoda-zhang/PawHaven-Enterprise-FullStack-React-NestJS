@@ -1,19 +1,17 @@
 import { Popover } from '@mui/material';
-import storageTool from '@pawhaven/frontend-core/utils/storage';
 import { ChevronDown, Globe } from 'lucide-react';
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import StorageKeys from '@/constants/StorageKeys';
+import storageTool from '../../utils/storage';
 
 const LanguageSelect = () => {
   const { i18n, t } = useTranslation();
-  const supportedLanguages =
-    useMemo(() => {
-      return Object.keys(i18n.services.resourceStore.data);
-    }, [i18n.services.resourceStore.data]) ?? [];
+  const supportedLanguages = useMemo(() => {
+    return Object.keys(i18n.services.resourceStore.data);
+  }, [i18n.services.resourceStore.data]);
   const setLanguage = (language: string) => {
-    storageTool.set(StorageKeys.I18NKEY, language);
+    storageTool.set('I18NKEY', language);
     i18n.changeLanguage(language);
   };
   return (
@@ -32,7 +30,7 @@ const LanguageSelect = () => {
   );
 };
 
-const LangSwitcher = () => {
+const I18nSwitch = () => {
   const { i18n, t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -86,4 +84,4 @@ const LangSwitcher = () => {
     </>
   );
 };
-export default LangSwitcher;
+export default I18nSwitch;
