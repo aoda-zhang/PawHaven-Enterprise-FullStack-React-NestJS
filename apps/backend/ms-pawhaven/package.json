@@ -42,7 +42,7 @@
     "dayjs": "^1.11.18",
     "dotenv": "^17.2.3",
     "helmet": "^8.1.0",
-    "js-yaml": "^4.1.0",
+    "js-yaml": "^4.1.1",
     "mongoose": "^8.19.1",
     "puppeteer": "^24.24.0",
     "reflect-metadata": "^0.2.2",
