@@ -1,14 +1,15 @@
 // A responsive hook that checks whether the current viewport width meets a given breakpoint.
 // Accepts either a breakpoint name (e.g. "md") or a numeric pixel value.
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 import BREAKPOINTS from './breakpoints';
 
-const useMatchBreakpoint = (input) => {
+export const useMatchBreakpoint = (input) => {
   // Resolve the breakpoint value: if a number is passed, use it directly;
   // if a key is passed (e.g. "md"), retrieve the breakpoint value from the BREAKPOINTS map.
-  const getTarget = () =>
-    typeof input === 'number' ? input : BREAKPOINTS[input];
+  const getTarget = useCallback(() => {
+    return typeof input === 'number' ? input : BREAKPOINTS[input];
+  }, [input]);
 
   // Initial match check. On the server, always return false to avoid SSR window errors.
   // On the client, compare current window width against the target breakpoint.
@@ -34,5 +35,3 @@ const useMatchBreakpoint = (input) => {
   // Return whether the current viewport width is greater than or equal to the target breakpoint.
   return matches;
 };
-
-export default useMatchBreakpoint;

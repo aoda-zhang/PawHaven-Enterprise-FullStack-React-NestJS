@@ -1,4 +1,4 @@
-import useMatchBreakpoint from '@pawhaven/design-system/useMatchBreakpoint';
+import { useMatchBreakpoint } from '@pawhaven/design-system/useMatchBreakpoint';
 import { AlignJustify } from 'lucide-react';
 import { useState } from 'react';
 
