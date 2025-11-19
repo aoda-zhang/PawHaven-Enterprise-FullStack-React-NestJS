@@ -6,6 +6,25 @@
     "node": "22.x",
     "pnpm": ">=10"
   },
+  "description": "A fullStack rescue stray animals platform with React + Node + monorepo architecture.",
+  "author": "aodazhang666@gmail.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aoda-zhang/PawHaven-Enterprise-FullStack-React-NestJS"
+  },
+  "homepage": "https://github.com/aoda-zhang/PawHaven-Enterprise-FullStack-React-NestJS#readme",
+  "keywords": [
+    "FullStack",
+    "react",
+    "nodejs",
+    "nestjs",
+    "monorepo",
+    "animal-rescue",
+    "stray-animals",
+    "pawhaven"
+  ],
+  "sideEffects": false,
+  "license": "MIT",
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",

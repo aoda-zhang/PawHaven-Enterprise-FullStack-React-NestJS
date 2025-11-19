@@ -9,6 +9,24 @@
     "./web": "./web.js",
     "./node": "./node.js"
   },
+  "description": "A fullStack rescue stray animals platform with React + Node + monorepo architecture.",
+  "author": "aodazhang666@gmail.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aoda-zhang/PawHaven-Enterprise-FullStack-React-NestJS"
+  },
+  "homepage": "https://github.com/aoda-zhang/PawHaven-Enterprise-FullStack-React-NestJS#readme",
+  "keywords": [
+    "FullStack",
+    "react",
+    "nodejs",
+    "nestjs",
+    "monorepo",
+    "animal-rescue",
+    "stray-animals",
+    "pawhaven"
+  ],
+  "sideEffects": false,
   "peerDependencies": {
     "@tanstack/eslint-plugin-query": "^5.74.7",
     "@typescript-eslint/eslint-plugin": "^8.32.1",

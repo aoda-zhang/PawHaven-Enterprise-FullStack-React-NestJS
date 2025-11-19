@@ -8,17 +8,34 @@
     "node": "22.x",
     "pnpm": ">=10"
   },
+  "description": "A fullStack rescue stray animals platform with React + Node + monorepo architecture.",
+  "author": "aodazhang666@gmail.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aoda-zhang/PawHaven-Enterprise-FullStack-React-NestJS"
+  },
+  "homepage": "https://github.com/aoda-zhang/PawHaven-Enterprise-FullStack-React-NestJS#readme",
+  "keywords": [
+    "FullStack",
+    "react",
+    "nodejs",
+    "nestjs",
+    "monorepo",
+    "animal-rescue",
+    "stray-animals",
+    "pawhaven"
+  ],
+  "sideEffects": false,
+  "license": "MIT",
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@hookform/resolvers": "^5.2.2",
     "@modyfi/vite-plugin-yaml": "^1.1.1",
     "@mui/material": "^7.3.4",
-    "@pawhaven/eslint-config": "workspace:*",
     "@pawhaven/i18n": "workspace:*",
     "@pawhaven/frontend-core": "workspace:*",
     "@pawhaven/design-system": "workspace:*",
-    "@pawhaven/tsconfig": "workspace:*",
     "@pawhaven/ui": "workspace:*",
     "@reduxjs/toolkit": "^2.9.0",
     "@tailwindcss/vite": "^4.1.14",
@@ -26,9 +43,6 @@
     "@tanstack/react-query": "^5.90.2",
     "@tanstack/react-query-devtools": "^5.90.2",
     "@tanstack/react-query-persist-client": "^5.90.7",
-    "@types/node": "^24.7.1",
-    "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.2.1",
     "@types/redux-persist": "^4.3.1",
     "@vitejs/plugin-react": "^5.0.4",
     "axios": "^1.12.2",
@@ -51,22 +65,27 @@
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.9.4",
     "redux-persist": "^6.0.0",
-    "typescript": "^5.9.3",
     "vite": "^7.1.11",
     "zod": "^4.1.12"
   },
   "scripts": {
-    "dev": "vite --mode dev --port 4008",
+    "dev": "vite --mode dev --port 4011",
     "uat": "vite --mode uat",
     "build:prod": "tsc && vite build --mode prod",
     "build:uat": "tsc && vite build --mode uat",
-    "preview": "vite preview"
+    "preview": "vite preview --port 4218"
   },
   "devDependencies": {
     "@types/ramda": "^0.31.1",
     "autoprefixer": "^10.4.21",
     "babel-plugin-react-compiler": "19.1.0-rc.3",
     "tailwindcss": "^4.1.14",
-    "vite-tsconfig-paths": "6.0.0-beta.4"
+    "vite-tsconfig-paths": "6.0.0-beta.4",
+    "@pawhaven/eslint-config": "workspace:*",
+    "@pawhaven/tsconfig": "workspace:*",
+    "typescript": "^5.9.3",
+    "@types/node": "^24.7.1",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.1"
   }
 }

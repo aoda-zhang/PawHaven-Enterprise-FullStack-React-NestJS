@@ -1,5 +1,6 @@
 import { useRouterInfo } from '@pawhaven/frontend-core/hooks';
 import { NotificationBanner, Toast } from '@pawhaven/ui';
+import { useTranslation } from 'react-i18next';
 import type { NavigateFunction, UIMatch } from 'react-router-dom';
 import { Outlet, useNavigate } from 'react-router-dom';
 
@@ -23,6 +24,7 @@ export const RootLayout = () => {
     profile?.baseUserInfo?.globalMenuUpdateAt,
   );
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const currentRouterInfo = useRouterInfo<RouterInfoType>();
   const { isMenuAvailable = true, isFooterAvailable = true } =
     currentRouterInfo?.handle ?? {};
@@ -37,7 +39,7 @@ export const RootLayout = () => {
               id: 'system-maintenance',
               type: 'info',
               variant: 'filled',
-              message: 'common.mockDataWarning',
+              message: t('common.mockDataWarning'),
               dismissible: false,
             }}
           />
