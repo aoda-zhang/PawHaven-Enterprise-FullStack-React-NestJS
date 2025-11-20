@@ -1,9 +1,9 @@
 import type { ReactElement } from 'react';
 import { lazy } from 'react';
 
-import ErrorFallback from '@/components/ErrorFallback';
+import { ErrorFallback } from '@/components/ErrorFallback';
 // import GuardRoute from '@/components/GuardRoute';
-import NotFund from '@/components/NotFund';
+import { NotFund } from '@/components/NotFund';
 import { Login } from '@/features/Auth/Login';
 import { Register } from '@/features/Auth/Register';
 import { Home } from '@/features/Home';

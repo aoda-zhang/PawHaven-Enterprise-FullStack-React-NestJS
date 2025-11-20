@@ -9,7 +9,7 @@
     "./web": "./web.js",
     "./node": "./node.js"
   },
-  "description": "A fullStack rescue stray animals platform with React + Node + monorepo architecture.",
+  "description": "PawHaven: An enterprise-level fullstack project built with React and NestJS.",
   "author": "aodazhang666@gmail.com",
   "repository": {
     "type": "git",

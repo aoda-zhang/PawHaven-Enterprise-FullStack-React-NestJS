@@ -6,7 +6,7 @@
     "node": "22.x",
     "pnpm": ">=10"
   },
-  "description": "A fullStack rescue stray animals platform with React + Node + monorepo architecture.",
+  "description": "PawHaven: An enterprise-level fullstack project built with React and NestJS.",
   "author": "aodazhang666@gmail.com",
   "repository": {
     "type": "git",
@@ -29,31 +29,29 @@
     "@emotion/react": "^11.14.0",
     "@mui/material": "^7.3.4",
     "@emotion/styled": "^11.14.1",
-    "@pawhaven/eslint-config": "workspace:*",
     "@pawhaven/ui": "workspace:*",
     "@pawhaven/i18n": "workspace:*",
-    "@pawhaven/tsconfig": "workspace:*",
     "@tanstack/react-query": "^5.90.2",
-    "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.2.1",
     "axios": "^1.12.2",
     "clsx": "^2.1.1",
     "crypto-js": "^4.2.0",
     "react-router-dom": "^7.9.4",
     "dayjs": "^1.11.18",
     "history": "^5.3.0",
-    "lodash": "^4.17.21",
     "lucide-react": "^0.545.0",
-    "or": "^0.2.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-hot-toast": "^2.6.0",
-    "typescript": "^5.9.3",
     "i18next": "^25.6.0",
     "react-i18next": "^16.0.0"
   },
   "devDependencies": {
-    "@types/crypto-js": "^4.2.2"
+    "@pawhaven/tsconfig": "workspace:*",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.1",
+    "typescript": "^5.9.3",
+    "@types/crypto-js": "^4.2.2",
+    "@pawhaven/eslint-config": "workspace:*"
   },
   "exports": {
     "./constants": "./constants/index.ts",

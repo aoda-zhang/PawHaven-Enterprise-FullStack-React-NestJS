@@ -6,8 +6,7 @@
     "node": "22.x",
     "pnpm": ">=10"
   },
-  "description": "A fullStack rescue stray animals platform with React + Node + monorepo architecture.",
-  "author": "aodazhang666@gmail.com",
+  "description": "PawHaven: An enterprise-level fullstack project built with React and NestJS.",
   "repository": {
     "type": "git",
     "url": "https://github.com/aoda-zhang/PawHaven-Enterprise-FullStack-React-NestJS"
@@ -31,20 +30,21 @@
     "@mui/material": "^7.3.4",
     "@mui/x-date-pickers": "^8.14.0",
     "@mui/x-date-pickers-pro": "^8.14.0",
-    "@pawhaven/eslint-config": "workspace:*",
     "@pawhaven/design-system": "workspace:*",
-    "@pawhaven/tsconfig": "workspace:*",
-    "@types/node": "^24.7.1",
-    "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.2.1",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.18",
     "lucide-react": "^0.545.0",
-    "or": "^0.2.0",
     "react": "^19.2.0",
     "react-hook-form": "^7.64.0",
     "react-hot-toast": "^2.6.0",
-    "react-loading-skeleton": "^3.5.0",
+    "react-loading-skeleton": "^3.5.0"
+  },
+  "devDependencies": {
+    "@pawhaven/tsconfig": "workspace:*",
+    "@pawhaven/eslint-config": "workspace:*",
+    "@types/node": "^24.7.1",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.1",
     "tailwindcss": "^4.1.14",
     "typescript": "^5.9.3"
   }

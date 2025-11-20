@@ -4,13 +4,13 @@ import { useNavigate } from 'react-router-dom';
 
 import type { ErrorInfo } from '../ErrorFallback';
 
-import useIsStableEnv from '@/hooks/useIsStableEnv';
+import { useIsStableEnv } from '@/hooks/useIsStableEnv';
 
 interface NotFundProps {
   error?: Partial<ErrorInfo>;
 }
 
-const NotFund: React.FC<NotFundProps> = ({ error }) => {
+export const NotFund: React.FC<NotFundProps> = ({ error }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const IsStableEnv = useIsStableEnv();
@@ -37,4 +37,3 @@ const NotFund: React.FC<NotFundProps> = ({ error }) => {
     </div>
   );
 };
-export default NotFund;

@@ -855,6 +855,9 @@ importers:
       vite:
         specifier: ^7.1.11
         version: 7.2.2(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.1)
+      vite-tsconfig-paths:
+        specifier: 6.0.0-beta.4
+        version: 6.0.0-beta.4(typescript@5.9.3)(vite@7.2.2(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.1))
       zod:
         specifier: ^4.1.12
         version: 4.1.12
@@ -889,9 +892,6 @@ importers:
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
-      vite-tsconfig-paths:
-        specifier: 6.0.0-beta.4
-        version: 6.0.0-beta.4(typescript@5.9.3)(vite@7.2.2(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.1))
 
   libs/configs/eslint-config:
     dependencies:
@@ -1142,27 +1142,15 @@ importers:
       '@mui/material':
         specifier: ^7.3.4
         version: 7.3.5(@emotion/react@11.14.0(@types/react@19.2.6)(react@19.2.0))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.6)(react@19.2.0))(@types/react@19.2.6)(react@19.2.0))(@types/react@19.2.6)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
-      '@pawhaven/eslint-config':
-        specifier: workspace:*
-        version: link:../../libs/configs/eslint-config
       '@pawhaven/i18n':
         specifier: workspace:*
         version: link:../i18n
-      '@pawhaven/tsconfig':
-        specifier: workspace:*
-        version: link:../../libs/configs/tsconfig
       '@pawhaven/ui':
         specifier: workspace:*
         version: link:../ui
       '@tanstack/react-query':
         specifier: ^5.90.2
         version: 5.90.10(react@19.2.0)
-      '@types/react':
-        specifier: ^19.2.2
-        version: 19.2.6
-      '@types/react-dom':
-        specifier: ^19.2.1
-        version: 19.2.3(@types/react@19.2.6)
       axios:
         specifier: ^1.12.2
         version: 1.13.2
@@ -1181,15 +1169,9 @@ importers:
       i18next:
         specifier: ^25.6.0
         version: 25.6.3(typescript@5.9.3)
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
       lucide-react:
         specifier: ^0.545.0
         version: 0.545.0(react@19.2.0)
-      or:
-        specifier: ^0.2.0
-        version: 0.2.0
       react:
         specifier: ^19.2.0
         version: 19.2.0
@@ -1205,13 +1187,25 @@ importers:
       react-router-dom:
         specifier: ^7.9.4
         version: 7.9.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
     devDependencies:
+      '@pawhaven/eslint-config':
+        specifier: workspace:*
+        version: link:../../libs/configs/eslint-config
+      '@pawhaven/tsconfig':
+        specifier: workspace:*
+        version: link:../../libs/configs/tsconfig
       '@types/crypto-js':
         specifier: ^4.2.2
         version: 4.2.2
+      '@types/react':
+        specifier: ^19.2.2
+        version: 19.2.6
+      '@types/react-dom':
+        specifier: ^19.2.1
+        version: 19.2.3(@types/react@19.2.6)
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
 
   packages/i18n:
     dependencies:
@@ -1245,6 +1239,28 @@ importers:
       '@pawhaven/design-system':
         specifier: workspace:*
         version: link:../design-system
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
+      dayjs:
+        specifier: ^1.11.18
+        version: 1.11.19
+      lucide-react:
+        specifier: ^0.545.0
+        version: 0.545.0(react@19.2.0)
+      react:
+        specifier: ^19.2.0
+        version: 19.2.0
+      react-hook-form:
+        specifier: ^7.64.0
+        version: 7.66.1(react@19.2.0)
+      react-hot-toast:
+        specifier: ^2.6.0
+        version: 2.6.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      react-loading-skeleton:
+        specifier: ^3.5.0
+        version: 3.5.0(react@19.2.0)
+    devDependencies:
       '@pawhaven/eslint-config':
         specifier: workspace:*
         version: link:../../libs/configs/eslint-config
@@ -1260,30 +1276,6 @@ importers:
       '@types/react-dom':
         specifier: ^19.2.1
         version: 19.2.3(@types/react@19.2.6)
-      clsx:
-        specifier: ^2.1.1
-        version: 2.1.1
-      dayjs:
-        specifier: ^1.11.18
-        version: 1.11.19
-      lucide-react:
-        specifier: ^0.545.0
-        version: 0.545.0(react@19.2.0)
-      or:
-        specifier: ^0.2.0
-        version: 0.2.0
-      react:
-        specifier: ^19.2.0
-        version: 19.2.0
-      react-hook-form:
-        specifier: ^7.64.0
-        version: 7.66.1(react@19.2.0)
-      react-hot-toast:
-        specifier: ^2.6.0
-        version: 2.6.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
-      react-loading-skeleton:
-        specifier: ^3.5.0
-        version: 3.5.0(react@19.2.0)
       tailwindcss:
         specifier: ^4.1.14
         version: 4.1.17
@@ -6349,9 +6341,6 @@ packages:
   optionator@0.9.4:
     resolution: {integrity: sha512-6IpQ7mKUxRcZNLIObR0hz7lxsapSSIYNZJwXPGeF0mTVqGKFIXj1DQcMoT22S3ROcLyY/rz0PWaWZ9ayWmad9g==}
     engines: {node: '>= 0.8.0'}
-
-  or@0.2.0:
-    resolution: {integrity: sha512-BHB8VZq2isxkyRaCBZ6CZCbQBzCT+gy8LPiqdbMH1+Fd6biFj3v8ebjeYzzL51PbsApsPYnGegGTO6KLQMxxDw==}
 
   ora@5.4.1:
     resolution: {integrity: sha512-5b6Y85tPxZZ7QytO+BQzysW31HJku27cRIlkbAXaNx+BdcVi+LlRFmVXzeF6a7JCwJpyw5c4b+YSVImQIrBpuQ==}
@@ -13646,8 +13635,6 @@ snapshots:
       prelude-ls: 1.2.1
       type-check: 0.4.0
       word-wrap: 1.2.5
-
-  or@0.2.0: {}
 
   ora@5.4.1:
     dependencies:

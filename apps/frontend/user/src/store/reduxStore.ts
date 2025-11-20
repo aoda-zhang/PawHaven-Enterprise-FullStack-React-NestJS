@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'redux-persist';
 
-import envConfig from '../config';
+import { loadConfig } from '../config';
 
 import { combinedReducers, persistConfig } from './reducerConfig';
 
@@ -13,7 +13,7 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: false, // needed for redux-persist
     }),
-  devTools: envConfig?.env !== 'prod', // Enable Redux DevTools in non-production environments
+  devTools: loadConfig().env !== 'prod', // Enable Redux DevTools in non-production environments
 });
 
 export const persistor = persistStore(store);

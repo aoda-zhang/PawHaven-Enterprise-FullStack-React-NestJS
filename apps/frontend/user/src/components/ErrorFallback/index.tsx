@@ -1,10 +1,10 @@
 import { useEffect, type ReactElement } from 'react';
 import { useRouteError } from 'react-router-dom';
 
-import NotFund from '../NotFund';
+import { NotFund } from '../NotFund';
 import SystemError from '../SystemError';
 
-import useIsStableEnv from '@/hooks/useIsStableEnv';
+import { useIsStableEnv } from '@/hooks/useIsStableEnv';
 
 export interface ErrorInfo {
   status: number;
@@ -12,7 +12,7 @@ export interface ErrorInfo {
   data?: string | ReactElement;
 }
 
-const ErrorFallback = () => {
+export const ErrorFallback = () => {
   const errorInfo = useRouteError() as Partial<ErrorInfo>;
   const IsStableEnv = useIsStableEnv();
   useEffect(() => {
@@ -33,5 +33,3 @@ const ErrorFallback = () => {
       return <SystemError error={errorInfo} />;
   }
 };
-
-export default ErrorFallback;

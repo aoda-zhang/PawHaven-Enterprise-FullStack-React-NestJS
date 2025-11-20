@@ -5,9 +5,9 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 import { useState, type ReactNode } from 'react';
 
-import envConfig from '../config';
+import { loadConfig } from '../config';
 
-import useIsStableEnv from '@/hooks/useIsStableEnv';
+import { useIsStableEnv } from '@/hooks/useIsStableEnv';
 
 export const QueryProvider = ({ children }: { children: ReactNode }) => {
   const IsStableEnv = useIsStableEnv();
@@ -16,12 +16,13 @@ export const QueryProvider = ({ children }: { children: ReactNode }) => {
       new QueryClient(
         getRequestQueryOptions({
           refetchOnReconnect:
-            envConfig?.queryOption?.refetchOnReconnect ?? true,
+            loadConfig()?.queryOption?.refetchOnReconnect ?? true,
           refetchOnWindowFocus:
-            envConfig?.queryOption?.refetchOnWindowFocus ?? false,
-          staleTime: Number(envConfig?.queryOption?.staleTime) ?? 5 * 60 * 1000,
+            loadConfig()?.queryOption?.refetchOnWindowFocus ?? false,
+          staleTime:
+            Number(loadConfig()?.queryOption?.staleTime) ?? 5 * 60 * 1000,
           cacheTime:
-            Number(envConfig?.queryOption?.cacheTime) ?? 30 * 60 * 1000,
+            Number(loadConfig()?.queryOption?.cacheTime) ?? 30 * 60 * 1000,
           onAuthError: () => {
             // navigate('/auth/login');
           },

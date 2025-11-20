@@ -1,15 +1,15 @@
 import { createApiClient } from '@pawhaven/frontend-core/api';
 
-import envConfig from '@/config';
+import { loadConfig } from '@/config';
 
 /**
  * Create a single shared API client instance for this app.
  * Ensures all API requests share the same configuration.
  */
 export const apiClient = createApiClient({
-  timeout: envConfig?.http?.timeout,
-  baseURL: envConfig?.http?.baseURL ?? '',
+  timeout: loadConfig()?.http?.timeout,
+  baseURL: loadConfig()?.http?.baseURL ?? '',
   enableSign: true,
-  prefix: envConfig?.http?.prefix,
-  privateKey: envConfig?.http?.privateKey,
+  prefix: loadConfig()?.http?.prefix,
+  privateKey: loadConfig()?.http?.privateKey,
 });

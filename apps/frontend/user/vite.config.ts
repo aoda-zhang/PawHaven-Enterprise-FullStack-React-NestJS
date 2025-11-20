@@ -1,15 +1,16 @@
-import tsconfigPaths from 'vite-tsconfig-paths';
 import ViteYaml from '@modyfi/vite-plugin-yaml';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
+import tsconfigPaths from 'vite-tsconfig-paths';
 
+// eslint-disable-next-line import/no-default-export
 export default defineConfig({
-  envPrefix: 'REACT_APP_',
+  envPrefix: 'PAWHAVEN_USER_',
   base: '/',
   server: {
     port: 3001,
-    strictPort: true,
+    strictPort: false,
     open: true,
     proxy: {
       '/api': {
@@ -21,6 +22,11 @@ export default defineConfig({
   },
   define: {
     'process.env': process.env,
+  },
+  preview: {
+    host: true,
+    port: 4173,
+    strictPort: false, // ⭐ allow auto port fallback
   },
   build: {
     outDir: 'build',

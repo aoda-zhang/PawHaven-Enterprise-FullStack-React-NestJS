@@ -123,3 +123,4 @@ tsconfig.tsbuildinfo
 !**/**/src/config/index.ts
 
 .eslintcache
+.env
