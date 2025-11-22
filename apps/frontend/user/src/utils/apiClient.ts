@@ -1,4 +1,4 @@
-import { createApiClient } from '@pawhaven/frontend-core/api';
+import { createApiClient } from '@pawhaven/frontend-core/utils';
 
 import { loadConfig } from '@/config';
 
@@ -7,9 +7,9 @@ import { loadConfig } from '@/config';
  * Ensures all API requests share the same configuration.
  */
 export const apiClient = createApiClient({
-  timeout: loadConfig()?.http?.timeout,
-  baseURL: loadConfig()?.http?.baseURL ?? '',
+  timeout: loadConfig()?.api?.timeout,
+  baseURL: loadConfig()?.api?.baseURL ?? '',
   enableSign: true,
-  prefix: loadConfig()?.http?.prefix,
-  privateKey: loadConfig()?.http?.privateKey,
+  prefix: loadConfig()?.api?.prefix,
+  privateKey: loadConfig()?.api?.privateKey,
 });

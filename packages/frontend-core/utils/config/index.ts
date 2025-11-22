@@ -1,9 +1,3 @@
-import { ConfigSchema, type ConfigType } from './config.schema';
-import devYaml from './dev/env/index.yaml';
-import prodYaml from './prod/env/index.yaml';
-import testYaml from './test/env/index.yaml';
-import uatYaml from './uat/env/index.yaml';
-
 export const EnvVariables = {
   dev: 'dev',
   uat: 'uat',
@@ -18,7 +12,13 @@ if (!currentEnv || !(currentEnv in EnvVariables)) {
   throw new Error(`Invalid or missing environment mode: ${currentEnv}`);
 }
 
-// Replace placeholders like ${VARIABLE_NAME} using environment variables
+/**
+ * Recursively traverses a configuration object and replaces placeholders
+ * Placeholders are expected in the format `${VARIABLE_NAME}` within strings.
+ *
+ * @param configObj - The configuration values from static yaml.
+ * @returns A new configuration object with all placeholders replaced by yaml static values and env values.
+ */
 const formatEnvValues = (configObj: Record<string, unknown>) => {
   const walk = (value: unknown): unknown => {
     if (typeof value === 'string') {
@@ -48,7 +48,7 @@ const formatEnvValues = (configObj: Record<string, unknown>) => {
   return walk(configObj);
 };
 
-export const loadConfig = (): ConfigType => {
+export const loadConfig = <T>(): T => {
   try {
     let rawConfig;
     switch (currentEnv) {

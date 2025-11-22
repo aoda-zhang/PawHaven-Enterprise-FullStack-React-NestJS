@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { EnvVariables, loadConfig } from '@/config';
+import { loadConfig } from '@/config';
 
 /**
  * Hook to determine if the current environment is production-like.
@@ -9,7 +9,7 @@ import { EnvVariables, loadConfig } from '@/config';
 export const useIsStableEnv = (): boolean => {
   const isProdOrTest = useMemo(() => {
     const env = loadConfig()?.env;
-    return [EnvVariables.test, EnvVariables.prod].includes(env);
+    return env === 'prod' || env === 'test';
   }, []);
 
   return isProdOrTest;

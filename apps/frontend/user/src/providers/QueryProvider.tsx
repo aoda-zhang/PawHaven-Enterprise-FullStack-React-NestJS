@@ -1,4 +1,4 @@
-import { getRequestQueryOptions } from '@pawhaven/frontend-core/query';
+import { getRequestQueryOptions } from '@pawhaven/frontend-core/utils';
 import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister';
 import { QueryClient } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -15,14 +15,11 @@ export const QueryProvider = ({ children }: { children: ReactNode }) => {
     () =>
       new QueryClient(
         getRequestQueryOptions({
-          refetchOnReconnect:
-            loadConfig()?.queryOption?.refetchOnReconnect ?? true,
+          refetchOnReconnect: loadConfig().query?.refetchOnReconnect ?? true,
           refetchOnWindowFocus:
-            loadConfig()?.queryOption?.refetchOnWindowFocus ?? false,
-          staleTime:
-            Number(loadConfig()?.queryOption?.staleTime) ?? 5 * 60 * 1000,
-          cacheTime:
-            Number(loadConfig()?.queryOption?.cacheTime) ?? 30 * 60 * 1000,
+            loadConfig().query?.refetchOnWindowFocus ?? false,
+          staleTime: Number(loadConfig().query?.staleTime) ?? 5 * 60 * 1000,
+          cacheTime: Number(loadConfig().query?.cacheTime) ?? 30 * 60 * 1000,
           onAuthError: () => {
             // navigate('/auth/login');
           },
