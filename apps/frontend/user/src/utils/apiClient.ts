@@ -1,4 +1,4 @@
-import { createApiClient } from '@pawhaven/frontend-core/utils';
+import { createApiClient } from '@pawhaven/frontend-core/api';
 
 import { loadConfig } from '@/config';
 
