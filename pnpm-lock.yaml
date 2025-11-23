@@ -1181,6 +1181,9 @@ importers:
       react-router-dom:
         specifier: ^7.9.4
         version: 7.9.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      zod:
+        specifier: ^4.1.12
+        version: 4.1.12
     devDependencies:
       '@pawhaven/eslint-config':
         specifier: workspace:*
