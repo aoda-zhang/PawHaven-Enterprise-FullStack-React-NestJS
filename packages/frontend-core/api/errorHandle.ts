@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // @ts-nocheck
-import { HTTP_STATUS } from '../../constants/httpReqStatus';
+import { HTTP_STATUS } from '../constants/httpReqStatus';
 
 import { HttpBusinessMappingCode, httpRequestErrors } from './types';
 
