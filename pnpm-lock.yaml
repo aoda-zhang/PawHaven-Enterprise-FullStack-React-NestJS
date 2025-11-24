@@ -110,30 +110,12 @@ importers:
       '@pawhaven/backend-core':
         specifier: workspace:*
         version: link:../../../packages/backend-core
-      '@pawhaven/eslint-config':
-        specifier: workspace:*
-        version: link:../../../packages/eslint-config
-      '@pawhaven/tsconfig':
-        specifier: workspace:*
-        version: link:../../../packages/tsconfig
-      '@types/bcrypt':
-        specifier: ^6.0.0
-        version: 6.0.0
-      '@types/express':
-        specifier: ^5.0.3
-        version: 5.0.5
-      '@types/passport-jwt':
-        specifier: ^4.0.1
-        version: 4.0.1
       add:
         specifier: ^2.0.6
         version: 2.0.6
       axios:
         specifier: ^1.12.2
         version: 1.13.2
-      bcrypt:
-        specifier: ^6.0.0
-        version: 6.0.0
       class-transformer:
         specifier: ^0.5.1
         version: 0.5.1
@@ -167,15 +149,6 @@ importers:
       mongoose:
         specifier: ^8.19.1
         version: 8.20.0(socks@2.8.7)
-      passport:
-        specifier: ^0.7.0
-        version: 0.7.0
-      passport-jwt:
-        specifier: ^4.0.1
-        version: 4.0.1
-      passport-local:
-        specifier: ^1.0.0
-        version: 1.0.0
       puppeteer:
         specifier: ^24.24.0
         version: 24.30.0(typescript@5.9.3)
@@ -201,9 +174,18 @@ importers:
       '@nestjs/testing':
         specifier: ^11.1.6
         version: 11.1.9(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(@nestjs/microservices@11.1.9)(@nestjs/platform-express@11.1.9)
-      '@types/crypto-js':
-        specifier: ^4.2.2
-        version: 4.2.2
+      '@pawhaven/eslint-config':
+        specifier: workspace:*
+        version: link:../../../packages/eslint-config
+      '@pawhaven/tsconfig':
+        specifier: workspace:*
+        version: link:../../../packages/tsconfig
+      '@types/bcrypt':
+        specifier: ^6.0.0
+        version: 6.0.0
+      '@types/express':
+        specifier: ^5.0.3
+        version: 5.0.5
       '@types/jest':
         specifier: ^30.0.0
         version: 30.0.0
@@ -213,9 +195,6 @@ importers:
       '@types/node':
         specifier: ^24.7.1
         version: 24.10.1
-      '@types/passport-local':
-        specifier: ^1.0.38
-        version: 1.0.38
       '@types/supertest':
         specifier: ^6.0.3
         version: 6.0.3
