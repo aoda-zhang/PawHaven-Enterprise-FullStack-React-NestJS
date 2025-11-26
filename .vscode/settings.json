@@ -50,5 +50,8 @@
     "@pawhaven/frontend-core/*": "${workspaceFolder}/packages/shared-frontend/*",
     "@pawhaven/backend-core/*": "${workspaceFolder}/packages/shared-backend/*"
   },
-  "path-autocomplete.extensionOnImport": true
+  "path-autocomplete.extensionOnImport": true,
+  "[proto3]": {
+    "editor.defaultFormatter": "zxh404.vscode-proto3"
+  }
 }

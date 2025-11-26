@@ -1,0 +1,94 @@
+syntax = "proto3";
+
+package coreService;
+
+// gRPC service definitions
+service AnimalService {
+  // Create an animal
+  rpc CreateAnimal (CreateAnimalRequest) returns (AnimalResponse);
+
+  // Get animal details
+  rpc GetAnimal (GetAnimalRequest) returns (AnimalResponse);
+
+  // Get paginated list of animals
+  rpc ListAnimals (ListAnimalsRequest) returns (ListAnimalsResponse);
+
+  // Update animal information
+  rpc UpdateAnimal (UpdateAnimalRequest) returns (AnimalResponse);
+
+  // Delete an animal
+  rpc DeleteAnimal (DeleteAnimalRequest) returns (DeleteAnimalResponse);
+}
+
+// =============== Models ===============
+
+message Animal {
+  string id = 1;
+  string name = 2;
+  string species = 3;   // species (cat/dog)
+  int32 age = 4;
+  string gender = 5;
+  string description = 6;
+  string avatarUrl = 7; // avatar image
+  bool adopted = 8;     // whether the animal has been adopted
+  string createdAt = 9;
+  string updatedAt = 10;
+}
+
+message Pagination {
+  int32 page = 1;
+  int32 pageSize = 2;
+  int32 total = 3;
+  int32 pageCount = 4;
+}
+
+// =============== Requests ===============
+
+message CreateAnimalRequest {
+  string name = 1;
+  string species = 2;
+  int32 age = 3;
+  string gender = 4;
+  string description = 5;
+  string avatarUrl = 6;
+}
+
+message GetAnimalRequest {
+  string id = 1;
+}
+
+message ListAnimalsRequest {
+  int32 page = 1;
+  int32 pageSize = 2;
+  string species = 3; // filter by species, e.g. dog/cat
+  bool adopted = 4;   // whether adopted
+}
+
+message UpdateAnimalRequest {
+  string id = 1;
+  string name = 2;
+  string species = 3;
+  int32 age = 4;
+  string gender = 5;
+  string description = 6;
+  string avatarUrl = 7;
+}
+
+message DeleteAnimalRequest {
+  string id = 1;
+}
+
+// =============== Responses ===============
+
+message AnimalResponse {
+  Animal data = 1;
+}
+
+message ListAnimalsResponse {
+  repeated Animal data = 1;
+  Pagination pagination = 2;
+}
+
+message DeleteAnimalResponse {
+  bool success = 1;
+}
