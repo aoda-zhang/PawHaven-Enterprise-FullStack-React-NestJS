@@ -59,5 +59,9 @@ module.exports = {
     '@typescript-eslint/no-empty-function': 'off',
     'prettier/prettier': 'off',
     '@typescript-eslint/consistent-type-imports': 'off',
+    'node/no-unsupported-features/es-syntax': [
+      'error',
+      { ignores: ['modules', 'dynamicImport'] },
+    ],
   },
 };

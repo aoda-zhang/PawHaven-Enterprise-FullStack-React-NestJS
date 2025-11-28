@@ -1,11 +1,11 @@
 {
-  "extends": "../../../tsconfig.base.json",
+  "extends": "@pawhaven/tsconfig/node",
   "compilerOptions": {
     "jsx": "react-jsx",
     "baseUrl": "",
     "outDir": "build",
     "paths": {
-      "@shared/*": ["../../../packages/shared-backend/*"],
+      "@shared/*": ["../../../packages/backend-core/*"],
       "@modules/*": ["src/modules/*"]
     }
   },

@@ -9,9 +9,9 @@ const Title = styled.div`
 
 interface Props {
   title: string;
-  content: { name: string; value: string }[];
+  content: Array<{ name: string; value: string }>;
 }
-const TripSubmitSuccess: React.FC<Props> = ({ title, content }) => {
+export const TripSubmitSuccess: React.FC<Props> = ({ title, content }) => {
   return (
     <>
       <Title>{title}</Title>
@@ -24,5 +24,3 @@ const TripSubmitSuccess: React.FC<Props> = ({ title, content }) => {
     </>
   );
 };
-
-export default TripSubmitSuccess;
