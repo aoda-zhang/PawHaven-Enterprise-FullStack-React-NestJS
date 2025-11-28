@@ -3,8 +3,7 @@
   "main": "build/main.js",
   "version": "1.0.0",
   "engines": {
-    "node": ">=22",
-    "pnpm": ">=10"
+    "node": ">=22"
   },
   "scripts": {
     "start:dev": "cross-env NODE_ENV=dev nest start --watch",
@@ -26,13 +25,11 @@
     "@nestjs/terminus": "^11.0.0",
     "@nestjs/throttler": "^6.4.0",
     "@react-email/components": "^0.5.6",
-    "@types/bcrypt": "^6.0.0",
     "@types/express": "^5.0.3",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.1",
     "add": "^2.0.6",
     "axios": "^1.12.2",
-    "bcrypt": "^6.0.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.2",
     "cookie-parser": "^1.4.7",
@@ -55,10 +52,11 @@
     "uuid": "^13.0.0"
   },
   "devDependencies": {
+    "@pawhaven/tsconfig": "workspace:*",
+    "@pawhaven/eslint-config": "workspace:*",
     "@nestjs/cli": "^11.0.10",
     "@nestjs/schematics": "^11.0.9",
     "@nestjs/testing": "^11.1.6",
-    "@types/crypto-js": "^4.2.2",
     "@types/i18n": "^0.13.12",
     "@types/jest": "^30.0.0",
     "@types/js-yaml": "^4.0.9",

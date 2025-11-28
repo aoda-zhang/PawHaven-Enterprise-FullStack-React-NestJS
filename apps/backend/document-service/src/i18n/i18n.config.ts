@@ -11,4 +11,5 @@ i18n.configure({
   syncFiles: false, // Disables synchronization of locale files
 });
 
+// eslint-disable-next-line import/no-default-export
 export default i18n;

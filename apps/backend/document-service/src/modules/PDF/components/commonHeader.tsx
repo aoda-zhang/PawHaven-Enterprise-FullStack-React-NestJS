@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import i18n from "@i18n/i18n.config";
+import styled from 'styled-components';
+import i18n from '@i18n/i18n.config';
 
 const Container = styled.div`
   display: flex;
@@ -25,17 +25,15 @@ interface CommonHeaderProps {
   slogan?: string;
 }
 
-const CommonHeader = ({ logoUrl, title, slogan }: CommonHeaderProps) => {
+export const CommonHeader = ({ logoUrl, title, slogan }: CommonHeaderProps) => {
   return (
     <Container>
       <div className="left">
         <img className="logo" src={logoUrl} alt="header" />
-        <span className="brand">{title ?? i18n.__("common.brand")}</span>
-        <span className="slogan">{slogan ?? i18n.__("common.slogan")}</span>
+        <span className="brand">{title ?? i18n.__('common.brand')}</span>
+        <span className="slogan">{slogan ?? i18n.__('common.slogan')}</span>
       </div>
       <div className="right">Test</div>
     </Container>
   );
 };
-
-export  CommonHeader;

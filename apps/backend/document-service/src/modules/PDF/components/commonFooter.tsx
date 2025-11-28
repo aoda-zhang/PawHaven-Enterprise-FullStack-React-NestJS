@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 const Container = styled.div`
   font-size: 14px;
   text-align: right;
@@ -10,7 +10,7 @@ const Container = styled.div`
     margin-right: 10px;
   }
 `;
-const CommonFooter = () => {
+export const CommonFooter = () => {
   return (
     <Container>
       <span className="page">Page</span>
@@ -18,5 +18,3 @@ const CommonFooter = () => {
     </Container>
   );
 };
-
-export  CommonFooter;
