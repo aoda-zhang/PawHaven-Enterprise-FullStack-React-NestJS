@@ -1,10 +1,9 @@
 {
   "extends": "@pawhaven/tsconfig/node",
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
       "@pawhaven/frontend-core": ["../../../packages/shared-backend/*"],
-      "@modules/*": ["src/modules/*"]
+      "@modules/*": ["./src/modules/*"]
     }
   },
   "include": ["src"]

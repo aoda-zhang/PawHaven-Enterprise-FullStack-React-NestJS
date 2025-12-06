@@ -1,7 +1,10 @@
 // import path from 'node:path';
 
-import { AuthModule } from '@modules/Auth/auth.module';
+// import { AuthModule } from '@modules/Auth/auth.module';
 import { Module } from '@nestjs/common';
+
+import { GatewayController } from './app.controller';
+import { AuthService } from './services/auth.service';
 // import { APP_GUARD } from '@nestjs/core';
 // import SharedModule from '@pawhaven/shared.module';
 // import { DocumentModule } from '@modules/Document/document.module';
@@ -25,10 +28,12 @@ import { Module } from '@nestjs/common';
     // }),
     // JwtModule,
     // DocumentModule,
-    AuthModule,
+    // AuthModule,
   ],
-  controllers: [],
+  controllers: [GatewayController],
   providers: [
+    AuthService,
+
     // {
     //   provide: APP_GUARD,
     //   useClass: SignGuard,
@@ -43,4 +48,4 @@ import { Module } from '@nestjs/common';
     // }
   ],
 })
-export class AppModule { }
+export class AppModule {}
