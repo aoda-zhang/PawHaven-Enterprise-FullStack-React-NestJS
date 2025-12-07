@@ -5,7 +5,6 @@ export interface HttpResType {
   status: number;
 }
 export enum HttpBusinessCode {
-  // jwt 过期
   jwtexpired = 'jwtexpired',
   invalidToken = 'invalidtoken',
   invalidSign = 'invalidsignature',
@@ -19,6 +18,5 @@ export enum HttpReqHeader {
 }
 
 export enum HttpBusinessMappingCode {
-  // jwt 过期
   jwtexpired = 'E4001',
 }

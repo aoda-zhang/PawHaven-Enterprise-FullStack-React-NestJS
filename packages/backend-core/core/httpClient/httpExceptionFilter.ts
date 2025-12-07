@@ -12,7 +12,7 @@ import { HttpResType } from './interface';
 
 @Injectable()
 @Catch()
-export default class HttpExceptionFilter implements ExceptionFilter {
+export class HttpExceptionFilter implements ExceptionFilter {
   private readonly logger = new Logger(HttpExceptionFilter.name);
 
   catch(exception: any, host: ArgumentsHost) {

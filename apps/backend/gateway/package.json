@@ -2,7 +2,6 @@
   "$schema": "http://json.schemastore.org/package",
   "private": true,
   "name": "@pawhaven/gateway",
-  "main": "build/main.js",
   "version": "1.0.0",
   "engines": {
     "node": ">=22",
@@ -28,7 +27,6 @@
     "@nestjs/terminus": "^11.0.0",
     "@nestjs/throttler": "^6.4.0",
     "@pawhaven/backend-core": "workspace:*",
-    "add": "^2.0.6",
     "axios": "^1.12.2",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.2",

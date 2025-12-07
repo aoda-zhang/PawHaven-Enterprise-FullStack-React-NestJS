@@ -1,13 +1,13 @@
 {
   "extends": "./base.json",
   "compilerOptions": {
+    "composite": false,
+    "declaration": false,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "useDefineForClassFields": false,
-    "module": "CommonJS", // Node.js standard module system
-    "outDir": "dist", // Output directory for compiled JS (if needed)
+    "module": "CommonJS", // Node.js standard module systemx
     "types": ["node"], // Include Node.js types
     "noEmit": false // Allow emitting compiled JS in backend
-  },
-  "exclude": ["node_modules", "dist"]
+  }
 }

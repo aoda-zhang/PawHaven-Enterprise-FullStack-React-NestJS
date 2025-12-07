@@ -6,7 +6,7 @@ import { ConfigKeys } from '../../constants/constant';
 import getConfigValues from '../../utils/getConfigValues';
 
 @Module({})
-class DatabaseModule {
+export class DatabaseModule {
   /**
    * dynamic Mongoose connection
    * @param dbConnectKeys the keys of the db connections in the config file
@@ -45,4 +45,3 @@ class DatabaseModule {
     }
   }
 }
-export default DatabaseModule;

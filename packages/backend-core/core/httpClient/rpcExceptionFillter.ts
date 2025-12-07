@@ -9,7 +9,7 @@ import { RpcException } from '@nestjs/microservices';
 import { Observable, throwError } from 'rxjs';
 
 @Catch()
-export default class AllRpcExceptionsFilter implements RpcExceptionFilter {
+export class AllRpcExceptionsFilter implements RpcExceptionFilter {
   private readonly logger = new Logger(AllRpcExceptionsFilter.name);
 
   catch(exception: any, host: ArgumentsHost): Observable<any> {
