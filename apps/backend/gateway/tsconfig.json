@@ -1,11 +1,16 @@
 {
   "extends": "@pawhaven/tsconfig/node",
   "compilerOptions": {
-    "baseUrl": ".",
+    "rootDir": "src",
+    "outDir": "dist",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "strict": true,
     "paths": {
-      "@pawhaven/frontend-core": ["../../../packages/shared-backend/*"],
-      "@modules/*": ["src/modules/*"]
+      "@pawhaven/backend-core": ["../../../packages/backend-core/*"],
+      "@modules/*": ["./src/modules/*"]
     }
   },
+
   "include": ["src"]
 }

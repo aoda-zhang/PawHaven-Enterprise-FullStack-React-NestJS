@@ -1,7 +1,7 @@
 import { HttpModule } from '@nestjs/axios';
 import { Global, Module } from '@nestjs/common';
 
-import HttpClientService from './HttpClient.service';
+import { HttpClientService } from './HttpClient.service';
 
 @Global()
 @Module({
@@ -9,4 +9,4 @@ import HttpClientService from './HttpClient.service';
   providers: [HttpClientService],
   exports: [HttpClientService],
 })
-export default class HttpClientModule {}
+export class HttpClientModule { }

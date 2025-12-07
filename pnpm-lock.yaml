@@ -69,6 +69,175 @@ importers:
         specifier: ^5.9.2
         version: 5.9.3
 
+  apps/backend/auth-service:
+    dependencies:
+      '@nestjs/axios':
+        specifier: ^4.0.1
+        version: 4.0.1(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(axios@1.13.2)(rxjs@7.8.2)
+      '@nestjs/common':
+        specifier: ^11.1.6
+        version: 11.1.9(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2)
+      '@nestjs/config':
+        specifier: ^4.0.2
+        version: 4.0.2(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(rxjs@7.8.2)
+      '@nestjs/core':
+        specifier: ^11.1.6
+        version: 11.1.9(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/microservices@11.1.9)(@nestjs/platform-express@11.1.9)(reflect-metadata@0.2.2)(rxjs@7.8.2)
+      '@nestjs/jwt':
+        specifier: ^11.0.1
+        version: 11.0.1(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))
+      '@nestjs/microservices':
+        specifier: ^11.1.6
+        version: 11.1.9(@grpc/grpc-js@1.14.1)(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(reflect-metadata@0.2.2)(rxjs@7.8.2)
+      '@nestjs/mongoose':
+        specifier: ^11.0.3
+        version: 11.0.3(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(mongoose@8.20.0(socks@2.8.7))(rxjs@7.8.2)
+      '@nestjs/passport':
+        specifier: ^11.0.5
+        version: 11.0.5(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(passport@0.7.0)
+      '@nestjs/platform-express':
+        specifier: ^11.1.6
+        version: 11.1.9(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)
+      '@nestjs/swagger':
+        specifier: ^11.2.0
+        version: 11.2.3(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)
+      '@nestjs/terminus':
+        specifier: ^11.0.0
+        version: 11.0.0(@grpc/grpc-js@1.14.1)(@grpc/proto-loader@0.8.0)(@nestjs/axios@4.0.1(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(axios@1.13.2)(rxjs@7.8.2))(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(@nestjs/microservices@11.1.9)(@nestjs/mongoose@11.0.3(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(mongoose@8.20.0(socks@2.8.7))(rxjs@7.8.2))(mongoose@8.20.0(socks@2.8.7))(reflect-metadata@0.2.2)(rxjs@7.8.2)
+      '@nestjs/throttler':
+        specifier: ^6.4.0
+        version: 6.4.0(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(reflect-metadata@0.2.2)
+      '@pawhaven/backend-core':
+        specifier: workspace:*
+        version: link:../../../packages/backend-core
+      '@pawhaven/eslint-config':
+        specifier: workspace:*
+        version: link:../../../packages/eslint-config
+      '@pawhaven/tsconfig':
+        specifier: workspace:*
+        version: link:../../../packages/tsconfig
+      '@types/bcrypt':
+        specifier: ^6.0.0
+        version: 6.0.0
+      '@types/express':
+        specifier: ^5.0.3
+        version: 5.0.5
+      '@types/passport-jwt':
+        specifier: ^4.0.1
+        version: 4.0.1
+      add:
+        specifier: ^2.0.6
+        version: 2.0.6
+      axios:
+        specifier: ^1.12.2
+        version: 1.13.2
+      bcrypt:
+        specifier: ^6.0.0
+        version: 6.0.0
+      class-transformer:
+        specifier: ^0.5.1
+        version: 0.5.1
+      class-validator:
+        specifier: ^0.14.2
+        version: 0.14.2
+      cookie-parser:
+        specifier: ^1.4.7
+        version: 1.4.7
+      cross-env:
+        specifier: ^10.1.0
+        version: 10.1.0
+      crypto-js:
+        specifier: ^4.2.0
+        version: 4.2.0
+      csurf:
+        specifier: ^1.11.0
+        version: 1.11.0
+      dayjs:
+        specifier: ^1.11.18
+        version: 1.11.19
+      dotenv:
+        specifier: ^17.2.3
+        version: 17.2.3
+      helmet:
+        specifier: ^8.1.0
+        version: 8.1.0
+      js-yaml:
+        specifier: ^4.1.0
+        version: 4.1.1
+      mongoose:
+        specifier: ^8.19.1
+        version: 8.20.0(socks@2.8.7)
+      passport:
+        specifier: ^0.7.0
+        version: 0.7.0
+      passport-jwt:
+        specifier: ^4.0.1
+        version: 4.0.1
+      passport-local:
+        specifier: ^1.0.0
+        version: 1.0.0
+      puppeteer:
+        specifier: ^24.24.0
+        version: 24.30.0(typescript@5.9.3)
+      reflect-metadata:
+        specifier: ^0.2.2
+        version: 0.2.2
+      rxjs:
+        specifier: ^7.8.2
+        version: 7.8.2
+      swagger-ui-express:
+        specifier: ^5.0.1
+        version: 5.0.1(express@5.1.0)
+      uuid:
+        specifier: ^13.0.0
+        version: 13.0.0
+    devDependencies:
+      '@nestjs/cli':
+        specifier: ^11.0.10
+        version: 11.0.12(@types/node@24.10.1)
+      '@nestjs/schematics':
+        specifier: ^11.0.9
+        version: 11.0.9(chokidar@4.0.3)(typescript@5.9.3)
+      '@nestjs/testing':
+        specifier: ^11.1.6
+        version: 11.1.9(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(@nestjs/microservices@11.1.9)(@nestjs/platform-express@11.1.9)
+      '@types/crypto-js':
+        specifier: ^4.2.2
+        version: 4.2.2
+      '@types/jest':
+        specifier: ^30.0.0
+        version: 30.0.0
+      '@types/js-yaml':
+        specifier: ^4.0.9
+        version: 4.0.9
+      '@types/node':
+        specifier: ^24.7.1
+        version: 24.10.1
+      '@types/passport-local':
+        specifier: ^1.0.38
+        version: 1.0.38
+      '@types/supertest':
+        specifier: ^6.0.3
+        version: 6.0.3
+      source-map-support:
+        specifier: ^0.5.21
+        version: 0.5.21
+      supertest:
+        specifier: ^7.1.4
+        version: 7.1.4
+      ts-loader:
+        specifier: ^9.5.4
+        version: 9.5.4(typescript@5.9.3)(webpack@5.100.2)
+      ts-node:
+        specifier: ^10.9.2
+        version: 10.9.2(@types/node@24.10.1)(typescript@5.9.3)
+      tsconfig-paths:
+        specifier: ^4.2.0
+        version: 4.2.0
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
   apps/backend/core-service:
     dependencies:
       '@grpc/grpc-js':
@@ -412,9 +581,6 @@ importers:
       '@pawhaven/backend-core':
         specifier: workspace:*
         version: link:../../../packages/backend-core
-      add:
-        specifier: ^2.0.6
-        version: 2.0.6
       axios:
         specifier: ^1.12.2
         version: 1.13.2
@@ -497,190 +663,6 @@ importers:
       '@types/node':
         specifier: ^24.7.1
         version: 24.10.1
-      '@types/supertest':
-        specifier: ^6.0.3
-        version: 6.0.3
-      source-map-support:
-        specifier: ^0.5.21
-        version: 0.5.21
-      supertest:
-        specifier: ^7.1.4
-        version: 7.1.4
-      ts-loader:
-        specifier: ^9.5.4
-        version: 9.5.4(typescript@5.9.3)(webpack@5.100.2)
-      ts-node:
-        specifier: ^10.9.2
-        version: 10.9.2(@types/node@24.10.1)(typescript@5.9.3)
-      tsconfig-paths:
-        specifier: ^4.2.0
-        version: 4.2.0
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
-
-  apps/backend/ms-auth:
-    dependencies:
-      '@nestjs-modules/mailer':
-        specifier: ^2.0.2
-        version: 2.0.2(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(nodemailer@7.0.10)
-      '@nestjs/axios':
-        specifier: ^4.0.1
-        version: 4.0.1(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(axios@1.13.2)(rxjs@7.8.2)
-      '@nestjs/common':
-        specifier: ^11.1.6
-        version: 11.1.9(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2)
-      '@nestjs/config':
-        specifier: ^4.0.2
-        version: 4.0.2(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(rxjs@7.8.2)
-      '@nestjs/core':
-        specifier: ^11.1.6
-        version: 11.1.9(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/microservices@11.1.9)(@nestjs/platform-express@11.1.9)(reflect-metadata@0.2.2)(rxjs@7.8.2)
-      '@nestjs/jwt':
-        specifier: ^11.0.1
-        version: 11.0.1(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))
-      '@nestjs/microservices':
-        specifier: ^11.1.6
-        version: 11.1.9(@grpc/grpc-js@1.14.1)(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(reflect-metadata@0.2.2)(rxjs@7.8.2)
-      '@nestjs/mongoose':
-        specifier: ^11.0.3
-        version: 11.0.3(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(mongoose@8.20.0(socks@2.8.7))(rxjs@7.8.2)
-      '@nestjs/platform-express':
-        specifier: ^11.1.6
-        version: 11.1.9(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)
-      '@nestjs/serve-static':
-        specifier: ^5.0.4
-        version: 5.0.4(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(express@5.1.0)
-      '@nestjs/swagger':
-        specifier: ^11.2.0
-        version: 11.2.3(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)
-      '@nestjs/terminus':
-        specifier: ^11.0.0
-        version: 11.0.0(@grpc/grpc-js@1.14.1)(@grpc/proto-loader@0.8.0)(@nestjs/axios@4.0.1(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(axios@1.13.2)(rxjs@7.8.2))(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(@nestjs/microservices@11.1.9)(@nestjs/mongoose@11.0.3(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(mongoose@8.20.0(socks@2.8.7))(rxjs@7.8.2))(mongoose@8.20.0(socks@2.8.7))(reflect-metadata@0.2.2)(rxjs@7.8.2)
-      '@nestjs/throttler':
-        specifier: ^6.4.0
-        version: 6.4.0(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(reflect-metadata@0.2.2)
-      '@pawhaven/backend-core':
-        specifier: workspace:*
-        version: link:../../../packages/backend-core
-      '@pawhaven/eslint-config':
-        specifier: workspace:*
-        version: link:../../../packages/eslint-config
-      '@pawhaven/tsconfig':
-        specifier: workspace:*
-        version: link:../../../packages/tsconfig
-      '@types/bcrypt':
-        specifier: ^6.0.0
-        version: 6.0.0
-      '@types/express':
-        specifier: ^5.0.3
-        version: 5.0.5
-      '@types/passport-jwt':
-        specifier: ^4.0.1
-        version: 4.0.1
-      add:
-        specifier: ^2.0.6
-        version: 2.0.6
-      axios:
-        specifier: ^1.12.2
-        version: 1.13.2
-      bcrypt:
-        specifier: ^6.0.0
-        version: 6.0.0
-      class-transformer:
-        specifier: ^0.5.1
-        version: 0.5.1
-      class-validator:
-        specifier: ^0.14.2
-        version: 0.14.2
-      cookie-parser:
-        specifier: ^1.4.7
-        version: 1.4.7
-      cross-env:
-        specifier: ^10.1.0
-        version: 10.1.0
-      crypto-js:
-        specifier: ^4.2.0
-        version: 4.2.0
-      csurf:
-        specifier: ^1.11.0
-        version: 1.11.0
-      dayjs:
-        specifier: ^1.11.18
-        version: 1.11.19
-      dotenv:
-        specifier: ^17.2.3
-        version: 17.2.3
-      helmet:
-        specifier: ^8.1.0
-        version: 8.1.0
-      i18n:
-        specifier: ^0.15.2
-        version: 0.15.3
-      js-yaml:
-        specifier: ^4.1.0
-        version: 4.1.1
-      mongoose:
-        specifier: ^8.19.1
-        version: 8.20.0(socks@2.8.7)
-      passport:
-        specifier: ^0.7.0
-        version: 0.7.0
-      passport-jwt:
-        specifier: ^4.0.1
-        version: 4.0.1
-      passport-local:
-        specifier: ^1.0.0
-        version: 1.0.0
-      puppeteer:
-        specifier: ^24.24.0
-        version: 24.30.0(typescript@5.9.3)
-      react:
-        specifier: ^19.2.0
-        version: 19.2.0
-      react-dom:
-        specifier: ^19.2.0
-        version: 19.2.0(react@19.2.0)
-      reflect-metadata:
-        specifier: ^0.2.2
-        version: 0.2.2
-      rxjs:
-        specifier: ^7.8.2
-        version: 7.8.2
-      styled-components:
-        specifier: ^6.1.19
-        version: 6.1.19(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
-      uuid:
-        specifier: ^13.0.0
-        version: 13.0.0
-    devDependencies:
-      '@nestjs/cli':
-        specifier: ^11.0.10
-        version: 11.0.12(@types/node@24.10.1)
-      '@nestjs/schematics':
-        specifier: ^11.0.9
-        version: 11.0.9(chokidar@4.0.3)(typescript@5.9.3)
-      '@nestjs/testing':
-        specifier: ^11.1.6
-        version: 11.1.9(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(@nestjs/microservices@11.1.9)(@nestjs/platform-express@11.1.9)
-      '@types/crypto-js':
-        specifier: ^4.2.2
-        version: 4.2.2
-      '@types/i18n':
-        specifier: ^0.13.12
-        version: 0.13.12
-      '@types/jest':
-        specifier: ^30.0.0
-        version: 30.0.0
-      '@types/js-yaml':
-        specifier: ^4.0.9
-        version: 4.0.9
-      '@types/node':
-        specifier: ^24.7.1
-        version: 24.10.1
-      '@types/passport-local':
-        specifier: ^1.0.38
-        version: 1.0.38
       '@types/supertest':
         specifier: ^6.0.3
         version: 6.0.3

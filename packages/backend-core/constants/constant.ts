@@ -5,6 +5,8 @@ export const EnvConstant = {
   test: 'test',
   prod: 'prod',
 };
+
+export type EnvTypes = keyof typeof EnvConstant
 export const MicroServiceNames = {
   TRIP: 'trip',
   DOCUMENT: 'document',

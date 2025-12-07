@@ -1,10 +1,9 @@
 {
   "extends": "@pawhaven/tsconfig/node",
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
       "@pawhaven/backend-core": ["../../../packages/backend-core/*"],
-      "@modules/*": ["src/modules/*"]
+      "@modules/*": ["./src/modules/*"]
     }
   },
   "exclude": ["node_modules"]

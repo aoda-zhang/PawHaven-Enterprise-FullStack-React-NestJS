@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable()
-export default class HttpSuccessInterceptor<T> implements NestInterceptor<T, any> {
+export class HttpSuccessInterceptor<T> implements NestInterceptor<T, any> {
   intercept(_context: ExecutionContext, next: CallHandler): Observable<any> {
     return next.handle().pipe(
       map((data) => {

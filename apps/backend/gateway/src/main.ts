@@ -3,8 +3,8 @@ import {
   ValidationPipe,
   VersioningType,
 } from '@nestjs/common';
-import type { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
-import { ConfigService } from '@nestjs/config';
+// import type { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
+// import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import type { NestExpressApplication } from '@nestjs/platform-express';
 import helmet from 'helmet';
@@ -15,16 +15,17 @@ import helmet from 'helmet';
 
 import { AppModule } from './app.module';
 
-const currentENV = process.env.NODE_ENV;
+// const currentENV = process.env.NODE_ENV;
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    forceCloseConnections: true,
     bufferLogs: true,
   });
   // const corsOptions: CorsOptions = app.get(ConfigService).get('cors');
-  app.enableCors(corsOptions);
+  // app.enableCors(corsOptions);
   // app.useLogger(app.get(Logger))
-  const prefix = app.get(ConfigService).get('http.prefix') ?? '';
-  app.setGlobalPrefix(prefix);
+  // const prefix = app.get(ConfigService).get('http.prefix') ?? '';
+  // app.setGlobalPrefix(prefix);
   // Version control like v1 v2
   app.enableVersioning({
     type: VersioningType.URI,
@@ -41,14 +42,16 @@ async function bootstrap() {
   );
   // await initSwagger(app);
   app.use(helmet());
-  const port = app.get(ConfigService).get('http.port') ?? 8080;
-  await app
-    .listen(port, '0.0.0.0', () => {
-      // [EnvConstant.dev, EnvConstant.uat]?.includes(currentENV?.toUpperCase()) &&
-      // console.log(`Successfully runing on local  http://localhost:${port}`);
-    })
-    .catch((error) => {
-      console.error(`Running failed on local with error : ${error}`);
-    });
+  // const port = app.get(ConfigService).get('http.port') ?? 8080;
+  const port = 8081;
+  await app.listen(port);
+  // await app
+  //   .listen(port, '0.0.0.0', () => {
+  //     // [EnvConstant.dev, EnvConstant.uat]?.includes(currentENV?.toUpperCase()) &&
+  //     // console.log(`Successfully runing on local  http://localhost:${port}`);
+  //   })
+  //   .catch((error) => {
+  //     console.error(`Running failed on local with error : ${error}`);
+  //   });
 }
 bootstrap();
