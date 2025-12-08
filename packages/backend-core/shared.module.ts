@@ -1,33 +1,33 @@
-import { DynamicModule, Global, Module, Provider, Type } from '@nestjs/common'
-import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core'
+import { DynamicModule, Global, Module, Provider, Type } from '@nestjs/common';
+import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 
-import { ConfigsModule } from './dynamicModule/configModule/configs.module'
-import { DatabaseModule } from './dynamicModule/dataBase/db.module'
-import { HttpExceptionFilter } from './dynamicModule/httpClient/httpExceptionFilter'
-import { HttpSuccessInterceptor } from './dynamicModule/httpClient/httpInterceptor'
-import MiddlewareModule from './middlewares/index.module'
-import { HttpClientModule } from './dynamicModule/httpClient/httpClient.module'
+import { ConfigsModule } from './dynamicModule/configModule/configs.module';
+// import { DatabaseModule } from './dynamicModule/dataBase/db.module'
+import { HttpExceptionFilter } from './dynamicModule/httpClient/httpExceptionFilter';
+import { HttpSuccessInterceptor } from './dynamicModule/httpClient/httpInterceptor';
+import { MiddlewareModule } from './middlewares/index.module';
+import { HttpClientModule } from './dynamicModule/httpClient/httpClient.module';
 
 // Nest Dynamic module
 export enum SharedModuleImports {
   Config = 'config',
   HttpClient = 'httpClient',
-  Monitoring = "monitoring",
-  Database = "database",
+  Monitoring = 'monitoring',
+  Database = 'database',
 }
 
 // Nest Provider
 export enum SharedModuleProviders {
-  HttpErrorMiddleware = "HttpErrorMiddleware",
-  HttpSuccessMiddleware = "HttpSuccessMiddleware",
+  HttpErrorMiddleware = 'HttpErrorMiddleware',
+  HttpSuccessMiddleware = 'HttpSuccessMiddleware',
 }
 
 interface SharedModuleOptions {
-  configPath: string,
+  configPath: string;
   features: {
-    imports?: SharedModuleImports[],
-    providers?: SharedModuleProviders[]
-  }
+    imports?: SharedModuleImports[];
+    providers?: SharedModuleProviders[];
+  };
 }
 
 @Global()
@@ -37,25 +37,30 @@ export class SharedModule {
     SharedModuleImports.Config,
     SharedModuleImports.HttpClient,
     SharedModuleImports.Monitoring,
-  ]
+  ];
 
   static forRoot(options: SharedModuleOptions): DynamicModule {
-    const { configPath, features: { imports = [], providers = [] } } = options
-    const importsToLoad = (imports?.length > 0 ? imports : this.defaultShardImports) as SharedModuleImports[]
-    const providersToLoad = this.loadProviders(providers) as Provider[]
-    const loadedModules = this.loadModules(configPath, importsToLoad)
+    const {
+      configPath,
+      features: { imports = [], providers = [] },
+    } = options;
+    const importsToLoad = (
+      imports?.length > 0 ? imports : this.defaultShardImports
+    ) as SharedModuleImports[];
+    const providersToLoad = this.loadProviders(providers) as Provider[];
+    const loadedModules = this.loadModules(configPath, importsToLoad);
 
     return {
       module: SharedModule,
       imports: loadedModules,
       exports: loadedModules,
-      providers: providersToLoad
-    }
+      providers: providersToLoad,
+    };
   }
 
   private static loadModules(
     configPath: string,
-    features: SharedModuleImports[]
+    features: SharedModuleImports[],
   ): Array<Type<any> | DynamicModule> {
     const loadedModules: Array<Type<any> | DynamicModule> = [];
 
@@ -74,9 +79,9 @@ export class SharedModule {
           case SharedModuleImports.Monitoring:
             loadedModules.push(MiddlewareModule);
             break;
-          case SharedModuleImports.Database:
-            loadedModules.push(DatabaseModule);
-            break;
+          // case SharedModuleImports.Database:
+          //   loadedModules.push(DatabaseModule);
+          //   break;
 
           default:
             console.warn(`Unknown feature: ${feature}`);
@@ -91,7 +96,7 @@ export class SharedModule {
   }
 
   private static loadProviders(
-    providers: SharedModuleProviders[] = []
+    providers: SharedModuleProviders[] = [],
   ): Array<Record<string, any>> {
     const loadedProviders: Array<Record<string, any>> = [];
     // eslint-disable-next-line no-restricted-syntax

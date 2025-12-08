@@ -6,6 +6,10 @@
     "node": ">=22",
     "pnpm": ">=10"
   },
+  "exports": {
+    "./sharedModule": "./shared.module.ts",
+    "./dynamicModule": "./dynamicModule/index.ts"
+  },
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch "

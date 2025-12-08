@@ -2,9 +2,10 @@ import path from 'node:path';
 
 // import { AuthModule } from '@modules/Auth/auth.module';
 import { Module } from '@nestjs/common';
-// import { HttpClientModule } from '@pawhaven/backend-core/core/httpClient/httpClient.module'
-import { SharedModule } from '@pawhaven/backend-core/shared.module';
-import { EnvConstant, EnvTypes } from '@pawhaven/backend-core/constants/constant';
+import {
+  SharedModule,
+  SharedModuleImports,
+} from '@pawhaven/backend-core/sharedModule';
 
 import { GatewayController } from './app.controller';
 import { AuthService } from './services/auth.service';
@@ -14,19 +15,21 @@ import { AuthService } from './services/auth.service';
 // import { SignGuard } from '@modules/Auth/guards/Sign.guard';
 // import { JWTGuard } from '@modules/Auth/guards/JWT.guard';
 // import ACLGuard from '@modules/ACL/middlewares/ACL.guard'
-const currentEnv = (process.env.NODE_ENV ?? 'uat') as EnvTypes;
+const currentEnv = process.env.NODE_ENV ?? 'uat';
 const configFilePath = path.resolve(
   __dirname,
-  `./config/${EnvConstant[currentEnv]}/env/index.yaml`,
+  `./config/${currentEnv}/env/index.yaml`,
 );
 
 @Module({
   imports: [
     // HttpClientModule
     SharedModule.forRoot({
-      configFilePath,
-      isIntergrateHttpExceptionFilter: true,
-      isIntergrateHttpInterceptor: true,
+      configPath: configFilePath,
+      features: {
+        imports: [SharedModuleImports.Config, SharedModuleImports.HttpClient],
+        providers: undefined,
+      },
     }),
     // JwtModule,
     // DocumentModule,
@@ -50,4 +53,4 @@ const configFilePath = path.resolve(
     // }
   ],
 })
-export class AppModule { }
+export class AppModule {}
