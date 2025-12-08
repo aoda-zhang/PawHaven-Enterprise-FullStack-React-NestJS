@@ -5,7 +5,7 @@ import { getConfigValues } from '../../utils/getConfigValues';
 
 @Global()
 @Module({})
-class ConfigsModule {
+export class ConfigsModule {
   /**
    * dynamic configration
    * @param configFilePath config file path
@@ -25,4 +25,3 @@ class ConfigsModule {
     };
   }
 }
-export default ConfigsModule;

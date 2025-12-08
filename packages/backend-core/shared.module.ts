@@ -1,82 +1,126 @@
-import { DynamicModule, Global, Module } from '@nestjs/common'
-// import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core'
+import { DynamicModule, Global, Module, Provider, Type } from '@nestjs/common'
+import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core'
 
-import ConfigsModule from './core/configModule/configs.module'
-// import { DatabaseModule } from './core/dataBase/db.module'
-// import HttpExceptionFilter from './core/httpClient/httpExceptionFilter'
-// import HttpSuccessInterceptor from './core/httpClient/httpInterceptor'
-// import MSClientModule from './core/microServiceClient/msClient.module'
+import { ConfigsModule } from './dynamicModule/configModule/configs.module'
+import { DatabaseModule } from './dynamicModule/dataBase/db.module'
+import { HttpExceptionFilter } from './dynamicModule/httpClient/httpExceptionFilter'
+import { HttpSuccessInterceptor } from './dynamicModule/httpClient/httpInterceptor'
 import MiddlewareModule from './middlewares/index.module'
-import { HttpClientModule } from './core/httpClient/httpClient.module'
+import { HttpClientModule } from './dynamicModule/httpClient/httpClient.module'
+
+// Nest Dynamic module
+export enum SharedModuleImports {
+  Config = 'config',
+  HttpClient = 'httpClient',
+  Monitoring = "monitoring",
+  Database = "database",
+}
+
+// Nest Provider
+export enum SharedModuleProviders {
+  HttpErrorMiddleware = "HttpErrorMiddleware",
+  HttpSuccessMiddleware = "HttpSuccessMiddleware",
+}
 
 interface SharedModuleOptions {
-  // the env config file path, e.g.
-  // const currentEnv = process.env.NODE_ENV ?? 'uat'
-  // const configFilePath = path.resolve(__dirname, `./config/${EnvConstant[currentEnv]}/env/index.yaml`)
-  configFilePath: string
-  isIntergrateMiddware?: boolean
-  isIntergrateHttpInterceptor?: boolean
-  isIntergrateHttpExceptionFilter?: boolean
+  configPath: string,
+  features: {
+    imports?: SharedModuleImports[],
+    providers?: SharedModuleProviders[]
+  }
 }
+
 @Global()
 @Module({})
 export class SharedModule {
+  private static defaultShardImports = [
+    SharedModuleImports.Config,
+    SharedModuleImports.HttpClient,
+    SharedModuleImports.Monitoring,
+  ]
+
   static forRoot(options: SharedModuleOptions): DynamicModule {
-    const {
-      configFilePath,
-      isIntergrateMiddware = true,
-      // isIntergrateHttpExceptionFilter = false,
-      // isIntergrateHttpInterceptor = false
-    } = options
+    const { configPath, features: { imports = [], providers = [] } } = options
+    const importsToLoad = (imports?.length > 0 ? imports : this.defaultShardImports) as SharedModuleImports[]
+    const providersToLoad = this.loadProviders(providers) as Provider[]
+    const loadedModules = this.loadModules(configPath, importsToLoad)
 
-    const getImports = () => {
-      let imports: DynamicModule[] = []
-      if (configFilePath) {
-        imports = [...imports, ConfigsModule.forRoot(configFilePath)]
-      }
-      // dynamic db connection
-      // imports = [...imports, DatabaseModule.forRoot(configFilePath)]
-
-      // middleware
-      if (isIntergrateMiddware) {
-        imports = [...imports, { module: MiddlewareModule }]
-      }
-
-      // microservice register - support both approaches
-      // imports = [...imports, MSClientModule.register(configFilePath)]
-
-      return imports
-    }
-
-    const getProviders = () => {
-      const providers: any[] = []
-      // if (isIntergrateHttpExceptionFilter) {
-      //   // catch http error
-      //   providers = [
-      //     ...providers,
-      //     {
-      //       provide: APP_FILTER,
-      //       useClass: HttpExceptionFilter
-      //     }
-      //   ]
-      // }
-      // if (isIntergrateHttpInterceptor) {
-      //   // catch http success
-      //   providers = [
-      //     ...providers,
-      //     {
-      //       provide: APP_INTERCEPTOR,
-      //       useClass: HttpSuccessInterceptor
-      //     }
-      //   ]
-      // }
-
-      return providers
-    }
     return {
       module: SharedModule,
-      imports: [...(getImports() ?? []), HttpClientModule],
-      providers: getProviders()
+      imports: loadedModules,
+      exports: loadedModules,
+      providers: providersToLoad
     }
+  }
+
+  private static loadModules(
+    configPath: string,
+    features: SharedModuleImports[]
+  ): Array<Type<any> | DynamicModule> {
+    const loadedModules: Array<Type<any> | DynamicModule> = [];
+
+    // eslint-disable-next-line no-restricted-syntax
+    for (const feature of features) {
+      try {
+        switch (feature) {
+          case SharedModuleImports.Config:
+            loadedModules.push(ConfigsModule.forRoot(configPath));
+            break;
+
+          case SharedModuleImports.HttpClient:
+            loadedModules.push(HttpClientModule);
+            break;
+
+          case SharedModuleImports.Monitoring:
+            loadedModules.push(MiddlewareModule);
+            break;
+          case SharedModuleImports.Database:
+            loadedModules.push(DatabaseModule);
+            break;
+
+          default:
+            console.warn(`Unknown feature: ${feature}`);
+            break;
+        }
+      } catch (error) {
+        console.error(`Failed to load feature ${feature}`, error);
+      }
+    }
+
+    return loadedModules;
+  }
+
+  private static loadProviders(
+    providers: SharedModuleProviders[] = []
+  ): Array<Record<string, any>> {
+    const loadedProviders: Array<Record<string, any>> = [];
+    // eslint-disable-next-line no-restricted-syntax
+    for (const provider of providers) {
+      try {
+        switch (provider) {
+          case SharedModuleProviders.HttpErrorMiddleware:
+            loadedProviders.push({
+              provide: APP_FILTER,
+              useClass: HttpExceptionFilter,
+            });
+            break;
+
+          case SharedModuleProviders.HttpSuccessMiddleware:
+            loadedProviders.push({
+              provide: APP_INTERCEPTOR,
+              useClass: HttpSuccessInterceptor,
+            });
+            break;
+
+          default:
+            console.warn(`Unknown provider: ${provider}`);
+            break;
+        }
+      } catch (error) {
+        console.error(`Failed to load provider ${provider}`, error);
+      }
+    }
+
+    return loadedProviders;
   }
 }
