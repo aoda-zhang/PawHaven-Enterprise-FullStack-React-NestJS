@@ -15,7 +15,7 @@ import { HttpResType } from './interface';
 export class HttpExceptionFilter implements ExceptionFilter {
   private readonly logger = new Logger(HttpExceptionFilter.name);
 
-  catch(exception: any, host: ArgumentsHost) {
+  catch(exception: any, host: ArgumentsHost): void {
     const isRpcContext = host.getType() === 'rpc';
     const isHttpContext = host.getType() === 'http';
 
@@ -25,12 +25,14 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
     if (exception instanceof HttpException) {
       const res = exception.getResponse();
-      message = typeof res === 'string' ? res : (res as any)?.message || exception.message;
+      message =
+        typeof res === 'string'
+          ? res
+          : (res as any)?.message || exception.message;
       status =
         typeof res === 'object' && 'status' in res
           ? (res as any).status || exception.getStatus()
           : exception.getStatus();
-
       data = typeof res === 'object' ? (res as any).data || null : null;
     } else {
       message = exception?.message ?? message;
@@ -49,12 +51,16 @@ export class HttpExceptionFilter implements ExceptionFilter {
       `Exception caught (context: ${host.getType()}):`,
       JSON.stringify(errorResponse),
     );
+
     if (isHttpContext) {
       const response = host.switchToHttp().getResponse();
       response.status(status).json(errorResponse);
+      return;
     }
+
     if (isRpcContext) {
-      return errorResponse;
+      // RPC context: emit or log but do NOT return (ESLint: no-return)
+      host.switchToRpc().getContext()?.emit?.('error', errorResponse);
     }
   }
 }

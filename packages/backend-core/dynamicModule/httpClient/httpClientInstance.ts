@@ -4,7 +4,7 @@ import { catchError, map } from 'rxjs/operators';
 import { HttpException, HttpStatus, Logger } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid';
 
 export type HttpMethod = 'get' | 'post' | 'put' | 'delete';
 
@@ -20,7 +20,7 @@ export class HttpClientInstance {
     private readonly serviceName: string,
     private readonly defaultHeaders: Record<string, string>,
     private readonly logger: Logger,
-  ) { }
+  ) {}
 
   private resolveBaseURL(): string {
     const key = `microServices.${this.serviceName}`;
@@ -52,7 +52,8 @@ export class HttpClientInstance {
     options?: RequestOptions,
   ): Promise<T> {
     const url = this.getFullURL(path);
-    const traceId = uuidv4();
+    // const traceId = uuidv4();
+    const traceId = '1234';
     const startTime = Date.now();
     const headers = {
       ...this.defaultHeaders,
@@ -74,7 +75,9 @@ export class HttpClientInstance {
         this.httpService.request<T>(requestConfig).pipe(
           map((res: AxiosResponse<T>) => {
             const duration = Date.now() - startTime;
-            this.logger.log(`HTTP ${method.toUpperCase()} ${url} completed in ${duration}ms (traceId=${traceId})`);
+            this.logger.log(
+              `HTTP ${method.toUpperCase()} ${url} completed in ${duration}ms (traceId=${traceId})`,
+            );
             return res.data;
           }),
           catchError((error: AxiosError) => {
@@ -87,7 +90,7 @@ export class HttpClientInstance {
 
             let status = HttpStatus.INTERNAL_SERVER_ERROR;
             let message = 'Remote service error';
-            let data = null;
+            // const errorData = null;
 
             if (error?.code === 'ECONNABORTED') {
               status = HttpStatus.GATEWAY_TIMEOUT;
@@ -96,9 +99,10 @@ export class HttpClientInstance {
               status = HttpStatus.SERVICE_UNAVAILABLE;
               message = 'Service unavailable';
             } else {
-              status = error?.response?.status || HttpStatus.INTERNAL_SERVER_ERROR;
+              status =
+                error?.response?.status || HttpStatus.INTERNAL_SERVER_ERROR;
               message = error?.message || 'Remote service error';
-              data = error?.response?.data ?? null
+              // errorData = error?.response?.data ?? null
             }
 
             throw new HttpException(

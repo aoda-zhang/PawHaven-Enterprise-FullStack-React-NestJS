@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { HttpClientService } from '@pawhaven/backend-core/dynamicModule';
+import { HttpClientService } from '@pawhaven/backend-core';
 
 @Injectable()
 export class AuthService {
