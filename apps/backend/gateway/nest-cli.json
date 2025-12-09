@@ -6,7 +6,6 @@
     "assets": [
       {
         "include": "config/**",
-        "exclude": "config/index.ts",
         "watchAssets": true
       }
     ]

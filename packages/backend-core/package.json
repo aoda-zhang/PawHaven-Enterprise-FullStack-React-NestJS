@@ -6,9 +6,14 @@
     "node": ">=22",
     "pnpm": ">=10"
   },
+  "type": "commonjs",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.js",
   "exports": {
-    "./sharedModule": "./shared.module.ts",
-    "./dynamicModule": "./dynamicModule/index.ts"
+    ".": {
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.js"
+    }
   },
   "scripts": {
     "build": "tsc",

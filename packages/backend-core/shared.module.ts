@@ -7,48 +7,31 @@ import { HttpExceptionFilter } from './dynamicModule/httpClient/httpExceptionFil
 import { HttpSuccessInterceptor } from './dynamicModule/httpClient/httpInterceptor';
 import { MiddlewareModule } from './middlewares/index.module';
 import { HttpClientModule } from './dynamicModule/httpClient/httpClient.module';
-
-// Nest Dynamic module
-export enum SharedModuleImports {
-  Config = 'config',
-  HttpClient = 'httpClient',
-  Monitoring = 'monitoring',
-  Database = 'database',
-}
-
-// Nest Provider
-export enum SharedModuleProviders {
-  HttpErrorMiddleware = 'HttpErrorMiddleware',
-  HttpSuccessMiddleware = 'HttpSuccessMiddleware',
-}
-
-interface SharedModuleOptions {
-  configPath: string;
-  features: {
-    imports?: SharedModuleImports[];
-    providers?: SharedModuleProviders[];
-  };
-}
+import {
+  SharedModuleFeatures,
+  SharedModuleOptions,
+  SharedModuleProviders,
+} from './types/index.types';
 
 @Global()
 @Module({})
 export class SharedModule {
-  private static defaultShardImports = [
-    SharedModuleImports.Config,
-    SharedModuleImports.HttpClient,
-    SharedModuleImports.Monitoring,
+  private static DEFAULT_FEATURES = [
+    SharedModuleFeatures.Config,
+    SharedModuleFeatures.HttpClient,
+    SharedModuleFeatures.Monitoring,
   ];
 
   static forRoot(options: SharedModuleOptions): DynamicModule {
     const {
-      configPath,
+      serviceName,
       features: { imports = [], providers = [] },
     } = options;
     const importsToLoad = (
-      imports?.length > 0 ? imports : this.defaultShardImports
-    ) as SharedModuleImports[];
+      imports?.length > 0 ? imports : this.DEFAULT_FEATURES
+    ) as SharedModuleFeatures[];
     const providersToLoad = this.loadProviders(providers) as Provider[];
-    const loadedModules = this.loadModules(configPath, importsToLoad);
+    const loadedModules = this.loadModules(serviceName, importsToLoad);
 
     return {
       module: SharedModule,
@@ -59,8 +42,8 @@ export class SharedModule {
   }
 
   private static loadModules(
-    configPath: string,
-    features: SharedModuleImports[],
+    serviceName: string,
+    features: SharedModuleFeatures[],
   ): Array<Type<any> | DynamicModule> {
     const loadedModules: Array<Type<any> | DynamicModule> = [];
 
@@ -68,18 +51,18 @@ export class SharedModule {
     for (const feature of features) {
       try {
         switch (feature) {
-          case SharedModuleImports.Config:
-            loadedModules.push(ConfigsModule.forRoot(configPath));
+          case SharedModuleFeatures.Config:
+            loadedModules.push(ConfigsModule.forRoot(serviceName));
             break;
 
-          case SharedModuleImports.HttpClient:
+          case SharedModuleFeatures.HttpClient:
             loadedModules.push(HttpClientModule);
             break;
 
-          case SharedModuleImports.Monitoring:
+          case SharedModuleFeatures.Monitoring:
             loadedModules.push(MiddlewareModule);
             break;
-          // case SharedModuleImports.Database:
+          // case SharedModuleFeatures.Database:
           //   loadedModules.push(DatabaseModule);
           //   break;
 
