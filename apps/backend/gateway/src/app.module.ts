@@ -23,7 +23,6 @@ const configFilePath = path.resolve(
 
 @Module({
   imports: [
-    // HttpClientModule
     SharedModule.forRoot({
       configPath: configFilePath,
       features: {

@@ -1,26 +1,26 @@
-import { readFileSync } from 'node:fs'
+import { readFileSync } from 'node:fs';
 
-import * as yaml from 'js-yaml'
+import * as yaml from 'js-yaml';
 
-import { EnvConstant } from '../constants/constant'
+import { EnvConstant } from '../constants/constant';
 
 const isConfigAvaliable = (configFilePath: string) => {
-  const avaliabEnvs = Object.values(EnvConstant)
-  const configContent = readFileSync(configFilePath, 'utf8')
+  const avaliabEnvs = Object.values(EnvConstant);
+  const configContent = readFileSync(configFilePath, 'utf8');
   const isAvaliable =
     avaliabEnvs.some((env) => configFilePath?.includes(env)) &&
-    Object.keys(configContent)?.length > 0
-  return isAvaliable
-}
+    Object.keys(configContent)?.length > 0;
+  return isAvaliable;
+};
 
-export const getConfigValues = (configFilePath: string) => {
+export const getConfigValues = <T = unknown>(configFilePath: string) => {
   try {
     if (isConfigAvaliable(configFilePath)) {
-      return yaml.load(readFileSync(configFilePath, 'utf8')) as Record<string, any>
+      return yaml.load(readFileSync(configFilePath, 'utf8')) as T;
     }
-    throw new Error('No config file exist！！！')
+    throw new Error('No config file exist！！！');
   } catch (error) {
-    console.error(`get config value error: ${error}`)
-    return {}
+    console.error(`get config value error: ${error}`);
+    return {};
   }
-}
+};

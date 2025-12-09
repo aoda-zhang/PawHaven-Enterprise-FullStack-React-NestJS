@@ -11,7 +11,7 @@ export class ConfigsModule {
    * @param configFilePath config file path
    */
   static forRoot(configFilePath: string): DynamicModule {
-    const configValues = getConfigValues(configFilePath);
+    const configValues = getConfigValues<Record<string, any>>(configFilePath);
     const DynamicConfigModule = ConfigModule.forRoot({
       load: [() => configValues],
       envFilePath: '.env',
