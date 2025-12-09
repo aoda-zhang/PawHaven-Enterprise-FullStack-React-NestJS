@@ -6,6 +6,14 @@
     "node": ">=22",
     "pnpm": ">=10"
   },
+  "exports": {
+    "./sharedModule": "./shared.module.ts",
+    "./dynamicModule": "./dynamicModule/index.ts"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch "
+  },
   "dependencies": {
     "@nestjs/axios": "^4.0.1",
     "@nestjs/common": "^11.1.6",
