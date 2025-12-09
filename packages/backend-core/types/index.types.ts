@@ -1,9 +1,12 @@
+import { MicroServiceNameType } from '../constants/constant';
+
 // Nest Dynamic module
 export enum SharedModuleFeatures {
   Config = 'config',
   HttpClient = 'httpClient',
   Monitoring = 'monitoring',
   Database = 'database',
+  Swagger = 'swagger',
 }
 
 // Nest Provider
@@ -13,7 +16,7 @@ export enum SharedModuleProviders {
 }
 
 export interface SharedModuleOptions {
-  serviceName: string;
+  serviceName: MicroServiceNameType;
   features: {
     imports?: SharedModuleFeatures[];
     providers?: SharedModuleProviders[];

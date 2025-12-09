@@ -5,15 +5,13 @@ import {
   RequestMethod,
 } from '@nestjs/common';
 
-import { HttpSettingMiddleware } from './httpSetting.middleware';
-
 @Module({
   providers: [],
 })
 export class MiddlewareModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
-      .apply(HttpSettingMiddleware)
+      .apply()
       .exclude(
         // exlude health route
         { path: 'health', method: RequestMethod.GET },

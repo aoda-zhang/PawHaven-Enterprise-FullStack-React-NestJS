@@ -4,7 +4,6 @@ import { ConfigService } from '@nestjs/config';
 
 import { HttpClientInstance } from './httpClientInstance';
 
-
 @Injectable()
 export class HttpClientService {
   private readonly logger = new Logger(HttpClientService.name);
@@ -12,7 +11,7 @@ export class HttpClientService {
   constructor(
     private readonly httpService: HttpService,
     private readonly config: ConfigService,
-  ) { }
+  ) {}
 
   create(serviceName: string) {
     if (!serviceName) {
