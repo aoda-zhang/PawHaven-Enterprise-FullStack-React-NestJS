@@ -20,7 +20,7 @@ export class HttpClientService {
 
     const defaultHeaders = {
       'X-App-Source': 'nestjs-gateway',
-      'X-Env': this.config.get<string>('NODE_ENV') || 'development',
+      'X-Env': this.config.get<string>('NODE_ENV') || 'dev',
     };
 
     return new HttpClientInstance(

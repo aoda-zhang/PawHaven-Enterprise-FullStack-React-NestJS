@@ -3,10 +3,12 @@ import {
   MicroServiceNames,
   SharedModule,
   SharedModuleFeatures,
+  SharedModuleProviders,
 } from '@pawhaven/backend-core';
 
 import { GatewayController } from './app.controller';
 import { AuthService } from './services/auth.service';
+import { CoreService } from './services/core.service';
 // import { APP_GUARD } from '@nestjs/core';
 // import { DocumentModule } from '@modules/Document/document.module';
 // import { JwtModule } from '@nestjs/jwt';
@@ -20,7 +22,10 @@ import { AuthService } from './services/auth.service';
       serviceName: MicroServiceNames.GATEWAY,
       features: {
         imports: [SharedModuleFeatures.Swagger],
-        providers: [],
+        providers: [
+          SharedModuleProviders.HttpErrorMiddleware,
+          SharedModuleProviders.HttpSuccessMiddleware,
+        ],
       },
     }),
     // JwtModule,
@@ -30,6 +35,7 @@ import { AuthService } from './services/auth.service';
   controllers: [GatewayController],
   providers: [
     AuthService,
+    CoreService,
 
     // {
     //   provide: APP_GUARD,

@@ -8,6 +8,7 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import type { NestExpressApplication } from '@nestjs/platform-express';
 import helmet from 'helmet';
+import { SwaggerService } from '@pawhaven/backend-core';
 // import { Logger } from 'nestjs-pino'
 // import { EnvConstant } from '@shared/constants/constant';
 
@@ -38,7 +39,8 @@ async function bootstrap() {
       },
     }),
   );
-  // await initSwagger(app);
+  const swaggerService = app.get(SwaggerService);
+  swaggerService.init(app);
   app.use(helmet());
   const port = app.get(ConfigService).get('http.port') ?? 8080;
   await app

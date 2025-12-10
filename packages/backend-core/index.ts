@@ -6,6 +6,7 @@ export { HttpClientModule } from './commonModules/httpClient/httpClient.module';
 // ========= Services ===========//
 
 export { HttpClientService } from './commonModules/httpClient/HttpClient.service';
+export { SwaggerService } from './commonModules/swagger/swagger.service';
 
 // ========= Filter & Interceptors =========== //
 

@@ -22,8 +22,9 @@ async function bootstrap() {
   //   },
   // );
 
-  const app = await NestFactory.create<NestExpressApplication>(AppModule)
-  const port = 9091
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  app.setGlobalPrefix('/core');
+  const port = 8081;
   await app.listen(port);
   console.log('gRPC core-service is running on 0.0.0.0:9091');
 }
