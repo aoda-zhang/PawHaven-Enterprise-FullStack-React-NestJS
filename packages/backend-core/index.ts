@@ -1,19 +1,23 @@
 // ========= Modules ===========//
-export { SharedModule } from './shared.module';
-export { ConfigsModule } from './dynamicModule/configModule/configs.module';
-export { HttpClientModule } from './dynamicModule/httpClient/httpClient.module';
+export { SharedModule } from './commonModules/shared.module';
+export { ConfigsModule } from './commonModules/configModule/configs.module';
+export { HttpClientModule } from './commonModules/httpClient/httpClient.module';
 
 // ========= Services ===========//
 
-export { HttpClientService } from './dynamicModule/httpClient/HttpClient.service';
+export { HttpClientService } from './commonModules/httpClient/HttpClient.service';
+export { SwaggerService } from './commonModules/swagger/swagger.service';
 
 // ========= Filter & Interceptors =========== //
 
-export { HttpExceptionFilter } from './dynamicModule/httpClient/httpExceptionFilter';
-export { HttpSuccessInterceptor } from './dynamicModule/httpClient/httpInterceptor';
+export { HttpExceptionFilter } from './commonModules/httpClient/httpExceptionFilter';
+export { HttpSuccessInterceptor } from './commonModules/httpClient/httpInterceptor';
+
+// ========= constants =========== //
+
+export { MicroServiceNames } from './constants/constant';
 
 // ========= Types =========== //
-
 export {
   SharedModuleProviders,
   SharedModuleFeatures,

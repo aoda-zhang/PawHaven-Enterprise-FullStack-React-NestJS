@@ -1,9 +1,14 @@
-// import { AuthModule } from '@modules/Auth/auth.module';
 import { Module } from '@nestjs/common';
-import { SharedModule, SharedModuleFeatures } from '@pawhaven/backend-core';
+import {
+  MicroServiceNames,
+  SharedModule,
+  SharedModuleFeatures,
+  SharedModuleProviders,
+} from '@pawhaven/backend-core';
 
 import { GatewayController } from './app.controller';
 import { AuthService } from './services/auth.service';
+import { CoreService } from './services/core.service';
 // import { APP_GUARD } from '@nestjs/core';
 // import { DocumentModule } from '@modules/Document/document.module';
 // import { JwtModule } from '@nestjs/jwt';
@@ -14,10 +19,13 @@ import { AuthService } from './services/auth.service';
 @Module({
   imports: [
     SharedModule.forRoot({
-      serviceName: 'gateway',
+      serviceName: MicroServiceNames.GATEWAY,
       features: {
-        imports: [SharedModuleFeatures.Config, SharedModuleFeatures.HttpClient],
-        providers: undefined,
+        imports: [SharedModuleFeatures.Swagger],
+        providers: [
+          SharedModuleProviders.HttpErrorMiddleware,
+          SharedModuleProviders.HttpSuccessMiddleware,
+        ],
       },
     }),
     // JwtModule,
@@ -27,6 +35,7 @@ import { AuthService } from './services/auth.service';
   controllers: [GatewayController],
   providers: [
     AuthService,
+    CoreService,
 
     // {
     //   provide: APP_GUARD,

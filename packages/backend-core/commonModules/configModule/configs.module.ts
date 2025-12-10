@@ -1,7 +1,8 @@
 import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 
 import { DynamicModule, Global, Module } from '@nestjs/common';
-import { ConfigModule, ConfigService, ConfigFactory } from '@nestjs/config';
+import { ConfigModule, ConfigFactory } from '@nestjs/config';
 import * as yaml from 'js-yaml';
 
 import { getCurrentEnv } from '../../utils/getCurrentEnv';
@@ -27,18 +28,21 @@ export class ConfigsModule {
     return {
       module: ConfigsModule,
       imports: [DynamicConfigModule],
-      exports: [ConfigService],
+      exports: [ConfigModule],
     };
   }
 
   private static getConfigValues<T = unknown>(serviceName: string): T {
+    const PROJECT_ROOT = join(__dirname, '../../../../../');
     const currentEnv = getCurrentEnv();
-    const conventionalConfigPath = `../../../../apps/backend/${serviceName}/config/${currentEnv}/env/index.yaml`;
+    const conventionalConfigPath = join(
+      PROJECT_ROOT,
+      `apps/backend/${serviceName}/src/config/${currentEnv}/env/index.yaml`,
+    );
     try {
       return yaml.load(readFileSync(conventionalConfigPath, 'utf8')) as T;
     } catch (error) {
-      console.error(`get config value error: ${error}`);
-      throw error;
+      throw new Error(`Config file loading failed: ${error}`);
     }
   }
 }

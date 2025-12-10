@@ -4,7 +4,7 @@ import { catchError, map } from 'rxjs/operators';
 import { HttpException, HttpStatus, Logger } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
-// import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 export type HttpMethod = 'get' | 'post' | 'put' | 'delete';
 
@@ -22,23 +22,36 @@ export class HttpClientInstance {
     private readonly logger: Logger,
   ) {}
 
-  private resolveBaseURL(): string {
-    const key = `microServices.${this.serviceName}`;
-    const url = this.configService.get<string>(key);
-
-    if (!url) {
-      throw new Error(`ConfigService: missing config for key "${key}"`);
+  private getCurrentMicroserviceOption(): Record<string, any> {
+    const allMicroservices =
+      this.configService.get<Array<Record<string, any>>>('microServices') ?? [];
+    const currentMicroserviceOption = allMicroservices?.find(
+      (mic) => mic?.name === this.serviceName && mic?.enable,
+    );
+    if (allMicroservices?.length > 0 && currentMicroserviceOption) {
+      return currentMicroserviceOption?.options;
     }
-    return url;
+    throw new Error(
+      `ConfigService: missing microServices ${this.serviceName} config`,
+    );
   }
 
   private getFullURL(path: string): string {
-    const baseURL = this.resolveBaseURL();
-    const cleanedBase = baseURL.trim().replace(/\/+$/, '');
-    const cleanedPath = path.trim().replace(/^\/+/, '');
+    const currentMicroserviceOption = this.getCurrentMicroserviceOption();
+    if (!currentMicroserviceOption) {
+      throw new Error(`Microservice host for "${this.serviceName}" is empty`);
+    }
+    let finalHost = currentMicroserviceOption?.host?.trim();
+    if (
+      (finalHost.includes('localhost') || finalHost.includes('127.0.0.1')) &&
+      currentMicroserviceOption?.port
+    ) {
+      finalHost += `:${currentMicroserviceOption.port}`;
+    }
+    const cleanedBase = finalHost.replace(/\/+$/, '');
+    const cleanedPath = path?.trim()?.replace(/^\/+/, '');
     const fullUrl = `${cleanedBase}/${cleanedPath}`;
-
-    if (!/^https?:\/\//.test(fullUrl)) {
+    if (!fullUrl) {
       throw new Error(`Invalid composed URL: "${fullUrl}"`);
     }
 
@@ -52,8 +65,7 @@ export class HttpClientInstance {
     options?: RequestOptions,
   ): Promise<T> {
     const url = this.getFullURL(path);
-    // const traceId = uuidv4();
-    const traceId = '1234';
+    const traceId = uuidv4();
     const startTime = Date.now();
     const headers = {
       ...this.defaultHeaders,
@@ -78,7 +90,7 @@ export class HttpClientInstance {
             this.logger.log(
               `HTTP ${method.toUpperCase()} ${url} completed in ${duration}ms (traceId=${traceId})`,
             );
-            return res.data;
+            return res?.data;
           }),
           catchError((error: AxiosError) => {
             const duration = Date.now() - startTime;

@@ -1,17 +1,19 @@
 import { DynamicModule, Global, Module, Provider, Type } from '@nestjs/common';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 
-import { ConfigsModule } from './dynamicModule/configModule/configs.module';
-// import { DatabaseModule } from './dynamicModule/dataBase/db.module'
-import { HttpExceptionFilter } from './dynamicModule/httpClient/httpExceptionFilter';
-import { HttpSuccessInterceptor } from './dynamicModule/httpClient/httpInterceptor';
-import { MiddlewareModule } from './middlewares/index.module';
-import { HttpClientModule } from './dynamicModule/httpClient/httpClient.module';
+import { MiddlewareModule } from '../middlewares/index.module';
 import {
   SharedModuleFeatures,
   SharedModuleOptions,
   SharedModuleProviders,
-} from './types/index.types';
+} from '../types/index.types';
+
+import { ConfigsModule } from './configModule/configs.module';
+// import { DatabaseModule } from './dataBase/db.module'
+import { HttpExceptionFilter } from './httpClient/httpExceptionFilter';
+import { HttpSuccessInterceptor } from './httpClient/httpInterceptor';
+import { HttpClientModule } from './httpClient/httpClient.module';
+import { SwaggerModule } from './swagger/swagger.module';
 
 @Global()
 @Module({})
@@ -19,7 +21,6 @@ export class SharedModule {
   private static DEFAULT_FEATURES = [
     SharedModuleFeatures.Config,
     SharedModuleFeatures.HttpClient,
-    SharedModuleFeatures.Monitoring,
   ];
 
   static forRoot(options: SharedModuleOptions): DynamicModule {
@@ -27,11 +28,22 @@ export class SharedModule {
       serviceName,
       features: { imports = [], providers = [] },
     } = options;
-    const importsToLoad = (
-      imports?.length > 0 ? imports : this.DEFAULT_FEATURES
-    ) as SharedModuleFeatures[];
+    const importsToLoad = [
+      ...new Set([...this.DEFAULT_FEATURES, ...imports]),
+    ] as SharedModuleFeatures[];
     const providersToLoad = this.loadProviders(providers) as Provider[];
     const loadedModules = this.loadModules(serviceName, importsToLoad);
+
+    console.log(
+      `\n[SharedModule] Service "${serviceName}" will load ${importsToLoad.length} module(s):`,
+    );
+    importsToLoad.forEach((name) => console.log(`  - ${name}`));
+
+    console.log(
+      `[SharedModule] Providers to register (${providersToLoad.length}):`,
+    );
+    providersToLoad.forEach((name) => console.log(`  - ${name}`));
+    console.log('');
 
     return {
       module: SharedModule,
@@ -62,6 +74,10 @@ export class SharedModule {
           case SharedModuleFeatures.Monitoring:
             loadedModules.push(MiddlewareModule);
             break;
+
+          case SharedModuleFeatures.Swagger:
+            loadedModules.push(SwaggerModule);
+            break;
           // case SharedModuleFeatures.Database:
           //   loadedModules.push(DatabaseModule);
           //   break;
@@ -71,7 +87,9 @@ export class SharedModule {
             break;
         }
       } catch (error) {
-        console.error(`Failed to load feature ${feature}`, error);
+        throw new Error(
+          `Failed to load feature : ${feature} Module , error info: ${error}`,
+        );
       }
     }
 
@@ -105,7 +123,9 @@ export class SharedModule {
             break;
         }
       } catch (error) {
-        console.error(`Failed to load provider ${provider}`, error);
+        throw new Error(
+          `Failed to load feature : ${provider} , error info: ${error}`,
+        );
       }
     }
 
