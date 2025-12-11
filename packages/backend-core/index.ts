@@ -15,10 +15,14 @@ export { HttpSuccessInterceptor } from './commonModules/httpClient/httpIntercept
 
 // ========= constants =========== //
 
-export { MicroServiceNames } from './constants/constant';
+export { microServiceNames } from './constants/microServiceNames';
+export { httpBusinessMappingCodes } from './constants/httpBusinessMappingCodes';
 
 // ========= Types =========== //
 export {
   SharedModuleProviders,
   SharedModuleFeatures,
-} from './types/index.types';
+} from './types/shareModule.types';
+
+export { HttpBusinessCode, HttpReqHeader } from './types/http.types';
+export type { HttpResType } from './types/http.types';

@@ -1,3 +1,5 @@
+import { microServiceNames } from './microServiceNames';
+
 export const EnvConstant = {
   dev: 'dev',
   uat: 'uat',
@@ -7,13 +9,6 @@ export const EnvConstant = {
 
 export type EnvTypes = keyof typeof EnvConstant;
 
-export const MicroServiceNames = {
-  GATEWAY: 'gateway',
-  CORE: 'core-service',
-  DOCUMENT: 'document-service',
-  AUTH: 'auth-service',
-} as const;
-
 export const Versions = {
   v1: 'v1',
   v2: 'v2',
@@ -22,7 +17,7 @@ export const Versions = {
 type VersionType = (typeof Versions)[keyof typeof Versions];
 
 export type MicroServiceNameType =
-  (typeof MicroServiceNames)[keyof typeof MicroServiceNames];
+  (typeof microServiceNames)[keyof typeof microServiceNames];
 
 export type MSMessagePatternType = {
   [key: string]: `${MicroServiceNameType}.${string}.${VersionType}`;

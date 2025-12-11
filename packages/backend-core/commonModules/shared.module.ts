@@ -6,7 +6,7 @@ import {
   SharedModuleFeatures,
   SharedModuleOptions,
   SharedModuleProviders,
-} from '../types/index.types';
+} from '../types/shareModule.types';
 
 import { ConfigsModule } from './configModule/configs.module';
 // import { DatabaseModule } from './dataBase/db.module'

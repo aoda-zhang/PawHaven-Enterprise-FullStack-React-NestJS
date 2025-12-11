@@ -645,12 +645,18 @@ importers:
       '@pawhaven/eslint-config':
         specifier: workspace:*
         version: link:../../../packages/eslint-config
+      '@pawhaven/shared':
+        specifier: workspace:*
+        version: link:../../../packages/shared
       '@pawhaven/tsconfig':
         specifier: workspace:*
         version: link:../../../packages/tsconfig
       '@types/bcrypt':
         specifier: ^6.0.0
         version: 6.0.0
+      '@types/crypto-js':
+        specifier: ^4.2.2
+        version: 4.2.2
       '@types/express':
         specifier: ^5.0.3
         version: 5.0.5
@@ -711,6 +717,9 @@ importers:
       '@pawhaven/i18n':
         specifier: workspace:*
         version: link:../../../packages/i18n
+      '@pawhaven/shared':
+        specifier: workspace:*
+        version: link:../../../packages/shared
       '@pawhaven/ui':
         specifier: workspace:*
         version: link:../../../packages/ui
@@ -1134,6 +1143,9 @@ importers:
       '@pawhaven/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
+      '@pawhaven/shared':
+        specifier: workspace:*
+        version: link:../shared
       '@pawhaven/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig
@@ -1155,12 +1167,21 @@ importers:
       '@pawhaven/frontend-core':
         specifier: workspace:*
         version: link:../frontend-core
+      '@pawhaven/shared':
+        specifier: workspace:*
+        version: link:../shared
       i18next:
         specifier: ^25.6.0
         version: 25.6.3(typescript@5.9.3)
       react-i18next:
         specifier: ^16.0.0
         version: 16.3.4(i18next@25.6.3(typescript@5.9.3))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3)
+
+  packages/shared:
+    dependencies:
+      '@pawhaven/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
 
   packages/tsconfig:
     dependencies:

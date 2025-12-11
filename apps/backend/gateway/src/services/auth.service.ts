@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { HttpClientService, MicroServiceNames } from '@pawhaven/backend-core';
+import { HttpClientService, microServiceNames } from '@pawhaven/backend-core';
 
 @Injectable()
 export class AuthService {
   private readonly coreService;
 
   constructor(private httpClient: HttpClientService) {
-    this.coreService = this.httpClient.create(MicroServiceNames.CORE);
+    this.coreService = this.httpClient.create(microServiceNames.CORE);
   }
 
   test(id: string) {

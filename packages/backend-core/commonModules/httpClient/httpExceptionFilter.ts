@@ -8,7 +8,7 @@ import {
   Logger,
 } from '@nestjs/common';
 
-import { HttpResType } from './interface';
+import { HttpResType } from '../../types/http.types';
 
 @Injectable()
 @Catch()

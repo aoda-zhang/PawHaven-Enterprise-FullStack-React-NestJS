@@ -6,16 +6,17 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Reflector } from '@nestjs/core';
-import { Decorators } from '@shared/constants/enum';
 import {
   HttpBusinessCode,
-  HttpBusinessMappingCode,
   HttpReqHeader,
-} from '@shared/core/httpClient/interface';
+  httpBusinessMappingCodes,
+} from '@pawhaven/backend-core';
 import CryptoJS from 'crypto-js';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
-import trim from '@shared/utils/trim';
+import { stringTrim } from '@pawhaven/shared/utils';
+
+import { decoratorsKeys } from '../decorators/decorator.constant';
 
 dayjs.extend(utc);
 
@@ -43,8 +44,8 @@ export class SignGuard implements CanActivate {
     private readonly reflector: Reflector,
     private readonly configService: ConfigService,
   ) {
-    this.privateKey = this.configService.get<string>('auth.privateKey') ?? '';
-    this.requestGap = this.configService.get<number>('auth.requestGap') ?? 300; // default 5 minutes
+    this.privateKey = this.configService.get<string>('auth.privateKey')!;
+    this.requestGap = this.configService.get<number>('auth.requestGap')!;
   }
 
   /**
@@ -100,7 +101,7 @@ export class SignGuard implements CanActivate {
     const response = context.switchToHttp().getResponse();
 
     const isNoSignReq = this.reflector.getAllAndOverride<boolean>(
-      Decorators.noSign,
+      decoratorsKeys.noSign,
       [context.getHandler(), context.getClass()],
     );
 
@@ -117,7 +118,7 @@ export class SignGuard implements CanActivate {
 
       // Validate timestamp header
       const clientTimestamp = Number(clientTimestampHeader);
-      if (!clientTimestamp || isNaN(clientTimestamp)) {
+      if (!clientTimestamp || Number.isNaN(clientTimestamp)) {
         throw new BadRequestException('Invalid timestamp header');
       }
 
@@ -131,10 +132,11 @@ export class SignGuard implements CanActivate {
 
       return isTimestampValid && isSignValid;
     } catch (error) {
-      switch (trim(error?.message)) {
+      // @ts-ignore
+      switch (stringTrim(error?.message)) {
         case HttpBusinessCode.jwtexpired:
         case HttpBusinessCode.invalidToken:
-          response.data = HttpBusinessMappingCode.jwtexpired;
+          response.data = httpBusinessMappingCodes.jwtexpired;
           break;
         default:
           break;

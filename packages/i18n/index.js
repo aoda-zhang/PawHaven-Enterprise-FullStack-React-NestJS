@@ -1,17 +1,17 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import { LocaleKeys } from '@pawhaven/frontend-core/constants';
 import { getLocale } from '@pawhaven/frontend-core/utils';
+import { localeCodes } from '@pawhaven/shared/constants';
 
 import deDE from './de-DE.json';
 import enUS from './en-US.json';
 import zhCN from './zh-CN.json';
 
-const defaultLanguage = LocaleKeys['en-US'];
+const defaultLanguage = localeCodes['en-US'];
 const languageResources = {
-  [LocaleKeys['zh-CN']]: { translation: zhCN },
-  [LocaleKeys['en-US']]: { translation: enUS },
-  [LocaleKeys['de-DE']]: { translation: deDE },
+  [localeCodes['zh-CN']]: { translation: zhCN },
+  [localeCodes['en-US']]: { translation: enUS },
+  [localeCodes['de-DE']]: { translation: deDE },
 };
 const currentLanguage = getLocale(
   defaultLanguage,

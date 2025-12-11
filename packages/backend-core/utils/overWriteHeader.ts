@@ -1,6 +1,6 @@
 import { Request } from 'express';
 
-import { HttpReqHeader } from '../commonModules/httpClient/interface';
+import { HttpReqHeader } from '../types/http.types';
 
 export const getTokenFromHeader = (request: Request) => {
   if (request?.headers?.[HttpReqHeader.accessToken]) {

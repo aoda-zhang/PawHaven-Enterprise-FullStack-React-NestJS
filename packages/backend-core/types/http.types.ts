@@ -16,7 +16,3 @@ export enum HttpReqHeader {
   accessToken = 'access-token',
   locale = 'locale',
 }
-
-export enum HttpBusinessMappingCode {
-  jwtexpired = 'E4001',
-}

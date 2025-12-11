@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import {
-  MicroServiceNames,
+  microServiceNames,
   SharedModule,
   SharedModuleFeatures,
   SharedModuleProviders,
@@ -19,7 +19,7 @@ import { CoreService } from './services/core.service';
 @Module({
   imports: [
     SharedModule.forRoot({
-      serviceName: MicroServiceNames.GATEWAY,
+      serviceName: microServiceNames.GATEWAY,
       features: {
         imports: [SharedModuleFeatures.Swagger],
         providers: [

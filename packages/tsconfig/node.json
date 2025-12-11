@@ -2,12 +2,12 @@
   "extends": "./base.json",
   "compilerOptions": {
     "composite": false,
-    "declaration": false,
+    "declarationMap": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "useDefineForClassFields": false,
-    "module": "CommonJS", // Node.js standard module systemx
-    "types": ["node"], // Include Node.js types
-    "noEmit": false // Allow emitting compiled JS in backend
+    "module": "CommonJS",
+    "types": ["node"],
+    "noEmit": false
   }
 }
