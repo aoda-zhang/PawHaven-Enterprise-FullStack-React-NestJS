@@ -3,7 +3,8 @@
   "compilerOptions": {
     "lib": ["dom", "dom.iterable", "esnext"],
     "jsx": "react-jsx",
-    "moduleResolution": "bundler"
+    "moduleResolution": "bundler",
+    "outDir": "build"
   },
   "exclude": ["node_modules", "dist", "build"]
 }
