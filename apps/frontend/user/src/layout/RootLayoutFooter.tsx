@@ -1,4 +1,4 @@
-import { myPersonal } from '@pawhaven/frontend-core/constants';
+import { myPersonal } from '@pawhaven/shared/constants/myPerson';
 import { useTranslation } from 'react-i18next';
 
 // import { Link } from 'react-router-dom';

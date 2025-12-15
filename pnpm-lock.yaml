@@ -1097,6 +1097,9 @@ importers:
       '@pawhaven/i18n':
         specifier: workspace:*
         version: link:../i18n
+      '@pawhaven/shared':
+        specifier: workspace:*
+        version: link:../shared
       '@pawhaven/ui':
         specifier: workspace:*
         version: link:../ui
@@ -1143,9 +1146,6 @@ importers:
       '@pawhaven/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
-      '@pawhaven/shared':
-        specifier: workspace:*
-        version: link:../shared
       '@pawhaven/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig

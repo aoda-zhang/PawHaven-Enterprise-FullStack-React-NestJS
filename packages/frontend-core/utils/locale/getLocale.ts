@@ -1,8 +1,9 @@
-import { LocaleKeys } from '../../constants/localeKey';
+import { localeCodes } from '@pawhaven/shared/constants/localeCodes';
+
 import { storageTool } from '../storage/storageTool';
 
 export const getLocale = (
-  defaultLanguage: string = LocaleKeys['en-US'],
+  defaultLanguage: string = localeCodes['en-US'],
   supportLanguages: string[] = [],
 ) => {
   const currentBrowserLanguage =

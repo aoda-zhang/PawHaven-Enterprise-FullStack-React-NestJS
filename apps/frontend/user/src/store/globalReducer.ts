@@ -1,5 +1,5 @@
-import { LocaleKeys } from '@pawhaven/frontend-core/constants';
 import { storageTool } from '@pawhaven/frontend-core/utils';
+import { localeCodes } from '@pawhaven/shared/constants/localeCodes';
 import { createSlice } from '@reduxjs/toolkit';
 
 import { useReduxSelector } from '../hooks/reduxHooks';
@@ -25,7 +25,7 @@ const initialState: GlobalStateType = {
     },
     accessToken: '',
   },
-  locale: storageTool.get(storageKeys.I18NKEY) || LocaleKeys['en-US'],
+  locale: storageTool.get(storageKeys.I18NKEY) || localeCodes['en-US'],
   isSysMaintain: true,
 };
 

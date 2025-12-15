@@ -49,8 +49,5 @@
     "composite": true,
     // Generate declaration files for TypeScript files
     "declaration": true
-  },
-  "files": [],
-  "include": [],
-  "exclude": ["**/*"]
+  }
 }

@@ -31,6 +31,7 @@
     "@emotion/styled": "^11.14.1",
     "@pawhaven/ui": "workspace:*",
     "@pawhaven/i18n": "workspace:*",
+    "@pawhaven/shared": "workspace:*",
     "@tanstack/react-query": "^5.90.2",
     "axios": "^1.12.2",
     "clsx": "^2.1.1",
@@ -51,8 +52,7 @@
     "@types/react-dom": "^19.2.1",
     "typescript": "^5.9.3",
     "@types/crypto-js": "^4.2.2",
-    "@pawhaven/eslint-config": "workspace:*",
-    "@pawhaven/shared": "workspace:*"
+    "@pawhaven/eslint-config": "workspace:*"
   },
   "exports": {
     "./constants": "./constants/index.ts",
