@@ -8,10 +8,10 @@
     "pnpm": ">=10"
   },
   "scripts": {
-    "start:dev": "cross-env NODE_ENV=dev nest start --watch",
-    "uat": "cross-env NODE_ENV=uat nest start --watch",
+    "dev": "nest start --watch",
     "build": "nest build",
-    "start": "NODE_ENV=uat node build/main.js"
+    "start": "node dist/main.js",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@nestjs/axios": "^4.0.1",
