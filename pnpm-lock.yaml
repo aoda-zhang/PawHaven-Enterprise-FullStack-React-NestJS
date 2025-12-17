@@ -449,7 +449,7 @@ importers:
         specifier: ^8.19.1
         version: 8.20.4(socks@2.8.7)
       nodemailer:
-        specifier: ^7.0.10
+        specifier: ^7.0.11
         version: 7.0.12
       puppeteer:
         specifier: ^24.24.0
