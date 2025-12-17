@@ -11,8 +11,8 @@ export const EnvVariables = {
   test: 'test',
 } as const;
 
-const environment = import.meta.PAWHAVEN_USER_APP_ENV;
-const currentEnv = environment?.MODE;
+const environmentVariables = import.meta.env;
+const currentEnv = environmentVariables.PAWHAVEN_USER_APP_ENV;
 
 if (!currentEnv || !(currentEnv in EnvVariables)) {
   throw new Error(`Invalid or missing environment mode: ${currentEnv}`);
@@ -24,7 +24,7 @@ const formatEnvValues = (configObj: Record<string, unknown>) => {
     if (typeof value === 'string') {
       return value.replace(/\$\{([^}]+)\}/g, (_, varName) => {
         const envKey = varName.trim();
-        const envValue = environment?.[envKey];
+        const envValue = environmentVariables?.[envKey];
         if (envValue === undefined) {
           console.warn(
             `Missing environment variable for placeholder: ${envKey}`,
@@ -82,7 +82,9 @@ export const loadConfig = (): ConfigType => {
     }
     return parsed.data;
   } catch (error) {
-    console.error('Error loading config:', error);
-    throw error;
+    if (currentEnv !== EnvVariables.prod) {
+      console.error('Error loading config:', error);
+    }
+    throw new Error('Config validation failed');
   }
 };
