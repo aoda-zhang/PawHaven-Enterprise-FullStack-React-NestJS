@@ -119,6 +119,5 @@ dist
 tsconfig.tsbuildinfo
 
 # configs
-config
 .eslintcache
 .env

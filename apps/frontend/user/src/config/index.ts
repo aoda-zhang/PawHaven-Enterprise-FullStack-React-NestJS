@@ -11,7 +11,7 @@ export const EnvVariables = {
   test: 'test',
 } as const;
 
-const environment = import.meta.env;
+const environment = import.meta.PAWHAVEN_USER_APP_ENV;
 const currentEnv = environment?.MODE;
 
 if (!currentEnv || !(currentEnv in EnvVariables)) {

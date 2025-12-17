@@ -72,10 +72,9 @@
   },
   "scripts": {
     "dev": "vite --mode dev",
-    "uat": "vite --mode uat",
-    "build:prod": "tsc && vite build --mode prod",
-    "build:uat": "tsc && vite build --mode uat",
-    "preview": "vite preview"
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@types/ramda": "^0.31.1",

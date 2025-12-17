@@ -1,12 +1,12 @@
-env: dev
+env: prod
 version: ${PAWHAVEN_USER_VERSION}
 
 featureFlags:
   enableBetaFeature: false
-  enableMaintenance: false
+  enableMaintenance: true
 
 api:
-  enableSign: true
+  enableSign: false
   baseURL: ${PAWHAVEN_USER_API_BASE_URL}
   prefix: api
   timeout: 5000

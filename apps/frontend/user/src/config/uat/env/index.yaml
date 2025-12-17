@@ -1,4 +1,4 @@
-env: dev
+env: uat
 version: ${PAWHAVEN_USER_VERSION}
 
 featureFlags:
