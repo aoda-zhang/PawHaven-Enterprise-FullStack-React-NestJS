@@ -26,7 +26,7 @@ async function bootstrap() {
   app.setGlobalPrefix('/core');
   const port = 8081;
   await app.listen(port);
-  console.log('gRPC core-service is running on 0.0.0.0:9091');
+  console.log(`gRPC core-service is running on ${port}`);
 }
 
 bootstrap();

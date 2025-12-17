@@ -10,12 +10,16 @@ export class GatewayController {
     private readonly coreService: CoreService,
   ) {}
 
-  @Get('/core/:id')
+  // ---------core service------------ //
+
+  @Get('/core/test/:id')
   testCore(@Param('id') id: string) {
     return this.coreService.test(id);
   }
 
-  @Get('/auth/:id')
+  // ---------auth service------------ //
+
+  @Get('/auth/test/:id')
   testAuth(@Param('id') id: string) {
     return this.authService.test(id);
   }

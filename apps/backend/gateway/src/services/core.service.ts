@@ -10,6 +10,6 @@ export class CoreService {
   }
 
   test(id: string) {
-    return this.coreService.get(`/core/${id}`);
+    return this.coreService.get(`/core/test/${id}`);
   }
 }

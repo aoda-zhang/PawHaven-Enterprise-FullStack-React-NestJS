@@ -8,7 +8,7 @@ export class ReportAnimalController {
   constructor(private readonly reportAnimalSerice: ReportAnimalService) {}
 
   // @GrpcMethod('AnimalService', 'CreateAnimal')
-  @Get('/:id')
+  @Get('/test/:id')
   AddAnimal() {
     return this.reportAnimalSerice.addAnimal();
   }

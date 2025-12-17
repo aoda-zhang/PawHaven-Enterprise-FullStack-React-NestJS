@@ -15,6 +15,6 @@ export class ReportAnimalService {
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
-    return { data: newAnimal };
+    return newAnimal;
   }
 }
