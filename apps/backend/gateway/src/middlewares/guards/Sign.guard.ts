@@ -136,7 +136,7 @@ export class SignGuard implements CanActivate {
       switch (stringTrim(error?.message)) {
         case HttpBusinessCode.jwtexpired:
         case HttpBusinessCode.invalidToken:
-          response.data = httpBusinessMappingCodes.jwtexpired;
+          response.data = httpBusinessMappingCodes.jwtExpired;
           break;
         default:
           break;

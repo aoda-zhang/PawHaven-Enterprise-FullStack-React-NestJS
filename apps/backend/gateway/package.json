@@ -9,7 +9,9 @@
   },
   "scripts": {
     "dev": "nest start --watch",
-    "build": "nest build",
+    "build:backend-core": "pnpm --filter @pawhaven/backend-core run build",
+    "build:gateway": "nest build",
+    "build": "pnpm i && pnpm run build:backend-core && pnpm run build:gateway",
     "start": "node dist/main.js",
     "typecheck": "tsc --noEmit"
   },
