@@ -1,0 +1,68 @@
+http:
+  env: uat
+  port: 8080
+  prefix: api
+  timeout: 5000
+  retryCount: 3
+  retryDelay: 500
+
+documentService:
+  baseURL: localehost:8082/api/document
+
+swagger:
+  title: 管理后台
+  version: 1.0
+  prefix: api-docs
+  description: 管理后台接口文档
+
+DBConnections:
+  - enable: true
+    options:
+      name: CORE_SERVICE_DB
+      uri: ${CORE_SERVICE_DB}
+
+microServices:
+  - name: core-service
+    enable: true
+    options:
+      host: http://localhost
+      port: 8081
+
+cors:
+  allowedHeaders:
+    - X-timestamp
+    - Access-Token
+    - Accept
+    - Content-Type
+    - X-Sign
+    - Locale
+  origins:
+    - http://localhost:3001
+    - 'http://130.33.242.136'
+  optionsSuccessStatus: 200
+  methods:
+    - GET
+    - POST
+    - PUT
+    - OPTIONS
+    - HEAD
+    - PATCH
+
+limitation:
+  ttl: 60
+  limit: 1000
+
+auth:
+  secret: aoda+zyr
+  ttl: 4h
+  refreshSecret: '^zyr&aoda^'
+  refreshTTL: 3d
+  saltRounds: 10
+  # privateKey: 47607E9C37F01796C5097F18B0873D8629BB8AC45F2E588DEAABE2AB49F79E28
+  privateKey: ${AUTH_PRIVATEKEY}
+  requestGap: 120
+  enableSign: true
+  rootUser: LOVE
+
+health:
+  ping: http://130.33.242.136/api/ping
