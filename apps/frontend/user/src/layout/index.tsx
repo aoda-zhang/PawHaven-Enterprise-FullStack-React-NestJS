@@ -12,6 +12,9 @@ import { RootLayoutMenu } from './RootLayoutMenu';
 import { useGlobalState } from '@/store/globalReducer';
 import type { MenuItemType, RouterInfoType } from '@/types/LayoutType';
 
+const environmentVariables = import.meta.env;
+const currentEnv = environmentVariables.PAWHAVEN_USER_APP_ENV;
+
 export interface LayoutProps {
   menuItems: MenuItemType[];
   navigate: NavigateFunction;
@@ -34,7 +37,7 @@ export const RootLayout = () => {
     <div className="flex flex-col box-border min-h-dvh">
       <header className="sticky top-0 bg-background z-notification">
         <Toast />
-        <div>当前环境是 {getRuntimeEnv('development')}</div>
+        <div>当前环境是 {getRuntimeEnv(currentEnv)}</div>
         {isSysMaintain && (
           <NotificationBanner
             banner={{
