@@ -1,11 +1,11 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
-import { DynamicModule, Global, Module } from '@nestjs/common';
+import { DynamicModule, Global, Logger, Module } from '@nestjs/common';
 import { ConfigModule, ConfigFactory } from '@nestjs/config';
 import * as yaml from 'js-yaml';
-
-import { getCurrentEnv } from '../../utils/getCurrentEnv';
+import { getRuntimeEnv } from '@pawhaven/shared/utils/getRuntimeEnv';
+import { RuntimeEnvType } from '@pawhaven/shared/constants/runtimeEnv';
 
 @Global()
 @Module({})
@@ -14,8 +14,14 @@ export class ConfigsModule {
    * dynamic configuration
    * @param serviceName service name
    */
-  static forRoot(serviceName: string): DynamicModule {
-    const configValues = this.getConfigValues(serviceName);
+  private static readonly logger = new Logger(ConfigsModule.name);
+
+  static forRoot(
+    runtimeEnv: RuntimeEnvType,
+    serviceName: string,
+  ): DynamicModule {
+    const configValues = this.getConfigValues(runtimeEnv, serviceName);
+    this.logger.log('configValues--------------------', configValues);
     const factory: ConfigFactory = () => configValues as Record<string, any>;
     const DynamicConfigModule = ConfigModule.forRoot({
       load: [factory],
@@ -32,9 +38,12 @@ export class ConfigsModule {
     };
   }
 
-  private static getConfigValues<T = unknown>(serviceName: string): T {
+  private static getConfigValues<T = unknown>(
+    runtimeEnv: RuntimeEnvType,
+    serviceName: string,
+  ): T {
     const PROJECT_ROOT = join(__dirname, '../../../../../');
-    const currentEnv = getCurrentEnv();
+    const currentEnv = getRuntimeEnv(runtimeEnv);
     const conventionalConfigPath = join(
       PROJECT_ROOT,
       `apps/backend/${serviceName}/src/config/${currentEnv}/env/index.yaml`,

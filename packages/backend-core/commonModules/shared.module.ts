@@ -1,5 +1,6 @@
 import { DynamicModule, Global, Module, Provider, Type } from '@nestjs/common';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
+import { RuntimeEnvType } from '@pawhaven/shared/constants/runtimeEnv';
 
 import { MiddlewareModule } from '../middlewares/index.module';
 import {
@@ -7,6 +8,7 @@ import {
   SharedModuleOptions,
   SharedModuleProviders,
 } from '../types/shareModule.types';
+import { MicroServiceNameType } from '../constants/microServices';
 
 import { ConfigsModule } from './configModule/configs.module';
 // import { DatabaseModule } from './dataBase/db.module'
@@ -25,6 +27,7 @@ export class SharedModule {
 
   static forRoot(options: SharedModuleOptions): DynamicModule {
     const {
+      runtimeEnv,
       serviceName,
       features: { imports = [], providers = [] },
     } = options;
@@ -32,7 +35,11 @@ export class SharedModule {
       ...new Set([...this.DEFAULT_FEATURES, ...imports]),
     ] as SharedModuleFeatures[];
     const providersToLoad = this.loadProviders(providers) as Provider[];
-    const loadedModules = this.loadModules(serviceName, importsToLoad);
+    const loadedModules = this.loadModules({
+      runtimeEnv,
+      serviceName,
+      features: importsToLoad,
+    });
 
     console.log(
       `\n[SharedModule] Service "${serviceName}" will load ${importsToLoad.length} module(s):`,
@@ -53,18 +60,20 @@ export class SharedModule {
     };
   }
 
-  private static loadModules(
-    serviceName: string,
-    features: SharedModuleFeatures[],
-  ): Array<Type<any> | DynamicModule> {
-    const loadedModules: Array<Type<any> | DynamicModule> = [];
+  private static loadModules(options: {
+    serviceName: MicroServiceNameType;
+    runtimeEnv: RuntimeEnvType;
+    features: SharedModuleFeatures[];
+  }): Array<Type<unknown> | DynamicModule> {
+    const { serviceName, runtimeEnv, features } = options;
+    const loadedModules: Array<Type<unknown> | DynamicModule> = [];
 
     // eslint-disable-next-line no-restricted-syntax
     for (const feature of features) {
       try {
         switch (feature) {
           case SharedModuleFeatures.Config:
-            loadedModules.push(ConfigsModule.forRoot(serviceName));
+            loadedModules.push(ConfigsModule.forRoot(runtimeEnv, serviceName));
             break;
 
           case SharedModuleFeatures.HttpClient:

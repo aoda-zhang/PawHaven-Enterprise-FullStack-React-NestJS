@@ -1,10 +1,9 @@
 {
   "name": "@pawhaven/shared",
   "version": "1.0.0",
-  "type": "module",
   "private": true,
   "engines": {
-    "node": "22.x",
+    "node": "24.x",
     "pnpm": ">=10"
   },
   "description": "PawHaven: An enterprise-level fullstack project built with React and NestJS.",

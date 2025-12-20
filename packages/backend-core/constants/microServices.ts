@@ -4,3 +4,6 @@ export const microServiceNames = {
   DOCUMENT: 'document-service',
   AUTH: 'auth-service',
 } as const;
+
+export type MicroServiceNameType =
+  (typeof microServiceNames)[keyof typeof microServiceNames];

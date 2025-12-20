@@ -5,6 +5,8 @@ import {
   SharedModuleFeatures,
   SharedModuleProviders,
 } from '@pawhaven/backend-core';
+// import ACLGuard from '@modules/ACL/middlewares/ACL.guard'
+import { RuntimeEnvType } from '@pawhaven/shared/constants/runtimeEnv';
 
 import { GatewayController } from './app.controller';
 import { AuthService } from './services/auth.service';
@@ -14,11 +16,12 @@ import { CoreService } from './services/core.service';
 // import { JwtModule } from '@nestjs/jwt';
 // import { SignGuard } from '@modules/Auth/guards/Sign.guard';
 // import { JWTGuard } from '@modules/Auth/guards/JWT.guard';
-// import ACLGuard from '@modules/ACL/middlewares/ACL.guard'
+console.log('当前env---------------', process.env.NODE_ENV);
 
 @Module({
   imports: [
     SharedModule.forRoot({
+      runtimeEnv: process.env.NODE_ENV as RuntimeEnvType,
       serviceName: microServiceNames.GATEWAY,
       features: {
         imports: [SharedModuleFeatures.Swagger],

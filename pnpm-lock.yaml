@@ -581,6 +581,9 @@ importers:
       '@pawhaven/backend-core':
         specifier: workspace:*
         version: link:../../../packages/backend-core
+      '@pawhaven/shared':
+        specifier: workspace:*
+        version: link:../../../packages/shared
       axios:
         specifier: ^1.12.2
         version: 1.13.2
@@ -645,9 +648,6 @@ importers:
       '@pawhaven/eslint-config':
         specifier: workspace:*
         version: link:../../../packages/eslint-config
-      '@pawhaven/shared':
-        specifier: workspace:*
-        version: link:../../../packages/shared
       '@pawhaven/tsconfig':
         specifier: workspace:*
         version: link:../../../packages/tsconfig
@@ -886,6 +886,9 @@ importers:
       '@nestjs/throttler':
         specifier: ^6.4.0
         version: 6.4.0(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(reflect-metadata@0.2.2)
+      '@pawhaven/shared':
+        specifier: workspace:*
+        version: link:../shared
       '@types/bcrypt':
         specifier: ^6.0.0
         version: 6.0.0

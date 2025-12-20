@@ -15,7 +15,7 @@ export { HttpSuccessInterceptor } from './commonModules/httpClient/httpIntercept
 
 // ========= constants =========== //
 
-export { microServiceNames } from './constants/microServiceNames';
+export { microServiceNames } from './constants/microServices';
 export { httpBusinessMappingCodes } from './constants/httpBusinessMappingCodes';
 
 // ========= Types =========== //
