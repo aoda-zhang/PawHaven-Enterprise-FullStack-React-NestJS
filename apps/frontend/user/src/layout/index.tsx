@@ -1,4 +1,5 @@
 import { useRouterInfo } from '@pawhaven/frontend-core/hooks';
+import { getRuntimeEnv } from '@pawhaven/shared';
 import { NotificationBanner, Toast } from '@pawhaven/ui';
 import { useTranslation } from 'react-i18next';
 import type { NavigateFunction, UIMatch } from 'react-router-dom';
@@ -33,6 +34,7 @@ export const RootLayout = () => {
     <div className="flex flex-col box-border min-h-dvh">
       <header className="sticky top-0 bg-background z-notification">
         <Toast />
+        <div>当前环境是 {getRuntimeEnv('development')}</div>
         {isSysMaintain && (
           <NotificationBanner
             banner={{

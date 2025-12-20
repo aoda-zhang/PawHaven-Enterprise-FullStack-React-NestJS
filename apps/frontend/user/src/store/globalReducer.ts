@@ -1,5 +1,5 @@
 import { storageTool } from '@pawhaven/frontend-core/utils';
-import { localeCodes } from '@pawhaven/shared/constants/localeCodes';
+import { localeCodes } from '@pawhaven/shared';
 import { createSlice } from '@reduxjs/toolkit';
 
 import { useReduxSelector } from '../hooks/reduxHooks';

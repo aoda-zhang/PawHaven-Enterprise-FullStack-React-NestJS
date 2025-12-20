@@ -1,4 +1,4 @@
-import { localeCodes } from '@pawhaven/shared/constants/localeCodes';
+import { localeCodes } from '@pawhaven/shared';
 
 import { storageTool } from '../storage/storageTool';
 

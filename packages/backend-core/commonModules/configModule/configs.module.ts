@@ -4,8 +4,7 @@ import { join } from 'node:path';
 import { DynamicModule, Global, Logger, Module } from '@nestjs/common';
 import { ConfigModule, ConfigFactory } from '@nestjs/config';
 import * as yaml from 'js-yaml';
-import { getRuntimeEnv } from '@pawhaven/shared/utils/getRuntimeEnv';
-import { RuntimeEnvType } from '@pawhaven/shared/constants/runtimeEnv';
+import { getRuntimeEnv, RuntimeEnvType } from '@pawhaven/shared';
 
 @Global()
 @Module({})
@@ -25,7 +24,7 @@ export class ConfigsModule {
     const factory: ConfigFactory = () => configValues as Record<string, any>;
     const DynamicConfigModule = ConfigModule.forRoot({
       load: [factory],
-      envFilePath: '.env',
+      envFilePath: '../../../../apps//backend//gateway/.env',
       isGlobal: true,
       cache: true,
       expandVariables: true,

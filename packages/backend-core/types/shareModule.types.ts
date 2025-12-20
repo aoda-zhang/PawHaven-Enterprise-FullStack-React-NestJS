@@ -1,4 +1,4 @@
-import { RuntimeEnvType } from '@pawhaven/shared/constants/runtimeEnv';
+import { RuntimeEnvType } from '@pawhaven/shared';
 
 import { MicroServiceNameType } from '../constants/microServices';
 

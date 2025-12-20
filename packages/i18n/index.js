@@ -1,7 +1,7 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { getLocale } from '@pawhaven/frontend-core/utils';
-import { localeCodes } from '@pawhaven/shared/constants';
+import { localeCodes } from '@pawhaven/shared';
 
 import deDE from './de-DE.json';
 import enUS from './en-US.json';

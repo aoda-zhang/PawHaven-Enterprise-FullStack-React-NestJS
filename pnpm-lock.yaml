@@ -1181,10 +1181,16 @@ importers:
         version: 16.3.4(i18next@25.6.3(typescript@5.9.3))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3)
 
   packages/shared:
-    dependencies:
+    devDependencies:
       '@pawhaven/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
+      '@pawhaven/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
+      '@types/node':
+        specifier: ^24.10.1
+        version: 24.10.1
 
   packages/tsconfig:
     dependencies:
@@ -10397,7 +10403,7 @@ snapshots:
 
   '@types/conventional-commits-parser@5.0.2':
     dependencies:
-      '@types/node': 25.0.2
+      '@types/node': 24.10.1
 
   '@types/cookiejar@2.1.5': {}
 
@@ -10669,7 +10675,7 @@ snapshots:
   '@typescript-eslint/project-service@8.47.0(typescript@5.9.3)':
     dependencies:
       '@typescript-eslint/tsconfig-utils': 8.47.0(typescript@5.9.3)
-      '@typescript-eslint/types': 8.47.0
+      '@typescript-eslint/types': 8.50.0
       debug: 4.4.3
       typescript: 5.9.3
     transitivePeerDependencies:

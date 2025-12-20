@@ -6,7 +6,7 @@ import {
   SharedModuleProviders,
 } from '@pawhaven/backend-core';
 // import ACLGuard from '@modules/ACL/middlewares/ACL.guard'
-import { RuntimeEnvType } from '@pawhaven/shared/constants/runtimeEnv';
+import { RuntimeEnvType } from '@pawhaven/shared';
 
 import { GatewayController } from './app.controller';
 import { AuthService } from './services/auth.service';

@@ -1,6 +1,6 @@
 import { DynamicModule, Global, Module, Provider, Type } from '@nestjs/common';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
-import { RuntimeEnvType } from '@pawhaven/shared/constants/runtimeEnv';
+import { RuntimeEnvType } from '@pawhaven/shared';
 
 import { MiddlewareModule } from '../middlewares/index.module';
 import {

@@ -1,10 +1,8 @@
 {
   "extends": "@pawhaven/tsconfig/node",
   "compilerOptions": {
-    "outDir": "dist",
-    "paths": {
-      "@pawhaven/shared": ["../shared/*"]
-    }
+    "outDir": "dist"
   },
+  "include": ["./**/*"],
   "exclude": ["node_modules", "dist"]
 }

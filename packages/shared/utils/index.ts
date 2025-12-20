@@ -1,1 +1,2 @@
-export { stringTrim } from './stringTrim';
+export { stringTrim } from './stringTrim.js';
+export { getRuntimeEnv } from './getRuntimeEnv.js';
