@@ -9,9 +9,7 @@
   },
   "scripts": {
     "dev": "nest start --watch",
-    "build:backend-core": "pnpm --filter @pawhaven/backend-core run build",
-    "build:gateway": "nest build",
-    "build": "pnpm i && pnpm run build:backend-core && pnpm run build:gateway",
+    "build": "nest build",
     "start": "node dist/main.js",
     "typecheck": "tsc --noEmit"
   },
@@ -46,7 +44,8 @@
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.2",
     "swagger-ui-express": "^5.0.1",
-    "uuid": "^13.0.0"
+    "uuid": "^13.0.0",
+    "turbo": "^2.7.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^11.0.10",

@@ -9,10 +9,9 @@
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.js",
-  "module": "dist/index.js",
+  "module": "./dist/index.js",
   "exports": {
     ".": {
-      "require": "./dist/index.js",
       "types": "./dist/index.d.js",
       "import": "./dist/index.js",
       "default": "./dist/index.js"
@@ -20,7 +19,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "start:watch": "tsc --watch "
+    "dev": "tsc --watch"
   },
   "description": "PawHaven: An enterprise-level fullstack project built with React and NestJS.",
   "author": "aodazhang666@gmail.com",

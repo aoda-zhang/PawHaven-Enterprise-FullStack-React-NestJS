@@ -72,8 +72,7 @@
   },
   "scripts": {
     "dev": "vite --mode dev",
-    "build:shared": "pnpm --filter @pawhaven/shared run build",
-    "build": "pnpm build:shared && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit"
   },

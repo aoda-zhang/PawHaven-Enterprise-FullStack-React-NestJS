@@ -16,7 +16,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "start:watch": "tsc --watch "
+    "dev": "tsc --watch "
   },
   "dependencies": {
     "@pawhaven/shared": "workspace:*",
