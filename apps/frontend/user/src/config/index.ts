@@ -12,7 +12,11 @@ export const EnvVariables = {
 } as const;
 
 const environmentVariables = import.meta.env;
+console.log('environmentVariables-----------------', environmentVariables);
+
 const currentEnv = environmentVariables.PAWHAVEN_USER_APP_ENV;
+
+console.log('currentEnv-----------------', currentEnv);
 
 if (!currentEnv || !(currentEnv in EnvVariables)) {
   throw new Error(`Invalid or missing environment mode: ${currentEnv}`);
