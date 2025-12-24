@@ -11,7 +11,7 @@ import { RuntimeEnvType } from '@pawhaven/shared';
 import { GatewayController } from './app.controller';
 import { AuthService } from './services/auth.service';
 import { CoreService } from './services/core.service';
-import 'dotenv/config';
+
 // import { APP_GUARD } from '@nestjs/core';
 // import { DocumentModule } from '@modules/Document/document.module';
 // import { JwtModule } from '@nestjs/jwt';

@@ -13,7 +13,7 @@ export class GatewayController {
   // ---------core service------------ //
 
   @Get('/core/test/:id')
-  testCore(@Param('id') id: string) {
+  testCore(@Param('id') id: number) {
     return this.coreService.test(id);
   }
 

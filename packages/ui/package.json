@@ -3,8 +3,22 @@
   "version": "3.0.0",
   "private": true,
   "engines": {
-    "node": "22.x",
+    "node": ">=22.x",
     "pnpm": ">=10"
+  },
+  "main": "./build/index.js",
+  "module": "./build/index.js",
+  "types": "./build/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "import": "./build/index.js",
+      "default": "./build/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
   },
   "description": "PawHaven: An enterprise-level fullstack project built with React and NestJS.",
   "repository": {

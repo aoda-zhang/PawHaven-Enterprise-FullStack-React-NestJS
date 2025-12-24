@@ -10,6 +10,7 @@
   "scripts": {
     "dev": "nest start --watch",
     "build": "nest build",
+    "turbo:build": "pnpm turbo run build --filter=@pawhaven/gateway --env-mode=loose",
     "start": "node dist/main.js",
     "typecheck": "tsc --noEmit"
   },
@@ -36,9 +37,7 @@
     "crypto-js": "^4.2.0",
     "csurf": "^1.11.0",
     "dayjs": "^1.11.18",
-    "dotenv": "^17.2.3",
     "helmet": "^8.1.0",
-    "js-yaml": "^4.1.0",
     "mongoose": "^8.19.1",
     "puppeteer": "^24.24.0",
     "reflect-metadata": "^0.2.2",

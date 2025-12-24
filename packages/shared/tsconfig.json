@@ -1,26 +1,11 @@
-// {
-//   "extends": "@pawhaven/tsconfig/base",
-//   "compilerOptions": {
-//     "outDir": "dist",
-//     "lib": ["ES2022", "DOM"],
-//     "module": "NodeNext",
-//     "moduleResolution": "NodeNext",
-//     "declaration": true,
-//     "declarationMap": true
-//   }
-// }
-
 {
+  "extends": "@pawhaven/tsconfig/base",
   "compilerOptions": {
-    "target": "ES2022",
+    "outDir": "dist",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "declaration": true,
-    "declarationMap": true,
-    "outDir": "dist",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true
+    "declarationMap": true
   },
   "exclude": ["node_modules", "dist"]
 }

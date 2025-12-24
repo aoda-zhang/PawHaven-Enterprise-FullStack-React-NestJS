@@ -65,7 +65,7 @@ export class SharedModule {
     runtimeEnv: RuntimeEnvType;
     features: SharedModuleFeatures[];
   }): Array<Type<unknown> | DynamicModule> {
-    const { serviceName, runtimeEnv, features } = options;
+    const { serviceName, features } = options;
     const loadedModules: Array<Type<unknown> | DynamicModule> = [];
 
     // eslint-disable-next-line no-restricted-syntax
@@ -73,7 +73,7 @@ export class SharedModule {
       try {
         switch (feature) {
           case SharedModuleFeatures.Config:
-            loadedModules.push(ConfigsModule.forRoot(runtimeEnv, serviceName));
+            loadedModules.push(ConfigsModule.forRoot(serviceName));
             break;
 
           case SharedModuleFeatures.HttpClient:

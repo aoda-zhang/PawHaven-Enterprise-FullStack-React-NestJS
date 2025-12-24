@@ -1,6 +1,6 @@
 http:
   env: prod
-  port: 2826
+  port: 8080
   prefix: api
   timeout: 5000
   retryCount: 3

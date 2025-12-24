@@ -4,7 +4,7 @@ This package provides shared TypeScript configuration presets for the PawHaven m
 
 ## Usage
 
-Follow these two steps to apply this tsconfig config in your sub-packages (e.g., `apps/frontend/user`):
+Follow these two steps to apply this tsconfig config in your sub-packages (e.g., `apps/frontend/portal`):
 
 1. Add `@pawhaven/tsconfig` to your sub-package's `package.json` dependencies (workspace-aware):
 
