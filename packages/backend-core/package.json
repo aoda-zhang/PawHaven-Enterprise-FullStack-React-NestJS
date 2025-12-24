@@ -11,14 +11,16 @@
   "exports": {
     ".": {
       "require": "./dist/index.js",
-      "types": "./dist/index.d.js"
+      "types": "./dist/index.d.ts"
     }
   },
   "scripts": {
     "build": "tsc",
-    "start:watch": "tsc --watch "
+    "dev": "tsc --watch ",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@pawhaven/shared": "workspace:*",
     "@nestjs/axios": "^4.0.1",
     "@nestjs/common": "^11.1.6",
     "@nestjs/config": "^4.0.2",

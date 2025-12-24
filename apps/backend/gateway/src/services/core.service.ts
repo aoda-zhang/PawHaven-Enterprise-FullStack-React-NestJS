@@ -9,7 +9,7 @@ export class CoreService {
     this.coreService = this.httpClient.create(microServiceNames.CORE);
   }
 
-  test(id: string) {
+  test(id: number) {
     return this.coreService.get(`/core/test/${id}`);
   }
 }

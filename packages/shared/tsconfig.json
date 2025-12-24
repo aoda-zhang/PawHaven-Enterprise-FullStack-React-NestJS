@@ -1,0 +1,11 @@
+{
+  "extends": "@pawhaven/tsconfig/base",
+  "compilerOptions": {
+    "outDir": "dist",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "declaration": true,
+    "declarationMap": true
+  },
+  "exclude": ["node_modules", "dist"]
+}

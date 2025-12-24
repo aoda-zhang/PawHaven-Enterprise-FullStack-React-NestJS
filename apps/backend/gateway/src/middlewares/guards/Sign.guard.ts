@@ -14,7 +14,7 @@ import {
 import CryptoJS from 'crypto-js';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
-import { stringTrim } from '@pawhaven/shared/utils';
+import { stringTrim } from '@pawhaven/shared';
 
 import { decoratorsKeys } from '../decorators/decorator.constant';
 

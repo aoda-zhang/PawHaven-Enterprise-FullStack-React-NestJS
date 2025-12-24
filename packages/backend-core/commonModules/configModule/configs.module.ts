@@ -1,11 +1,12 @@
+import 'dotenv/config';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 import { DynamicModule, Global, Module } from '@nestjs/common';
 import { ConfigModule, ConfigFactory } from '@nestjs/config';
 import * as yaml from 'js-yaml';
-
-import { getCurrentEnv } from '../../utils/getCurrentEnv';
+import { getRuntimeEnv, resolveAppConfig } from '@pawhaven/shared';
+import type { RuntimeEnvType } from '@pawhaven/shared';
 
 @Global()
 @Module({})
@@ -15,14 +16,28 @@ export class ConfigsModule {
    * @param serviceName service name
    */
   static forRoot(serviceName: string): DynamicModule {
-    const configValues = this.getConfigValues(serviceName);
-    const factory: ConfigFactory = () => configValues as Record<string, any>;
+    const runtimeEnv = process.env.NODE_ENV as RuntimeEnvType;
+    const currentEnv = getRuntimeEnv(runtimeEnv);
+    const yamlContent = this.loadYamlContent<Record<string, unknown>>(
+      currentEnv,
+      serviceName,
+    );
+    const appConfig = resolveAppConfig(yamlContent, process.env) ?? {};
+    const configFactory: ConfigFactory = () => ({
+      ...appConfig,
+    });
+
     const DynamicConfigModule = ConfigModule.forRoot({
-      load: [factory],
-      envFilePath: '.env',
       isGlobal: true,
       cache: true,
       expandVariables: true,
+      envFilePath: [
+        `.env.local.${currentEnv}`,
+        `.env.${currentEnv}`,
+        '.env.local',
+        '.env',
+      ],
+      load: [configFactory],
     });
 
     return {
@@ -32,12 +47,14 @@ export class ConfigsModule {
     };
   }
 
-  private static getConfigValues<T = unknown>(serviceName: string): T {
+  private static loadYamlContent<T = unknown>(
+    runtimeEnv: string,
+    serviceName: string,
+  ): T {
     const PROJECT_ROOT = join(__dirname, '../../../../../');
-    const currentEnv = getCurrentEnv();
     const conventionalConfigPath = join(
       PROJECT_ROOT,
-      `apps/backend/${serviceName}/src/config/${currentEnv}/env/index.yaml`,
+      `apps/backend/${serviceName}/src/config/${runtimeEnv}/env/index.yaml`,
     );
     try {
       return yaml.load(readFileSync(conventionalConfigPath, 'utf8')) as T;

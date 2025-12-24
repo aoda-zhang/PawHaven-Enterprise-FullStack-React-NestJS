@@ -38,14 +38,12 @@ cors:
     - Locale
   origins:
     - http://localhost:3001
-    - 'http://130.33.242.136'
   optionsSuccessStatus: 200
   methods:
     - GET
     - POST
     - PUT
-    - OPTIONS
-    - HEAD
+    - DELETE
     - PATCH
 
 limitation:

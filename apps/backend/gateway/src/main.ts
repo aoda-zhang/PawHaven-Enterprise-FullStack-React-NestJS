@@ -42,7 +42,8 @@ async function bootstrap() {
   const swaggerService = app.get(SwaggerService);
   swaggerService.init(app);
   app.use(helmet());
-  const port = app.get(ConfigService).get('http.port') ?? 8080;
+  const port = app.get(ConfigService).get('http.port');
+
   await app
     .listen(port, '0.0.0.0', () => {
       console.log(`Successfully runing on local  http://localhost:${port}`);

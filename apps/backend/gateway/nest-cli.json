@@ -3,9 +3,14 @@
   "collection": "@nestjs/schematics",
   "sourceRoot": "src",
   "compilerOptions": {
+    "watchAssets": true,
     "assets": [
       {
-        "include": "config/**",
+        "include": "./src/config/**",
+        "watchAssets": true
+      },
+      {
+        "include": ".env*",
         "watchAssets": true
       }
     ]

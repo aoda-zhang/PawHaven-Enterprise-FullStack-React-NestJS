@@ -1,7 +1,6 @@
 {
   "extends": "@pawhaven/tsconfig/node",
   "compilerOptions": {
-    "rootDir": ".",
     "outDir": "dist"
   },
   "include": ["./**/*"],

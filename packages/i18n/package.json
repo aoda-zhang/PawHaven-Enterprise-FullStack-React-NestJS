@@ -25,7 +25,6 @@
     "pawhaven"
   ],
   "dependencies": {
-    "@pawhaven/frontend-core": "workspace:*",
     "@pawhaven/shared": "workspace:*",
     "i18next": "^25.6.0",
     "react-i18next": "^16.0.0"

@@ -3,8 +3,26 @@
   "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": "22.x",
+    "node": ">=22.x",
     "pnpm": ">=10"
+  },
+  "main": "./build/index.js",
+  "module": "./build/index.js",
+  "types": "./build/index.d.ts",
+  "files": [
+    "build"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "import": "./build/index.js",
+      "default": "./build/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
   },
   "description": "PawHaven: An enterprise-level fullstack project built with React and NestJS.",
   "author": "aodazhang666@gmail.com",
@@ -23,7 +41,6 @@
     "stray-animals",
     "pawhaven"
   ],
-  "sideEffects": false,
   "license": "MIT",
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -53,13 +70,5 @@
     "typescript": "^5.9.3",
     "@types/crypto-js": "^4.2.2",
     "@pawhaven/eslint-config": "workspace:*"
-  },
-  "exports": {
-    "./constants": "./constants/index.ts",
-    "./utils": "./utils/index.ts",
-    "./components": "./components/index.ts",
-    "./hooks": "./hooks/index.ts",
-    "./api": "./api/index.ts",
-    "./reactQuery": "./reactQuery/index.ts"
   }
 }

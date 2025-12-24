@@ -6,11 +6,12 @@
     "node": ">=22"
   },
   "scripts": {
-    "start:debug": "cross-env NODE_ENV=dev nest start --debug --watch",
-    "dev": "cross-env NODE_ENV=dev nest start --watch",
-    "uat": "cross-env NODE_ENV=uat nest start --watch",
-    "test": "cross-env NODE_ENV=test nest start --watch",
-    "build": "rm -rf build && nest build"
+    "dev": "nest start --watch",
+    "build:backend-core": "pnpm --filter @pawhaven/backend-core run build",
+    "build:service": "nest build",
+    "build": "pnpm i && pnpm run build:backend-core && pnpm run build:service",
+    "start": "node dist/main.js",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.14.1",
