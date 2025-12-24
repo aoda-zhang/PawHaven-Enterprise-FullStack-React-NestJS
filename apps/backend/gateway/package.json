@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "nest start --watch",
     "build": "nest build",
-    "turbo:build": "pnpm turbo run build --filter=@pawhaven/gateway --env-mode=loose",
+    "turbo:build": "turbo run build --filter=@pawhaven/gateway --env-mode=loose",
     "start": "node dist/main.js",
     "typecheck": "tsc --noEmit"
   },
