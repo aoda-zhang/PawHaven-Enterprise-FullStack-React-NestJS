@@ -1,0 +1,9 @@
+{
+  "extends": "@pawhaven/tsconfig/base",
+  "compilerOptions": {
+    "outDir": "dist/cjs",
+    "module": "CommonJS",
+    "moduleResolution": "node"
+  },
+  "exclude": ["node_modules", "dist"]
+}
