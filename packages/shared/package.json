@@ -2,28 +2,27 @@
   "name": "@pawhaven/shared",
   "version": "1.0.0",
   "private": true,
-  "type": "module",
   "engines": {
     "node": "24.x",
     "pnpm": ">=10"
   },
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "module": "./dist/index.js",
   "files": [
     "dist"
   ],
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.js",
-      "default": "./dist/index.js"
-    },
-    "./package.json": "./package.json"
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    }
   },
   "scripts": {
-    "build": "tsc",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build": "pnpm run build:esm && pnpm run build:cjs",
     "dev": "tsc --watch"
   },
   "description": "PawHaven: An enterprise-level fullstack project built with React and NestJS.",
