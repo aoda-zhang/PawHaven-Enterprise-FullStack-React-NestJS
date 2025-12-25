@@ -2,7 +2,7 @@
   "name": "@pawhaven/shared",
   "version": "1.0.0",
   "private": true,
-  "type": "module",
+  "type": "commonjs",
   "engines": {
     "node": "24.x",
     "pnpm": ">=10"

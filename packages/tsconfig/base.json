@@ -39,9 +39,6 @@
     // Require explicit return values in functions
     "noImplicitReturns": true,
 
-    // Allow importing JSON modules
-    "resolveJsonModule": true,
-
     // Ensure each file can be compiled in isolation (safe for Babel/TSX)
     "isolatedModules": true,
 
