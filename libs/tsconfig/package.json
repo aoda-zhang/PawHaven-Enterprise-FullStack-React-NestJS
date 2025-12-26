@@ -8,23 +8,6 @@
     "./web": "./web.json",
     "./node": "./node.json"
   },
-  "description": "PawHaven: An enterprise-level fullstack project built with React and NestJS.",
-  "author": "aodazhang666@gmail.com",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/aoda-zhang/PawHaven-Enterprise-FullStack-React-NestJS"
-  },
-  "homepage": "https://github.com/aoda-zhang/PawHaven-Enterprise-FullStack-React-NestJS#readme",
-  "keywords": [
-    "FullStack",
-    "react",
-    "nodejs",
-    "nestjs",
-    "monorepo",
-    "animal-rescue",
-    "stray-animals",
-    "pawhaven"
-  ],
   "sideEffects": false,
   "dependencies": {
     "@modyfi/vite-plugin-yaml": "^1.1.1"
