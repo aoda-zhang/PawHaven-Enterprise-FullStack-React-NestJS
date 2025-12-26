@@ -3,7 +3,7 @@
 
 @source "../ui/**/*.{js,ts,jsx,tsx}"; /* Shared pure UI components */
 @source "../../apps/frontend/**/*.{js,ts,jsx,tsx}"; /* Business app */
-@source "../frontend-core/components/**/*.{js,ts,jsx,tsx}"; /* shared components cross multiple app */
+@source "../frontend-core/**/*.{js,ts,jsx,tsx}"; /* shared components cross multiple app */
 
 @theme {
   /* === Core Colors (Warm & Friendly) === */
@@ -204,7 +204,6 @@
     padding: 0;
     min-height: 100%;
     color: var(--color-text);
-    background-color: var(--color-background);
     font-family: var(--font-family-sans);
     /*
       Whether to set a fixed font-size here depends on your business needs:

@@ -1,6 +1,22 @@
 import GlobalStyles from '@mui/material/GlobalStyles';
-import { StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
+import {
+  StyledEngineProvider,
+  ThemeProvider,
+  createTheme,
+} from '@mui/material/styles';
 import { MUITheme } from '@pawhaven/design-system/MUI-theme';
+
+const theme = createTheme(MUITheme, {
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+        },
+      },
+    },
+  },
+});
 
 export const MUIThemeProvider = ({
   children,
@@ -8,9 +24,9 @@ export const MUIThemeProvider = ({
   children: React.ReactNode;
 }) => {
   return (
-    <StyledEngineProvider>
+    <StyledEngineProvider injectFirst>
       <GlobalStyles styles="@layer theme, base, mui, components, utilities;" />
-      <ThemeProvider theme={MUITheme}>{children}</ThemeProvider>
+      <ThemeProvider theme={theme}>{children}</ThemeProvider>
     </StyledEngineProvider>
   );
 };

@@ -6,7 +6,7 @@ export const Brand = ({ navigate }: { navigate: NavigateFunction }) => {
 
   return (
     <div
-      className="flex flex-row items-center gap-3 cursor-pointer mr-auto"
+      className="flex flex-row items-center gap-3 cursor-pointer"
       onClick={() => {
         navigate('/');
       }}
