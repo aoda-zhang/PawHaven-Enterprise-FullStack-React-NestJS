@@ -1,6 +1,7 @@
 packages:
   - apps/**
   - packages/**
+  - libs/**
 
 onlyBuiltDependencies:
   - '@mui/x-telemetry'
@@ -10,5 +11,4 @@ onlyBuiltDependencies:
   - bcrypt
   - esbuild
   - protobufjs
-  - puppeteer
   - unrs-resolver

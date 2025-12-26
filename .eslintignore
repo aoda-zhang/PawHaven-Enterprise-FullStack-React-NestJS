@@ -22,5 +22,5 @@ logs/
 
 # Ignore specific monorepo folders that don't require linting
 packages/i18n
-packages/tsconfig
-packages/eslint-config
+libs/tsconfig
+libs/eslint-config

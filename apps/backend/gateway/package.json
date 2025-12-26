@@ -39,7 +39,6 @@
     "dayjs": "^1.11.18",
     "helmet": "^8.1.0",
     "mongoose": "^8.19.1",
-    "puppeteer": "^24.24.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.2",
     "swagger-ui-express": "^5.0.1",
