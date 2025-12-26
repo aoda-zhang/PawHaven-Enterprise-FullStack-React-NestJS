@@ -13,32 +13,36 @@ export const RootLayoutMenu = ({
   navigate,
   currentRouterInfo,
 }: RootLayoutHeaderProps) => {
-  const isMDDevice = useMatchBreakpoint('md');
+  const enableSidebarMode = useMatchBreakpoint('lg');
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   const onOpenSidebar = () => setSidebarOpen(true);
   const onCloseSidebar = () => setSidebarOpen(false);
 
   return (
-    <header className="flex items-center gap-4 box-border p-[.625rem] z-header border-border border-b-1 px-6 py-4 bg-white">
+    <header className="flex justify-between items-center box-border p-[.625rem] z-header border-border border-b-1 px-6 py-4 bg-white">
       <Brand navigate={navigate} />
-      {!isMDDevice && (
-        <RootLayoutMenuRender
+      <div className="flex gap-4">
+        {!enableSidebarMode && (
+          <RootLayoutMenuRender
+            menuItems={menuItems}
+            activePath={currentRouterInfo?.pathname || ''}
+            navigate={navigate}
+          />
+        )}
+
+        {/* Open Side bar Icon */}
+        {enableSidebarMode && (
+          <AlignJustify size={34} onClick={onOpenSidebar} />
+        )}
+        {/* Side bar */}
+        <RootLayoutSidebar
           menuItems={menuItems}
-          activePath={currentRouterInfo?.pathname || ''}
+          isSidebarOpen={isSidebarOpen}
+          onCloseSidebar={onCloseSidebar}
           navigate={navigate}
         />
-      )}
-
-      {/* Open Side bar Icon */}
-      {isMDDevice && <AlignJustify size={34} onClick={onOpenSidebar} />}
-      {/* Side bar */}
-      <RootLayoutSidebar
-        menuItems={menuItems}
-        isSidebarOpen={isSidebarOpen}
-        onCloseSidebar={onCloseSidebar}
-        navigate={navigate}
-      />
+      </div>
     </header>
   );
 };

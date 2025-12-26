@@ -57,7 +57,11 @@ export const RootLayout = () => {
         <div className="flex-1">
           <Outlet />
         </div>
-        <footer>{isFooterAvailable && <RootLayoutFooter />}</footer>
+        {isFooterAvailable && (
+          <footer>
+            <RootLayoutFooter />
+          </footer>
+        )}
       </main>
     </div>
   );

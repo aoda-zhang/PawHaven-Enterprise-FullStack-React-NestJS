@@ -85,7 +85,6 @@ const getDynamicRouters = (): Promise<RouteObject[]> => {
           handle: {
             isRequireUserLogin: false,
             isMenuAvailable: false,
-            isFooterAvailable: false,
             isLazyLoad: false,
           },
           element: 'auth_login',
@@ -95,7 +94,6 @@ const getDynamicRouters = (): Promise<RouteObject[]> => {
           handle: {
             isRequireUserLogin: false,
             isMenuAvailable: false,
-            isFooterAvailable: false,
             isLazyLoad: false,
           },
           element: 'auth_register',
