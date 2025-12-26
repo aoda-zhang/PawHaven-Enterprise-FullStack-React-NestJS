@@ -2,10 +2,6 @@
   "name": "@pawhaven/frontend-core",
   "version": "1.0.0",
   "private": true,
-  "engines": {
-    "node": ">=22.x",
-    "pnpm": ">=10"
-  },
   "main": "./build/index.js",
   "module": "./build/index.js",
   "types": "./build/index.d.ts",

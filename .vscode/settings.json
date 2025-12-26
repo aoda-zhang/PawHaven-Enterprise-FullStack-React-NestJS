@@ -47,8 +47,8 @@
   // --- 🧭 Path Autocomplete: alias path completions ---
   "path-autocomplete.pathMappings": {
     "@pawhaven/ui/*": "${workspaceFolder}/packages/ui/*",
-    "@pawhaven/frontend-core/*": "${workspaceFolder}/packages/shared-frontend/*",
-    "@pawhaven/backend-core/*": "${workspaceFolder}/packages/shared-backend/*"
+    "@pawhaven/frontend-core/*": "${workspaceFolder}/packages/frontend-core/*",
+    "@pawhaven/backend-core/*": "${workspaceFolder}/packages/backend-core/*"
   },
   "path-autocomplete.extensionOnImport": true,
   "[proto3]": {

@@ -4,10 +4,6 @@
   "main": "main.js",
   "type": "module",
   "private": true,
-  "engines": {
-    "node": "22.x",
-    "pnpm": ">=10"
-  },
   "sideEffects": false,
   "dependencies": {
     "@emotion/react": "^11.14.0",
