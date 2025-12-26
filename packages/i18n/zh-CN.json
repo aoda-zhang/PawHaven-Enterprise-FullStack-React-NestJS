@@ -63,8 +63,8 @@
   },
   "home": {
     "home_page": "主页",
-    "rescue": " 我要救助",
-    "report": "我要上报"
+    "rescue": " 救助",
+    "report": "上报"
   },
   "reportStray": {
     "report_animal": "上报流浪动物",
