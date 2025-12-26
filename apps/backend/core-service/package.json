@@ -2,9 +2,6 @@
   "private": "true",
   "name": "@pawhaven/core-service",
   "version": "1.0.0",
-  "engines": {
-    "node": ">=22"
-  },
   "scripts": {
     "dev": "nest start --watch",
     "build:backend-core": "pnpm --filter @pawhaven/backend-core run build",

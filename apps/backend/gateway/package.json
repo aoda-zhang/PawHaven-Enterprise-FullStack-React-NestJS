@@ -3,10 +3,6 @@
   "private": true,
   "name": "@pawhaven/gateway",
   "version": "1.0.0",
-  "engines": {
-    "node": ">=22",
-    "pnpm": ">=10"
-  },
   "scripts": {
     "dev": "nest start --watch",
     "build": "nest build",

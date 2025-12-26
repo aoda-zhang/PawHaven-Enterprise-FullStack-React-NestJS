@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "engines": {
-    "node": ">=22.x",
-    "pnpm": ">=10"
+    "node": "24.x",
+    "pnpm": "10"
   },
   "scripts": {
     "prepare": "husky",

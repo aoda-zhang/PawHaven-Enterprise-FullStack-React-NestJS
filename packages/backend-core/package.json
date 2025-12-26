@@ -2,10 +2,6 @@
   "private": true,
   "name": "@pawhaven/backend-core",
   "version": "1.0.0",
-  "engines": {
-    "node": ">=22",
-    "pnpm": ">=10"
-  },
   "main": "./dist/index.js",
   "types": "./dist/index.d.js",
   "exports": {

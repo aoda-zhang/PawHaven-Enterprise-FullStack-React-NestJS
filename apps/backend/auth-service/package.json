@@ -4,10 +4,6 @@
   "name": "@pawhaven/auth",
   "main": "build/main.js",
   "version": "1.0.0",
-  "engines": {
-    "node": ">=22",
-    "pnpm": ">=10"
-  },
   "scripts": {
     "start:dev": "cross-env NODE_ENV=dev nest start --watch",
     "uat": "cross-env NODE_ENV=uat nest start --watch",

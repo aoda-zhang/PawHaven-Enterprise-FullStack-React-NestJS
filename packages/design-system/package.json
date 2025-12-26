@@ -2,10 +2,6 @@
   "name": "@pawhaven/design-system",
   "version": "1.0.0",
   "private": true,
-  "engines": {
-    "node": "22.x",
-    "pnpm": ">=10"
-  },
   "dependencies": {
     "react": "^19.2.0",
     "@mui/material": "^7.3.4",
