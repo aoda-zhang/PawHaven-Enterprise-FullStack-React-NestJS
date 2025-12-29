@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 
 import { AuthService } from './services/auth.service';
 import { CoreService } from './services/core.service';
@@ -12,15 +12,15 @@ export class GatewayController {
 
   // ---------core service------------ //
 
-  @Get('/core/test/:id')
-  testCore(@Param('id') id: number) {
-    return this.coreService.test(id);
+  @Get('/core/bootstrap')
+  getNavigation() {
+    return this.coreService.getAppBootstrap();
   }
 
   // ---------auth service------------ //
 
-  @Get('/auth/test/:id')
-  testAuth(@Param('id') id: string) {
-    return this.authService.test(id);
+  @Get('/auth/navigation')
+  getNavigations() {
+    return this.authService.getNavigation();
   }
 }

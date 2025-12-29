@@ -30,6 +30,7 @@ export const NotificationBanner: React.FC<{ banner: BannerMessage }> = ({
           'rounded-none justify-start text-left text-[0.95rem] py-4 px-4 lg:px-20 bg-info',
           banner?.bannerWrapClassNames,
         ])}
+        sx={{ borderRadius: 0 }}
         action={
           banner.dismissible ? (
             <IconButton size="small" onClick={() => setOpen(false)}>

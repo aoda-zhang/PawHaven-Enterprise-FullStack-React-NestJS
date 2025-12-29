@@ -3,13 +3,13 @@ import { HttpClientService, microServiceNames } from '@pawhaven/backend-core';
 
 @Injectable()
 export class AuthService {
-  private readonly coreService;
+  private readonly authService;
 
   constructor(private httpClient: HttpClientService) {
-    this.coreService = this.httpClient.create(microServiceNames.CORE);
+    this.authService = this.httpClient.create(microServiceNames.AUTH);
   }
 
-  test(id: string) {
-    return this.coreService.get(`/pawhaven/${id}`);
+  getNavigation() {
+    return this.authService.get('/test');
   }
 }

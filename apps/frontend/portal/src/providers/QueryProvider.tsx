@@ -38,7 +38,14 @@ export const QueryProvider = ({ children }: { children: ReactNode }) => {
   return (
     <PersistQueryClientProvider
       client={queryClient}
-      persistOptions={{ persister: asyncStoragePersister }}
+      persistOptions={{
+        persister: asyncStoragePersister,
+        dehydrateOptions: {
+          shouldDehydrateQuery: (query) => {
+            return query.meta?.persist === true;
+          },
+        },
+      }}
     >
       {children}
       {!IsStableEnv && <ReactQueryDevtools initialIsOpen />}

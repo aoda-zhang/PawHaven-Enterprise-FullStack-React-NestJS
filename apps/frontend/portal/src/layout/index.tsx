@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next';
 import type { NavigateFunction, UIMatch } from 'react-router-dom';
 import { Outlet, useNavigate } from 'react-router-dom';
 
-import { useFetchGlobalMenu } from './RootLayoutAPI';
 import { RootLayoutFooter } from './RootLayoutFooter';
 import { RootLayoutMenu } from './RootLayoutMenu';
 
+import { useAppBootstrapState } from '@/store/appBootstrapReducer';
 import { useGlobalState } from '@/store/globalReducer';
 import type { MenuItemType, RouterInfoType } from '@/types/LayoutType';
 
@@ -18,11 +18,8 @@ export interface LayoutProps {
 }
 
 export const RootLayout = () => {
-  const { profile, isSysMaintain } = useGlobalState();
-  const { data: globalMenuItems = [] } = useFetchGlobalMenu(
-    profile?.baseUserInfo?.userID,
-    profile?.baseUserInfo?.globalMenuUpdateAt,
-  );
+  const { isSysMaintain } = useGlobalState();
+  const { menus } = useAppBootstrapState();
   const navigate = useNavigate();
   const { t } = useTranslation();
   const currentRouterInfo = useRouterInfo<RouterInfoType>();
@@ -44,9 +41,9 @@ export const RootLayout = () => {
             }}
           />
         )}
-        {isMenuAvailable && globalMenuItems?.length > 0 && (
+        {isMenuAvailable && menus?.length > 0 && (
           <RootLayoutMenu
-            menuItems={globalMenuItems}
+            menuItems={menus}
             navigate={navigate}
             currentRouterInfo={currentRouterInfo}
           />

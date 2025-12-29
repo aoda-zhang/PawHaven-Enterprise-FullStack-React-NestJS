@@ -1,5 +1,3 @@
-import { RuntimeEnvType } from '@pawhaven/shared';
-
 import { MicroServiceNameType } from '../constants/microServices';
 
 // Nest Dynamic module
@@ -19,7 +17,6 @@ export enum SharedModuleProviders {
 
 export interface SharedModuleOptions {
   serviceName: MicroServiceNameType;
-  runtimeEnv: RuntimeEnvType;
   features: {
     imports?: SharedModuleFeatures[];
     providers?: SharedModuleProviders[];

@@ -1,6 +1,5 @@
 import { DynamicModule, Global, Module, Provider, Type } from '@nestjs/common';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
-import { RuntimeEnvType } from '@pawhaven/shared';
 
 import { MiddlewareModule } from '../middlewares/index.module';
 import {
@@ -27,7 +26,6 @@ export class SharedModule {
 
   static forRoot(options: SharedModuleOptions): DynamicModule {
     const {
-      runtimeEnv,
       serviceName,
       features: { imports = [], providers = [] },
     } = options;
@@ -36,7 +34,6 @@ export class SharedModule {
     ] as SharedModuleFeatures[];
     const providersToLoad = this.loadProviders(providers) as Provider[];
     const loadedModules = this.loadModules({
-      runtimeEnv,
       serviceName,
       features: importsToLoad,
     });
@@ -62,7 +59,6 @@ export class SharedModule {
 
   private static loadModules(options: {
     serviceName: MicroServiceNameType;
-    runtimeEnv: RuntimeEnvType;
     features: SharedModuleFeatures[];
   }): Array<Type<unknown> | DynamicModule> {
     const { serviceName, features } = options;

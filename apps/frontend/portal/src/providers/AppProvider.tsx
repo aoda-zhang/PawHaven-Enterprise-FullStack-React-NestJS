@@ -8,6 +8,7 @@ import { MUIThemeProvider } from './MUIThemeProvider';
 import { QueryProvider } from './QueryProvider';
 import { StoreProvider } from './StoreProvider';
 
+import { AppBootstrapGate } from '@/components/AppBootstrapGate';
 import { SystemError } from '@/components/SystemError';
 
 type AppProviderProps = {
@@ -19,7 +20,9 @@ export const AppProvider = ({ children }: AppProviderProps) => {
     <MUIThemeProvider>
       <StoreProvider>
         <ErrorBoundary FallbackComponent={SystemError}>
-          <QueryProvider>{children}</QueryProvider>
+          <QueryProvider>
+            <AppBootstrapGate> {children}</AppBootstrapGate>
+          </QueryProvider>
         </ErrorBoundary>
       </StoreProvider>
     </MUIThemeProvider>

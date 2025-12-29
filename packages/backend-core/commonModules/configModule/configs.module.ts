@@ -24,7 +24,7 @@ export class ConfigsModule {
     );
     const appConfig = resolveAppConfig(yamlContent, process.env) ?? {};
     const configFactory: ConfigFactory = () => ({
-      ...appConfig,
+      ...(appConfig ?? {}),
     });
 
     const DynamicConfigModule = ConfigModule.forRoot({

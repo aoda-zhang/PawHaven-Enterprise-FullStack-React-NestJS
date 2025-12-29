@@ -2,13 +2,9 @@
   "extends": "@pawhaven/tsconfig/node",
   "compilerOptions": {
     "outDir": "dist",
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "strict": true,
     "paths": {
       "@modules/*": ["./src/modules/*"]
     }
   },
-
   "include": ["src"]
 }

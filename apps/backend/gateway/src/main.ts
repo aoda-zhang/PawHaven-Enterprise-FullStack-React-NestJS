@@ -3,7 +3,6 @@ import {
   ValidationPipe,
   VersioningType,
 } from '@nestjs/common';
-// import type { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import type { NestExpressApplication } from '@nestjs/platform-express';
@@ -14,14 +13,13 @@ import { SwaggerService } from '@pawhaven/backend-core';
 
 import { AppModule } from './app.module';
 
-// const currentENV = process.env.NODE_ENV;
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     forceCloseConnections: true,
     bufferLogs: true,
   });
-  // const corsOptions: CorsOptions = app.get(ConfigService).get('cors');
-  // app.enableCors(corsOptions);
+  const corsOptions = app.get(ConfigService).get('cors');
+  app.enableCors(corsOptions);
   // app.useLogger(app.get(Logger))
   const prefix = app.get(ConfigService).get('http.prefix') ?? '';
   app.setGlobalPrefix(prefix);
