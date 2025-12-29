@@ -6,7 +6,6 @@ import {
   SharedModuleProviders,
 } from '@pawhaven/backend-core';
 // import ACLGuard from '@modules/ACL/middlewares/ACL.guard'
-import { RuntimeEnvType } from '@pawhaven/shared';
 
 import { GatewayController } from './app.controller';
 import { AuthService } from './services/auth.service';
@@ -20,7 +19,6 @@ import { CoreService } from './services/core.service';
 @Module({
   imports: [
     SharedModule.forRoot({
-      runtimeEnv: process.env.NODE_ENV as RuntimeEnvType,
       serviceName: microServiceNames.GATEWAY,
       features: {
         imports: [SharedModuleFeatures.Swagger],

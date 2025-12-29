@@ -4,9 +4,8 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "nest start --watch",
-    "build:backend-core": "pnpm --filter @pawhaven/backend-core run build",
-    "build:service": "nest build",
-    "build": "pnpm i && pnpm run build:backend-core && pnpm run build:service",
+    "build": "nest build",
+    "turbo:build": "turbo run build --filter=@pawhaven/core-service --env-mode=loose",
     "start": "node dist/main.js",
     "typecheck": "tsc --noEmit"
   },

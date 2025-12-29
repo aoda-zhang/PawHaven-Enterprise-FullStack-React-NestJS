@@ -3,7 +3,8 @@ import { persistReducer, persistStore } from 'redux-persist';
 
 import { loadConfig } from '../config';
 
-import { combinedReducers, persistConfig } from './reducerConfig';
+import { persistConfig } from './persistReducers';
+import { combinedReducers } from './reducerRegister';
 
 const rootReducer = combineReducers(combinedReducers);
 

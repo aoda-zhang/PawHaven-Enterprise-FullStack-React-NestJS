@@ -1,21 +1,21 @@
 import { Loading, SuspenseWrapper } from '@pawhaven/ui';
-import type { ReactNode } from 'react';
-import { useMemo } from 'react';
+import { useMemo, type ReactNode } from 'react';
 import type { RouteObject } from 'react-router-dom';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import { routerElementMapping } from './routerElementMapping';
 
-import { useFetchGlobalRouters } from '@/layout/RootLayoutAPI';
-import { useGlobalState } from '@/store/globalReducer';
+import { useAppBootstrapState } from '@/store/appBootstrapReducer';
 
 export interface RouteMetaType {
   isRequireUserLogin?: boolean;
   children?: ReactNode;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const routesMapping = (routesFromAPI: any[]): RouteObject[] => {
+const routesMapping = (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  routesFromAPI: Array<Record<string, any>>,
+): RouteObject[] => {
   const routes = routesFromAPI.map((route) => {
     const isLazyLoadElement = route?.handle?.isLazyLoad ?? true;
     const mappedRoute: RouteObject = {
@@ -39,22 +39,18 @@ const routesMapping = (routesFromAPI: any[]): RouteObject[] => {
   return routes;
 };
 
+// eslint-disable-next-line consistent-return
 export const AppRouterProvider = () => {
-  const { profile } = useGlobalState();
-  const { data: globalRouters = [] } = useFetchGlobalRouters(
-    profile?.baseUserInfo?.userID,
-    profile?.baseUserInfo?.globalRouterUpdateAt,
-  );
+  const { routers } = useAppBootstrapState();
   const router = useMemo(() => {
-    const mappedRoutes = routesMapping(globalRouters);
+    const mappedRoutes = routesMapping(routers);
     if (mappedRoutes?.length > 0) {
       return createBrowserRouter(mappedRoutes);
     }
     return null;
-  }, [globalRouters]);
+  }, [routers]);
 
   if (router) {
     return <RouterProvider router={router} />;
   }
-  return <Loading />;
 };

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { HttpClientService, microServiceNames } from '@pawhaven/backend-core';
 
 @Injectable()
@@ -9,7 +9,12 @@ export class CoreService {
     this.coreService = this.httpClient.create(microServiceNames.CORE);
   }
 
-  test(id: number) {
-    return this.coreService.get(`/core/test/${id}`);
+  async getAppBootstrap() {
+    try {
+      const appBootstrap = await this.coreService.get('/core/app/bootstrap');
+      return appBootstrap;
+    } catch (error) {
+      throw new BadRequestException('bad request');
+    }
   }
 }

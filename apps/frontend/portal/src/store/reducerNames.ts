@@ -3,4 +3,5 @@ export const reducerNames = {
   root: 'root',
   global: 'global',
   rescue: 'rescue',
+  bootstrap: 'bootstrap',
 };

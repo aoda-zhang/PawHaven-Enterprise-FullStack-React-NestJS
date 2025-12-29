@@ -11,7 +11,8 @@
     "prepare": "husky",
     "lint-staged": "lint-staged",
     "build:gateway": "turbo run build --filter=@pawhaven/gateway",
-    "build:portal": "turbo run build --filter=@pawhaven/portal"
+    "build:portal": "turbo run build --filter=@pawhaven/portal",
+    "build:core-service": "turbo run build --filter=@pawhaven/core-service"
   },
   "lint-staged": {
     "**/*.{ts,tsx,js,jsx}": [

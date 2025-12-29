@@ -25,7 +25,7 @@ microServices:
   - name: core-service
     enable: true
     options:
-      host: http://localhost
+      host: ${CORE_SERVICE_HOST}
       port: 8081
 
 cors:
@@ -36,7 +36,7 @@ cors:
     - Content-Type
     - X-Sign
     - Locale
-  origins:
+  origin:
     - http://localhost:3001
   optionsSuccessStatus: 200
   methods:

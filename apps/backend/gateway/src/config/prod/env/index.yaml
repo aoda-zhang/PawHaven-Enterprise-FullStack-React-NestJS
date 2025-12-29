@@ -25,7 +25,7 @@ microServices:
   - name: core-service
     enable: true
     options:
-      host: http://localhost
+      host: ${CORE_SERVICE_HOST}
       port: 8081
 
 cors:
@@ -35,11 +35,11 @@ cors:
     - Accept
     - Content-Type
     - X-Sign
+    - x-locale
     - Locale
-  origins:
-    - http://localhost:3001
-    - 'http://130.33.242.136'
-  optionsSuccessStatus: 200
+  origin:
+    - https://pawhaven.work
+  optionsSuccessStatus: 204
   methods:
     - GET
     - POST

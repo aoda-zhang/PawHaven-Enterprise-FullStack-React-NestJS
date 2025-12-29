@@ -42,6 +42,6 @@ export const globalReducer = createSlice({
 export const { setProfile } = globalReducer.actions;
 export const useGlobalState = () => {
   return useReduxSelector(
-    (state: ReduxState) => state?.global ?? {},
+    (state: ReduxState) => state?.[reducerNames.global] ?? {},
   ) as GlobalStateType;
 };
