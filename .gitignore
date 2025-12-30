@@ -122,6 +122,7 @@ tsconfig.tsbuildinfo
 .eslintcache
 .env
 .env.*
+!.env.example
 
 # turbo
 .turbo

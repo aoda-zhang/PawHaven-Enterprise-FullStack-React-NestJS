@@ -19,7 +19,7 @@ const getAppBootstrap = async (): Promise<{
   menus: MenuItemType[];
   routers: RouteObject[];
 }> => {
-  return apiClient.get('core/bootstrap');
+  return apiClient.get('core/app/bootstrap');
 };
 
 export const useGetAppBootstrap = (userID?: string, menuUpdateAt?: string) => {

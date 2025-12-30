@@ -34,12 +34,13 @@
     "csurf": "^1.11.0",
     "dayjs": "^1.11.18",
     "helmet": "^8.1.0",
+    "http-proxy-middleware": "^3.0.5",
     "mongoose": "^8.19.1",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.2",
     "swagger-ui-express": "^5.0.1",
-    "uuid": "^13.0.0",
-    "turbo": "^2.7.0"
+    "turbo": "^2.7.0",
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^11.0.10",

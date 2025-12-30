@@ -1,10 +1,11 @@
-import { Loading, SuspenseWrapper } from '@pawhaven/ui';
+import { SuspenseWrapper } from '@pawhaven/ui';
 import { useMemo, type ReactNode } from 'react';
 import type { RouteObject } from 'react-router-dom';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import { routerElementMapping } from './routerElementMapping';
 
+import { NotFund } from '@/components/NotFund';
 import { useAppBootstrapState } from '@/store/appBootstrapReducer';
 
 export interface RouteMetaType {
@@ -39,7 +40,6 @@ const routesMapping = (
   return routes;
 };
 
-// eslint-disable-next-line consistent-return
 export const AppRouterProvider = () => {
   const { routers } = useAppBootstrapState();
   const router = useMemo(() => {
@@ -53,4 +53,5 @@ export const AppRouterProvider = () => {
   if (router) {
     return <RouterProvider router={router} />;
   }
+  return <NotFund />;
 };
