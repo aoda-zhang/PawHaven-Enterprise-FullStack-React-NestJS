@@ -6,9 +6,6 @@ http:
   retryCount: 3
   retryDelay: 500
 
-documentService:
-  baseURL: localehost:8082/api/document
-
 swagger:
   title: 管理后台
   version: 1.0
@@ -27,6 +24,8 @@ microServices:
     options:
       host: ${CORE_SERVICE_HOST}
       port: 8081
+      gatewayPrefix: /api/core
+      pathRewrite: /core-service
 
 cors:
   allowedHeaders:
@@ -38,30 +37,13 @@ cors:
     - x-locale
     - Locale
   origin:
-    - https://pawhaven.work
+    - http://localhost:3001
+  credentials: true
   optionsSuccessStatus: 204
   methods:
     - GET
     - POST
     - PUT
-    - OPTIONS
-    - HEAD
+    - DELETE
     - PATCH
-
-limitation:
-  ttl: 60
-  limit: 1000
-
-auth:
-  secret: aoda+zyr
-  ttl: 4h
-  refreshSecret: '^zyr&aoda^'
-  refreshTTL: 3d
-  saltRounds: 10
-  privateKey: ${AUTH_PRIVATEKEY}
-  requestGap: 120
-  enableSign: true
-  rootUser: LOVE
-
-health:
-  ping:
+    - OPTIONS

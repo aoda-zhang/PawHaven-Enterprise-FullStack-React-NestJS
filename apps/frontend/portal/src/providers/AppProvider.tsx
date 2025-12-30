@@ -17,14 +17,14 @@ type AppProviderProps = {
 
 export const AppProvider = ({ children }: AppProviderProps) => {
   return (
-    <MUIThemeProvider>
-      <StoreProvider>
-        <ErrorBoundary FallbackComponent={SystemError}>
+    <ErrorBoundary FallbackComponent={SystemError}>
+      <MUIThemeProvider>
+        <StoreProvider>
           <QueryProvider>
-            <AppBootstrapGate> {children}</AppBootstrapGate>
+            <AppBootstrapGate>{children}</AppBootstrapGate>
           </QueryProvider>
-        </ErrorBoundary>
-      </StoreProvider>
-    </MUIThemeProvider>
+        </StoreProvider>
+      </MUIThemeProvider>
+    </ErrorBoundary>
   );
 };

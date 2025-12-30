@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Post } from '@nestjs/common';
 
 import { BootstrapService } from './bootstrap.service';
 
@@ -9,5 +9,10 @@ export class BootstrapController {
   @Get('/bootstrap')
   getAppBootstrap() {
     return this.bootService.getAppBootstrap();
+  }
+
+  @Post('/create')
+  createTest() {
+    return this.bootService.create();
   }
 }

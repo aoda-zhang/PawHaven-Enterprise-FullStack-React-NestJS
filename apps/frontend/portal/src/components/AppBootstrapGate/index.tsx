@@ -2,7 +2,7 @@ import { Loading } from '@pawhaven/ui';
 import type { ReactNode } from 'react';
 
 import { useGetAppBootstrap } from '../../providers/appBootstrapAPI';
-import { ErrorFallback } from '../ErrorFallback';
+import { SystemError } from '../SystemError';
 
 export const AppBootstrapGate = ({ children }: { children: ReactNode }) => {
   const { isLoading, isError } = useGetAppBootstrap();
@@ -12,7 +12,7 @@ export const AppBootstrapGate = ({ children }: { children: ReactNode }) => {
   }
 
   if (isError) {
-    return <ErrorFallback />;
+    return <SystemError />;
   }
 
   return <>{children}</>;

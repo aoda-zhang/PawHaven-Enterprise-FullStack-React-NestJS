@@ -12,7 +12,7 @@ export interface ErrorInfo {
   data?: string | ReactElement;
 }
 
-export const ErrorFallback = () => {
+export const RouterErrorFallback = () => {
   const errorInfo = useRouteError() as Partial<ErrorInfo>;
   const IsStableEnv = useIsStableEnv();
   useEffect(() => {

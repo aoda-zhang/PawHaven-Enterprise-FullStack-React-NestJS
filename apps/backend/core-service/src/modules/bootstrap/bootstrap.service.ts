@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 
 @Injectable()
 export class BootstrapService {
@@ -92,5 +92,9 @@ export class BootstrapService {
         element: 'notFund',
       },
     ];
+  }
+
+  create() {
+    throw new BadRequestException();
   }
 }

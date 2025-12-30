@@ -1,8 +1,7 @@
 import Button from '@mui/material/Button';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
 
-import type { ErrorInfo } from '../ErrorFallback';
+import type { ErrorInfo } from '../RouterErrorFallback';
 
 import { useIsStableEnv } from '@/hooks/useIsStableEnv';
 
@@ -12,11 +11,11 @@ interface NotFundProps {
 
 export const NotFund: React.FC<NotFundProps> = ({ error }) => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const IsStableEnv = useIsStableEnv();
 
   const goToHome = () => {
-    navigate('/');
+    window.location.href = '/';
   };
 
   return (

@@ -3,7 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface SystemErrorProps {
-  error: unknown;
+  error?: unknown;
   resetErrorBoundary?: () => void;
 }
 

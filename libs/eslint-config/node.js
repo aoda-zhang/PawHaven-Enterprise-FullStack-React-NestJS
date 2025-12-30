@@ -13,6 +13,11 @@ module.exports = {
     node: true, // Enables Node.js global variables and Node.js scoping
     es2022: true, // Enables all ECMAScript 2022 globals and syntax
   },
+  settings: {
+    node: {
+      version: '>=24.0.0',
+    },
+  },
   // Merge base extensions with Node-relevant plugin configurations
   extends: [
     ...baseEslintConfig.extends,
@@ -23,10 +28,6 @@ module.exports = {
     ...baseEslintConfig.rules,
     // Node.js specific adjustments
     'no-console': 'off', // Allow console for server logging
-    'node/no-unsupported-features/es-syntax': [
-      'error',
-      { ignores: ['modules'] },
-    ],
     'node/no-missing-import': 'off', // Allow unresolved imports handled by bundlers or TypeScript
     'node/no-unpublished-import': 'off', // Disable false positives for monorepo setups
     'node/no-extraneous-import': 'off', // Allow imports from shared workspace packages
@@ -46,6 +47,8 @@ module.exports = {
     'max-classes-per-file': ['warn', 1], // One class per file
     'no-empty-function': 'off',
     '@typescript-eslint/no-empty-function': 'off',
+    'node/no-unsupported-features/es-syntax': 'off',
+    'eslintnode/no-unsupported-features/es-syntax': 'off',
     'prettier/prettier': [
       'error',
       {
@@ -59,9 +62,5 @@ module.exports = {
     '@typescript-eslint/no-empty-function': 'off',
     'prettier/prettier': 'off',
     '@typescript-eslint/consistent-type-imports': 'off',
-    'node/no-unsupported-features/es-syntax': [
-      'error',
-      { ignores: ['modules', 'dynamicImport'] },
-    ],
   },
 };
