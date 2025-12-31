@@ -37,7 +37,7 @@ cors:
     - x-locale
     - Locale
   origin:
-    - http://localhost:3001
+    - https://pawhaven.work
   credentials: true
   optionsSuccessStatus: 204
   methods:
