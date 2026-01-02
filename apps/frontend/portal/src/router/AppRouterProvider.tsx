@@ -53,5 +53,5 @@ export const AppRouterProvider = () => {
   if (router) {
     return <RouterProvider router={router} />;
   }
-  return <NotFund />;
+  return null;
 };
