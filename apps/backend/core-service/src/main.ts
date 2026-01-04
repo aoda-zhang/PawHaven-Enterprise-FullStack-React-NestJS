@@ -1,8 +1,5 @@
 import type { NestExpressApplication } from '@nestjs/platform-express';
 import { NestFactory } from '@nestjs/core';
-
-// import { MicroserviceOptions, Transport } from '@nestjs/microservices';
-
 import { ConfigService } from '@nestjs/config';
 import { Logger } from '@nestjs/common';
 
@@ -10,21 +7,6 @@ import { AppModule } from './app.module';
 
 async function bootstrap(): Promise<void> {
   const logger = new Logger('Bootstrap');
-  // const app = await NestFactory.createMicroservice<MicroserviceOptions>(
-  //   AppModule,
-  //   {
-  //     transport: Transport.GRPC,
-  //     options: {
-  //       package: 'coreService', // change to your proto package name
-  //       protoPath: join(
-  //         __dirname,
-  //         '../../../../packages//backend-core/protos/animal.proto',
-  //       ), // adjust path if needed
-  //       url: '0.0.0.0:9091',
-  //     },
-  //   },
-  // );
-
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const configService = app.get(ConfigService) as ConfigService;
   app.setGlobalPrefix(configService.get('http.prefix')!);
