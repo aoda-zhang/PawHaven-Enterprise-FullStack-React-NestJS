@@ -18,7 +18,6 @@ export interface ApiClientOptions {
   timeout?: number; // Optional request timeout
   enableSign?: boolean; // Whether to use signature validation
   prefix: string; // endpoint prefix
-  privateKey: string; // HMA key
   withCredentials?: boolean; // Is send cookies to backend automatically
 }
 

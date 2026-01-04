@@ -8,8 +8,6 @@ import { loadConfig } from '@/config';
  */
 export const apiClient = createApiClient({
   timeout: loadConfig()?.api?.timeout,
-  baseURL: loadConfig()?.api?.baseURL ?? '',
-  enableSign: true,
+  baseURL: '/api',
   prefix: loadConfig()?.api?.prefix,
-  privateKey: loadConfig()?.api?.privateKey,
 });

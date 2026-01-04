@@ -8,7 +8,7 @@ import axios, {
 
 import { getLocale } from '../utils/locale/getLocale';
 
-import { generateSign, getUTCTimestamp } from './encrypt';
+import { getUTCTimestamp } from './encrypt';
 import { normalizeHttpError } from './errorHandle';
 import type { ApiClientOptions } from './types';
 
@@ -20,14 +20,7 @@ import type { ApiClientOptions } from './types';
  * Factory function to create a reusable API client with common interceptors and headers.
  */
 export const createApiClient = (options: ApiClientOptions) => {
-  const {
-    baseURL,
-    timeout = 20000,
-    enableSign = true,
-    prefix,
-    privateKey,
-    withCredentials = true,
-  } = options;
+  const { baseURL, timeout = 20000, withCredentials = true } = options;
 
   const Http: AxiosInstance = axios.create({
     baseURL,
@@ -35,29 +28,20 @@ export const createApiClient = (options: ApiClientOptions) => {
     withCredentials,
   });
 
-  const getHttpHeaders = (config: Record<string, any>) => {
+  const getHttpHeaders = () => {
     const timestamp = `${getUTCTimestamp()}`;
     const headers: Record<string, any> = {
       Accept: 'application/json',
       'X-timestamp': timestamp,
       'X-locale': getLocale(),
     };
-    if (enableSign) {
-      headers['X-sign'] = generateSign({
-        config,
-        timestamp,
-        prefix,
-        privateKey,
-      });
-    }
-
     return headers;
   };
 
   // ✅ Request interceptor with proper typing
   Http.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {
-      Object.assign(config.headers ?? {}, getHttpHeaders(config));
+      Object.assign(config.headers ?? {}, getHttpHeaders());
       return config;
     },
     (error) => {
