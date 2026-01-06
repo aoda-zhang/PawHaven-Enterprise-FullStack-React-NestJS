@@ -8,6 +8,8 @@ import {
   SharedModuleProviders,
 } from '@pawhaven/backend-core';
 
+import { DatabaseModule } from './database/database.module';
+
 @Module({
   imports: [
     SharedModule.forRoot({
@@ -20,6 +22,7 @@ import {
         ],
       },
     }),
+    DatabaseModule,
     ReportAnimalModule,
     BootstrapModule,
   ],

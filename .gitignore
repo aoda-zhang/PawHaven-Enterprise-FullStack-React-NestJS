@@ -126,3 +126,4 @@ tsconfig.tsbuildinfo
 
 # turbo
 .turbo
+**/prisma/generated/prisma/**

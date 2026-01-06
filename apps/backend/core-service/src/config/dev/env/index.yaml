@@ -12,7 +12,7 @@ swagger:
   prefix: api-docs
   description: 管理后台接口文档
 
-DBConnections:
+dbConnections:
   - enable: true
     options:
       name: CORE_SERVICE_DB
