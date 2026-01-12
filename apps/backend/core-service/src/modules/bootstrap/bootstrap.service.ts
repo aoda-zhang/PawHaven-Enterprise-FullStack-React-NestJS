@@ -2,6 +2,8 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 
 @Injectable()
 export class BootstrapService {
+  constructor() {}
+
   async getAppBootstrap() {
     const menus = this.getAppMenus();
     const routers = this.getAppRouters();

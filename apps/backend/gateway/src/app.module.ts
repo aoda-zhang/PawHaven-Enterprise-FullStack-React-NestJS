@@ -1,9 +1,5 @@
 import { Module } from '@nestjs/common';
-import {
-  microServiceNames,
-  SharedModule,
-  SharedModuleProviders,
-} from '@pawhaven/backend-core';
+import { microServiceNames, SharedModule } from '@pawhaven/backend-core';
 
 // import ACLGuard from '@modules/ACL/middlewares/ACL.guard'
 
@@ -24,12 +20,6 @@ import { ProxyModule } from './proxy/proxy.module';
   imports: [
     SharedModule.forRoot({
       serviceName: microServiceNames.GATEWAY,
-      features: {
-        providers: [
-          SharedModuleProviders.HttpErrorMiddleware,
-          SharedModuleProviders.HttpSuccessMiddleware,
-        ],
-      },
     }),
     ProxyModule,
     // JwtModule,

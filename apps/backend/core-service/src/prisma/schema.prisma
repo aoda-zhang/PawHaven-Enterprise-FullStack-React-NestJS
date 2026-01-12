@@ -1,7 +1,0 @@
-generator client {
-  provider = "prisma-client-js"
-}
-
-datasource coreServiceDB {
-  provider = "mongodb"
-}

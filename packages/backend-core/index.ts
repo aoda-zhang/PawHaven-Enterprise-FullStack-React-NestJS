@@ -1,9 +1,7 @@
-export { SharedModule } from './commonModules/shared.module';
-export { SwaggerService } from './commonModules/swagger/swagger.service';
-export { HttpClientService } from './commonModules/httpClient/HttpClient.service';
+export { SharedModule } from './dynamicModules/shared.module';
+export { getPrismaInjectionToken } from './dynamicModules/prisma/getPrismaInjectionToken';
+export { SwaggerService } from './dynamicModules/swagger/swagger.service';
+export { HttpClientService } from './dynamicModules/httpClient/HttpClient.service';
 export * from './constants';
-export {
-  SharedModuleProviders,
-  SharedModuleFeatures,
-} from './types/shareModule.types';
 export * from './types';
+export * from './dynamicModules/sharedModule.type';
