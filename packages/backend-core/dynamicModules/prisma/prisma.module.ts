@@ -3,6 +3,7 @@ import { DynamicModule, Global, Module, Provider } from '@nestjs/common';
 import { DatabaseEngine } from '../../constants';
 
 import { getPrismaInjectionToken } from './getPrismaInjectionToken';
+// import { prismaMiddleware } from './prisma.middleware';
 
 export interface PrismaModuleOptions {
   databaseEngine: DatabaseEngine;
@@ -24,8 +25,8 @@ export class PrismaModule {
           log: options?.log ?? ['warn', 'error'],
         });
 
+        // prisma.$use(prismaMiddleware);
         await prisma.$connect();
-
         return prisma;
       },
     };

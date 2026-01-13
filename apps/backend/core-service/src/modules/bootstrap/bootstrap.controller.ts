@@ -1,4 +1,4 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 
 import { BootstrapService } from './bootstrap.service';
 
@@ -11,8 +11,8 @@ export class BootstrapController {
     return this.bootService.getAppBootstrap();
   }
 
-  @Post('/create')
-  createTest() {
-    return this.bootService.create();
+  @Post('/menu')
+  createMenus(@Body() menu: any) {
+    return this.bootService.createMenus(menu);
   }
 }
