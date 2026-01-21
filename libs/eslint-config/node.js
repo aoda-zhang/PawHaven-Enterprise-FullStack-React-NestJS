@@ -37,7 +37,6 @@ module.exports = {
     'no-useless-constructor': 'off',
     'no-empty-function': ['error', { allow: ['constructors'] }], // Allow empty constructors for dependency injection
     '@typescript-eslint/no-useless-constructor': 'off', // Allow constructors with only dependency injection
-    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }], // Ignore unused variables starting with _
     '@typescript-eslint/no-explicit-any': 'warn', // Warn on use of any
     '@typescript-eslint/explicit-function-return-type': 'warn', // Recommend explicit return types in backend
     'prefer-const': 'warn',
@@ -46,6 +45,13 @@ module.exports = {
     'class-methods-use-this': 'off', // Service methods may not use 'this'
     'max-classes-per-file': ['warn', 1], // One class per file
     'no-empty-function': 'off',
+    'no-param-reassign': [
+      'error',
+      {
+        props: true,
+        ignorePropertyModificationsFor: ['params'],
+      },
+    ],
     '@typescript-eslint/no-empty-function': 'off',
     'node/no-unsupported-features/es-syntax': 'off',
     'eslintnode/no-unsupported-features/es-syntax': 'off',

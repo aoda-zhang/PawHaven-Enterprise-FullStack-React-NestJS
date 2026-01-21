@@ -18,19 +18,45 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.1",
-    "@mui/material": "^7.3.4",
-    "@mui/x-date-pickers": "^8.14.0",
-    "@mui/x-date-pickers-pro": "^8.14.0",
     "@pawhaven/design-system": "workspace:*",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.18",
     "lucide-react": "^0.545.0",
-    "react": "^19.2.0",
     "react-hook-form": "^7.64.0",
     "react-hot-toast": "^2.6.0",
     "react-loading-skeleton": "^3.5.0"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/material": "^7.3.4",
+    "@mui/x-date-pickers": "^8.14.0",
+    "@mui/x-date-pickers-pro": "^8.14.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": false
+    },
+    "react-dom": {
+      "optional": false
+    },
+    "@emotion/react": {
+      "optional": false
+    },
+    "@emotion/styled": {
+      "optional": false
+    },
+    "@mui/material": {
+      "optional": false
+    },
+    "@mui/x-date-pickers": {
+      "optional": true
+    },
+    "@mui/x-date-pickers-pro": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@pawhaven/tsconfig": "workspace:*",

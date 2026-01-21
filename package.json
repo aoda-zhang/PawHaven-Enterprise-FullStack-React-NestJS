@@ -15,8 +15,14 @@
     "build:core-service": "turbo run build --filter=@pawhaven/core-service"
   },
   "lint-staged": {
-    "**/*.{ts,tsx,js,jsx}": [
+    "*.{js,jsx,ts,tsx,mjs,cjs}": [
       "eslint --fix",
+      "prettier --write"
+    ],
+    "*.json": [
+      "prettier --write"
+    ],
+    "*.md": [
       "prettier --write"
     ]
   },
@@ -61,5 +67,5 @@
     "turbo": "^2.7.1",
     "typescript": "^5.9.3"
   },
-  "packageManager": "pnpm@10.27.0"
+  "packageManager": "pnpm@10.28.1"
 }

@@ -3,8 +3,10 @@
   "compilerOptions": {
     "outDir": "dist",
     "paths": {
-      "@modules/*": ["./src/modules/*"]
+      "@modules/*": ["./src/modules/*"],
+      "@prisma-mongo-client": ["./src/prisma/mongodb/generated/prisma/client"]
     }
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["./src/prisma/mongodb/base-model.snippet.prisma"]
 }
