@@ -3,12 +3,20 @@ import { DynamicModule, Global, Module, Provider } from '@nestjs/common';
 import { DatabaseEngine } from '../../constants';
 
 import { getPrismaInjectionToken } from './getPrismaInjectionToken';
-// import { prismaMiddleware } from './prisma.middleware';
+import { defaultPrismaExtensions } from './extensions';
+
+export interface PrismaExtension {
+  name?: string;
+  query?: Record<string, unknown>;
+  model?: Record<string, unknown>;
+  result?: Record<string, unknown>;
+  client?: Record<string, unknown>;
+}
 
 export interface PrismaModuleOptions {
   databaseEngine: DatabaseEngine;
   Client: any;
-  log?: Array<'query' | 'info' | 'warn' | 'error'>;
+  extensions?: PrismaExtension[];
 }
 
 @Global()
@@ -20,12 +28,15 @@ export class PrismaModule {
     const provider: Provider = {
       provide: injectProviderKey,
       useFactory: async () => {
-        const { Client } = options;
-        const prisma = new Client({
-          log: options?.log ?? ['warn', 'error'],
-        });
+        const { Client, extensions = [] } = options;
 
-        // prisma.$use(prismaMiddleware);
+        const basePrisma = new Client();
+
+        const prisma = [...defaultPrismaExtensions, ...extensions].reduce(
+          (client, ext) => client.$extends(ext),
+          basePrisma,
+        );
+
         await prisma.$connect();
         return prisma;
       },

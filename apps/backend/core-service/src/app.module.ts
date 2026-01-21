@@ -22,7 +22,6 @@ import { PrismaClient as MongoPrismaClient } from '@prisma-mongo-client';
           options: {
             databaseEngine: databaseEngines.mongodb,
             Client: MongoPrismaClient,
-            log: ['query'],
           },
         },
       ],

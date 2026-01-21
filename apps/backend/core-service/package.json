@@ -9,6 +9,7 @@
     "turbo:build": "turbo run build --filter=@pawhaven/core-service --env-mode=loose",
     "start": "node dist/main.js",
     "prisma:generate-mongodb": "prisma generate --schema=./src/prisma/mongodb/schema.prisma",
+    "prisma:db-push": "prisma db push --schema=./src/prisma/mongodb/schema.prisma",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
