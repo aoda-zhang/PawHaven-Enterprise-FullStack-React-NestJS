@@ -34,7 +34,7 @@ export class BootstrapService {
     try {
       const menus = await this.prisma.menu.findMany({
         select: {
-          id: true,
+          id: false,
           label: true,
           type: true,
           to: true,
@@ -77,55 +77,6 @@ export class BootstrapService {
       routers,
     };
   }
-
-  // getAppRouters() {
-  //   return [
-  //     {
-  //       element: 'rootLayout',
-  //       children: [
-  //         {
-  //           path: '/',
-  //           handle: { isRequireUserLogin: false, isLazyLoad: false },
-  //           element: 'home',
-  //         },
-  //         {
-  //           path: '/report-stray',
-  //           element: 'report_stray',
-  //         },
-  //         {
-  //           path: '/rescue/guides',
-  //           element: 'rescue_guides',
-  //         },
-  //         {
-  //           path: '/rescue/detail/:animalID',
-  //           element: 'rescue_detail',
-  //         },
-  //         {
-  //           path: '/auth/login',
-  //           handle: {
-  //             isRequireUserLogin: false,
-  //             isMenuAvailable: false,
-  //             isLazyLoad: false,
-  //           },
-  //           element: 'auth_login',
-  //         },
-  //         {
-  //           path: '/auth/register',
-  //           handle: {
-  //             isRequireUserLogin: false,
-  //             isMenuAvailable: false,
-  //             isLazyLoad: false,
-  //           },
-  //           element: 'auth_register',
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       path: '/notFund',
-  //       element: 'notFund',
-  //     },
-  //   ];
-  // }
 
   async getAppRouters(): Promise<any[]> {
     const routes = await this.prisma.route.findMany({
