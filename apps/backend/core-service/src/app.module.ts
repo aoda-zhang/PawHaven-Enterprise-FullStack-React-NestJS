@@ -7,7 +7,7 @@ import {
   SharedModule,
   SharedModuleFeatures,
 } from '@pawhaven/backend-core';
-import { PrismaClient as MongoPrismaClient } from '@prisma-mongo-client';
+import { PrismaClient as MongoPrismaClient } from '@prisma/client';
 
 @Module({
   imports: [
