@@ -1,11 +1,11 @@
 import { SuspenseWrapper } from '@pawhaven/ui';
-import { useMemo, type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import type { RouteObject } from 'react-router-dom';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import { routerElementMapping } from './routerElementMapping';
 
-import { useAppBootstrapState } from '@/store/appBootstrapReducer';
+import { useLandingContext } from '@/features/Landing/landingContext';
 
 export interface RouteMetaType {
   isRequireUserLogin?: boolean;
@@ -40,18 +40,11 @@ const routesMapping = (
 };
 
 export const AppRouterProvider = () => {
-  const { routers } = useAppBootstrapState();
-
-  const router = useMemo(() => {
-    if (routers?.length > 0) {
-      return createBrowserRouter(routesMapping(routers));
-    }
-    return null;
-  }, [routers]);
-
-  if (!router) {
+  const { routers } = useLandingContext();
+  if (!routers || routers?.length === 0) {
     return null;
   }
-
-  return <RouterProvider router={router} />;
+  return (
+    <RouterProvider router={createBrowserRouter(routesMapping(routers))} />
+  );
 };

@@ -8,7 +8,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import { RootLayoutFooter } from './RootLayoutFooter';
 import { RootLayoutMenu } from './RootLayoutMenu';
 
-import { useAppBootstrapState } from '@/store/appBootstrapReducer';
+import { useLandingContext } from '@/features/Landing/landingContext';
 import { useGlobalState } from '@/store/globalReducer';
 import type { MenuItemType, RouterInfoType } from '@/types/LayoutType';
 
@@ -20,7 +20,7 @@ export interface LayoutProps {
 
 export const RootLayout = () => {
   const { isSysMaintain } = useGlobalState();
-  const { menus } = useAppBootstrapState();
+  const { menus } = useLandingContext();
   const navigate = useNavigate();
   const { t } = useTranslation();
   const currentRouterInfo = useRouterInfo<RouterInfoType>();
