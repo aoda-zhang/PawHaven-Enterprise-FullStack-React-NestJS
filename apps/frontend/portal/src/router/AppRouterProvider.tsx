@@ -43,32 +43,15 @@ export const AppRouterProvider = () => {
   const { routers } = useAppBootstrapState();
 
   const router = useMemo(() => {
-    const defaultRoute = [
-      {
-        path: '/',
-        element: (
-          <SuspenseWrapper>{routerElementMapping.rootLayout}</SuspenseWrapper>
-        ),
-        errorElement: routerElementMapping.errorFallback,
-        children: [
-          {
-            path: '',
-            element: (
-              <SuspenseWrapper>{routerElementMapping.home}</SuspenseWrapper>
-            ),
-            errorElement: routerElementMapping.errorFallback,
-          },
-        ],
-      },
-    ];
-    let mappedRoutes: RouteObject[] = defaultRoute;
-
-    if (routers && routers.length > 0) {
-      mappedRoutes = routesMapping(routers);
+    if (routers?.length > 0) {
+      return createBrowserRouter(routesMapping(routers));
     }
-
-    return createBrowserRouter(mappedRoutes);
+    return null;
   }, [routers]);
+
+  if (!router) {
+    return null;
+  }
 
   return <RouterProvider router={router} />;
 };
