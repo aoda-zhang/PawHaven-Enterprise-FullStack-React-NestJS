@@ -86,26 +86,38 @@ export class BootstrapService {
         element: true,
         handle: true,
         parentId: true,
+        order: true,
       },
       orderBy: { order: 'asc' },
     });
 
-    const root = routes.find((r) => r.parentId === null);
-    if (!root) return [];
+    const routeMap = new Map<string, any>();
 
-    const children = routes
-      .filter((r) => r.parentId === root.id)
-      .map((r) => ({
-        path: r.path,
+    routes.forEach((r) => {
+      routeMap.set(r.id, {
+        path: r.path ?? undefined,
         element: r.element,
         ...(r.handle ? { handle: r.handle } : {}),
-      }));
+      });
+    });
 
-    return [
-      {
-        element: root.element,
-        ...(children.length > 0 ? { children } : {}),
-      },
-    ];
+    const result: any[] = [];
+
+    routes.forEach((r) => {
+      const current = routeMap.get(r.id);
+
+      if (r.parentId) {
+        const parent = routeMap.get(r.parentId);
+        if (!parent) return;
+
+        parent.children = parent.children
+          ? [...parent.children, current]
+          : [current];
+      } else {
+        result.push(current);
+      }
+    });
+
+    return result;
   }
 }
