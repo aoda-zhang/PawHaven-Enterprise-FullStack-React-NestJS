@@ -1,5 +1,6 @@
 import { useRouterInfo } from '@pawhaven/frontend-core';
-import { NotificationBanner, Toast } from '@pawhaven/ui';
+import { Loading, NotificationBanner, Toast } from '@pawhaven/ui';
+import { Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { NavigateFunction, UIMatch } from 'react-router-dom';
 import { Outlet, useNavigate } from 'react-router-dom';
@@ -41,7 +42,7 @@ export const RootLayout = () => {
             }}
           />
         )}
-        {isMenuAvailable && menus?.length > 0 && (
+        {isMenuAvailable && (
           <RootLayoutMenu
             menuItems={menus}
             navigate={navigate}
@@ -52,7 +53,9 @@ export const RootLayout = () => {
 
       <main className="flex-1 flex flex-col">
         <div className="flex-1">
-          <Outlet />
+          <Suspense fallback={<Loading></Loading>}>
+            <Outlet />
+          </Suspense>
         </div>
         {isFooterAvailable && (
           <footer>

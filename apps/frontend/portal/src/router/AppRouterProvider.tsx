@@ -5,7 +5,6 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import { routerElementMapping } from './routerElementMapping';
 
-import { NotFund } from '@/components/NotFund';
 import { useAppBootstrapState } from '@/store/appBootstrapReducer';
 
 export interface RouteMetaType {
@@ -42,16 +41,17 @@ const routesMapping = (
 
 export const AppRouterProvider = () => {
   const { routers } = useAppBootstrapState();
+
   const router = useMemo(() => {
-    const mappedRoutes = routesMapping(routers);
-    if (mappedRoutes?.length > 0) {
-      return createBrowserRouter(mappedRoutes);
+    if (routers?.length > 0) {
+      return createBrowserRouter(routesMapping(routers));
     }
     return null;
   }, [routers]);
 
-  if (router) {
-    return <RouterProvider router={router} />;
+  if (!router) {
+    return null;
   }
-  return null;
+
+  return <RouterProvider router={router} />;
 };
