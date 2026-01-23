@@ -8,7 +8,7 @@ export const getLocale = (
 ) => {
   const currentBrowserLanguage =
     typeof window !== 'undefined' ? window.navigator.language : '';
-  const choosedLanguage = storageTool.get('I18NKEY');
+  const choosedLanguage = storageTool.get('i18nextLng');
   if (choosedLanguage) {
     return choosedLanguage;
   }

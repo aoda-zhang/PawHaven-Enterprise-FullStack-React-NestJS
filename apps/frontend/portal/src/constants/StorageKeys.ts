@@ -1,5 +1,5 @@
 export const StorageKeys = {
   globalState: 'globalState',
   tripRecord: 'tripRecord',
-  I18NKEY: 'I18NKEY',
+  i18nextLng: 'i18nextLng',
 };

@@ -1,8 +1,7 @@
 import '@pawhaven/design-system/globalTailwind.css';
+import { I18nProvider } from '@pawhaven/i18n/i18nProvider';
 import { type ReactNode } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-// Enable i18n for the entire app
-import '@pawhaven/i18n';
 
 import { MUIThemeProvider } from './MUIThemeProvider';
 import { QueryProvider } from './QueryProvider';
@@ -17,11 +16,13 @@ type AppProviderProps = {
 export const AppProvider = ({ children }: AppProviderProps) => {
   return (
     <ErrorBoundary FallbackComponent={SystemError}>
-      <MUIThemeProvider>
-        <QueryProvider>
-          <StoreProvider>{children}</StoreProvider>
-        </QueryProvider>
-      </MUIThemeProvider>
+      <I18nProvider>
+        <MUIThemeProvider>
+          <StoreProvider>
+            <QueryProvider>{children}</QueryProvider>
+          </StoreProvider>
+        </MUIThemeProvider>
+      </I18nProvider>
     </ErrorBoundary>
   );
 };
