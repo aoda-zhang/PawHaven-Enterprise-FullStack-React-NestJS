@@ -1,22 +1,18 @@
 import { Popover } from '@mui/material';
+import { supportedLngs } from '@pawhaven/i18n/supportedLngs';
 import { ChevronDown, Globe } from 'lucide-react';
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-
-import { storageTool } from '../../utils/storage/storageTool';
 
 const LanguageSelect = () => {
   const { i18n, t } = useTranslation();
-  const supportedLanguages = useMemo(() => {
-    return Object.keys(i18n.services.resourceStore.data);
-  }, [i18n.services.resourceStore.data]);
   const setLanguage = (language: string) => {
-    storageTool.set('I18NKEY', language);
     i18n.changeLanguage(language);
   };
+
   return (
     <div className="flex flex-col gap-[.625rem] text-[.875rem] p-[.625rem] text-gray-600 border-gray-400 rounded-[10%] border">
-      {supportedLanguages?.map((item) => (
+      {supportedLngs.map((item) => (
         <button
           key={item}
           className="cursor-pointer text-left hover:border-b hover:border-gray-500"

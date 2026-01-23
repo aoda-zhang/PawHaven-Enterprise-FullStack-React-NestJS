@@ -25,7 +25,7 @@ const initialState: GlobalStateType = {
     },
     accessToken: '',
   },
-  locale: storageTool.get(StorageKeys.I18NKEY) || localeCodes['en-US'],
+  locale: storageTool.get(StorageKeys.i18nextLng) || localeCodes['en-US'],
   isSysMaintain: true,
 };
 
