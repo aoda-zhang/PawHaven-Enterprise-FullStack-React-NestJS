@@ -26,7 +26,7 @@ export interface MenuRenderType {
   navigate: NavigateFunction;
 }
 
-export type RouterHandle = {
+export type RouterMeta = {
   isMenuAvailable?: boolean;
   isRequireUserLogin?: boolean;
   isFooterAvailable?: boolean;
@@ -35,10 +35,18 @@ export type RouterHandle = {
 
 export interface RouterInfoType {
   data: Record<string, unknown> | undefined;
-  handle: RouterHandle;
+  handle: RouterMeta;
   id: string;
   params: Record<string, unknown> | undefined;
   pathname: string;
+  element: string;
+}
+
+export interface RouterEle {
+  handle?: RouterMeta;
+  path: string;
+  element: string;
+  children?: RouterEle[];
 }
 
 export interface RootLayoutHeaderProps {

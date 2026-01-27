@@ -3,7 +3,6 @@ import type { ReactElement } from 'react';
 
 import { NotFund } from '@/components/NotFund';
 import { RouterErrorFallback } from '@/components/RouterErrorFallback';
-// import GuardRoute from '@/components/GuardRoute';
 import { Login } from '@/features/Auth/Login';
 import { Register } from '@/features/Auth/Register';
 import { Home } from '@/features/Home';
@@ -23,11 +22,6 @@ const RescueGuide = lazyImport(
 );
 
 export const routerElementMapping: Record<string, ReactElement> = {
-  // guardRoute: (
-  //   <GuardRoute>
-  //     <RootLayout />
-  //   </GuardRoute>
-  // ),
   rootLayout: <RootLayout />,
   home: <Home />,
   auth_login: <Login />,
