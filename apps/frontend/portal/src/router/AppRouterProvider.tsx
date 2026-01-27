@@ -5,26 +5,53 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import { routerElementMapping } from './routerElementMapping';
 
+import { AuthGuard } from '@/features/Auth/AuthGuard';
 import { useLandingContext } from '@/features/Landing/landingContext';
+import type { RouterEle } from '@/types/LayoutType';
 
 export interface RouteMetaType {
   isRequireUserLogin?: boolean;
   children?: ReactNode;
 }
 
-const routesMapping = (
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  routesFromAPI: Array<Record<string, any>>,
-): RouteObject[] => {
+const applyRouteWrappers = (router: ReactNode) => {
+  /**
+   * Route-level wrappers.
+   * Order matters: outer → inner.
+   * Add new guards/layouts here when needed.
+   */
+  const routeWrappers = [
+    (node: ReactNode) => <AuthGuard>{node}</AuthGuard>,
+    // (node: ReactNode) => <PermissionGuard>{node}</PermissionGuard>,
+    // (node: ReactNode) => <FeatureFlagGuard>{node}</FeatureFlagGuard>,
+  ];
+
+  return routeWrappers.reduceRight((node, wrap) => wrap(node), router);
+};
+
+const buildRouteElement = (route: RouterEle) => {
+  const handle = route?.handle ?? {};
+  const isLazyLoadElement = handle.isLazyLoad ?? true;
+  const isChildRoute = !route?.children;
+
+  const rawElement = isLazyLoadElement ? (
+    <SuspenseWrapper>{routerElementMapping[route?.element]}</SuspenseWrapper>
+  ) : (
+    routerElementMapping[route?.element]
+  );
+
+  if (!isChildRoute) {
+    return rawElement;
+  }
+
+  return applyRouteWrappers(rawElement);
+};
+
+const routesMapping = (routesFromAPI: RouterEle[]): RouteObject[] => {
   const routes = routesFromAPI.map((route) => {
-    const isLazyLoadElement = route?.handle?.isLazyLoad ?? true;
     const mappedRoute: RouteObject = {
       path: route?.path,
-      element: isLazyLoadElement ? (
-        <SuspenseWrapper>{routerElementMapping[route.element]}</SuspenseWrapper>
-      ) : (
-        routerElementMapping[route.element]
-      ),
+      element: buildRouteElement(route),
       handle: route?.handle,
       errorElement: routerElementMapping.errorFallback,
     };

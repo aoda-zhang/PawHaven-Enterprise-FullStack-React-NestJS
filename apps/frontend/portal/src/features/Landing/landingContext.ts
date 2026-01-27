@@ -1,16 +1,15 @@
 import { createContext, useContext } from 'react';
-import type { RouteObject } from 'react-router-dom';
 
-import type { MenuItemType } from '@/types/LayoutType';
+import type { MenuItemType, RouterEle } from '@/types/LayoutType';
 
 export interface LandingDataType {
   menus: MenuItemType[];
-  routers: RouteObject[];
+  routers: RouterEle[];
 }
 
 export const LandingContext = createContext<LandingDataType>({
   menus: [] as MenuItemType[],
-  routers: [] as RouteObject[],
+  routers: [] as RouterEle[],
 });
 
 export const useLandingContext = (): LandingDataType => {

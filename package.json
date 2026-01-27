@@ -12,7 +12,8 @@
     "lint-staged": "lint-staged",
     "build:gateway": "turbo run build --filter=@pawhaven/gateway",
     "build:portal": "turbo run build --filter=@pawhaven/portal",
-    "build:core-service": "turbo run build --filter=@pawhaven/core-service"
+    "build:core-service": "turbo run build --filter=@pawhaven/core-service",
+    "build:auth-service": "turbo run build --filter=@pawhaven/auth-service"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,mjs,cjs}": [
@@ -67,5 +68,5 @@
     "turbo": "^2.7.1",
     "typescript": "^5.9.3"
   },
-  "packageManager": "pnpm@10.28.1"
+  "packageManager": "pnpm@10.28.2"
 }

@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 import type { AuthFieldType, ProfileType } from '../types';
@@ -7,6 +7,7 @@ import * as AuthAPI from './requests';
 
 import { useReduxDispatch } from '@/hooks/reduxHooks';
 import { setProfile } from '@/store/globalReducer';
+import type { RouterMeta } from '@/types/LayoutType';
 
 export const useLogin = () => {
   const navigate = useNavigate();
@@ -17,6 +18,14 @@ export const useLogin = () => {
       dispatch(setProfile(loginInfo));
       navigate('/');
     },
+  });
+};
+
+export const useVerify = (routerMeta: RouterMeta) => {
+  return useQuery({
+    queryKey: ['auth', 'verify'],
+    queryFn: AuthAPI.verify,
+    enabled: routerMeta?.isRequireUserLogin,
   });
 };
 

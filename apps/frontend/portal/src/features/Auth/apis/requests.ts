@@ -7,7 +7,11 @@ export const register = (userInfo: AuthFieldType): Promise<ProfileType> => {
 };
 
 export const login = (userInfo: AuthFieldType): Promise<ProfileType> => {
-  return apiClient.post('/auth/v1/login', userInfo);
+  return apiClient.post('/auth/login', userInfo);
+};
+
+export const verify = (): Promise<boolean> => {
+  return apiClient.get('/auth/verify');
 };
 
 export const refreshToken = (token: {

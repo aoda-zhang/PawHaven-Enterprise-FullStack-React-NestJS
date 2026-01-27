@@ -11,7 +11,6 @@ interface NotFundProps {
 
 export const NotFund: React.FC<NotFundProps> = ({ error }) => {
   const { t } = useTranslation();
-  // const navigate = useNavigate();
   const IsStableEnv = useIsStableEnv();
 
   const goToHome = () => {

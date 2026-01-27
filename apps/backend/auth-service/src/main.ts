@@ -1,25 +1,26 @@
-import { NestFactory } from '@nestjs/core'
-import { AppModule } from './app.module'
-import { MicroserviceOptions, Transport } from '@nestjs/microservices'
-import { ConfigService } from '@nestjs/config'
-import { AllRpcExceptionsFilter } from '@shared/core/httpClient/rpcExceptionFillter'
+import type { NestExpressApplication } from '@nestjs/platform-express';
+import { NestFactory } from '@nestjs/core';
+import { ConfigService } from '@nestjs/config';
+import { Logger } from '@nestjs/common';
 
-async function bootstrap() {
-    const appContext = await NestFactory.createApplicationContext(AppModule)
-    const configService = appContext.get(ConfigService)
+import { AppModule } from './app.module';
 
-    const port = configService.get<number>('http.port', 8083)
-    const host = configService.get<string>('http.host', '0.0.0.0')
+async function bootstrap(): Promise<void> {
+  const logger = new Logger('Bootstrap');
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const configService = app.get(ConfigService) as ConfigService;
+  app.setGlobalPrefix(configService.get('http.prefix')!);
+  const port = configService.get('http.port');
 
-    const app = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, {
-        transport: Transport.TCP,
-        options: {
-            host,
-            port
-        }
-    })
-    app.useGlobalFilters(new AllRpcExceptionsFilter())
-
-    await app.listen()
+  try {
+    await app.listen(port, '0.0.0.0');
+    logger.log(`core-service running at http://localhost:${port}`);
+  } catch (error) {
+    logger.error('Failed to start auth-service', error);
+    throw new Error(
+      `Bootstrap failed: ${error instanceof Error ? error.message : error}`,
+    );
+  }
 }
-bootstrap()
+
+bootstrap();

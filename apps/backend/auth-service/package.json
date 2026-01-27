@@ -1,14 +1,15 @@
 {
   "$schema": "http://json.schemastore.org/package",
   "private": true,
-  "name": "@pawhaven/auth",
+  "name": "@pawhaven/auth-service",
   "main": "build/main.js",
   "version": "1.0.0",
   "scripts": {
-    "start:dev": "cross-env NODE_ENV=dev nest start --watch",
-    "uat": "cross-env NODE_ENV=uat nest start --watch",
+    "dev": "nest start --watch",
     "build": "nest build",
-    "start": "NODE_ENV=uat node build/main.js"
+    "turbo:build": "turbo run build --filter=@pawhaven/auth-service --env-mode=loose",
+    "start": "node dist/main.js",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@nestjs/axios": "^4.0.1",
