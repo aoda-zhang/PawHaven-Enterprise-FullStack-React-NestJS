@@ -13,10 +13,7 @@ interface AuthGuardProps {
 export const AuthGuard = ({ children }: AuthGuardProps) => {
   const { routerMeta = {} } = useCurrentRouteMeta();
   const { data: isAuthenticated, isError } = useVerify(routerMeta);
-  if (
-    routerMeta?.isRequireUserLogin &&
-    (isError || isAuthenticated === false)
-  ) {
+  if (routerMeta?.isRequireUserLogin && (isError || isAuthenticated !== true)) {
     return <Navigate to={routePaths.login} replace />;
   }
   return <>{children}</>;
