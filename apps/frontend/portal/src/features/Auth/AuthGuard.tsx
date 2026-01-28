@@ -1,3 +1,4 @@
+import { Loading } from '@pawhaven/ui';
 import { type ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
 
@@ -12,7 +13,10 @@ interface AuthGuardProps {
 
 export const AuthGuard = ({ children }: AuthGuardProps) => {
   const { routerMeta = {} } = useCurrentRouteMeta();
-  const { data: isAuthenticated, isError } = useVerify(routerMeta);
+  const { data: isAuthenticated, isLoading, isError } = useVerify(routerMeta);
+  if (isLoading) {
+    return <Loading />;
+  }
   if (routerMeta?.isRequireUserLogin && (isError || isAuthenticated !== true)) {
     return <Navigate to={routePaths.login} replace />;
   }
