@@ -766,8 +766,8 @@ importers:
         specifier: ^4.1.1
         version: 4.1.1
       lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
+        specifier: ^4.17.23
+        version: 4.17.23
       lucide-react:
         specifier: ^0.545.0
         version: 0.545.0(react@19.2.3)
@@ -1481,6 +1481,10 @@ packages:
     resolution: {integrity: sha512-Q/N6JNWvIvPnLDvjlE1OUBLPQHH6l3CltCEsHIujp45zQUSSh8K+gHnaEX45yAT1nyngnINhvWtzN+Nb9D8RAQ==}
     engines: {node: '>=6.9.0'}
 
+  '@babel/runtime@7.28.6':
+    resolution: {integrity: sha512-05WQkdpL9COIMz4LjTxGpPNCdlpyimKppYNoJ5Di5EUObifl8t4tuLuUBBZEpoLYOmfvIWrsp9fCl0HoPRVTdA==}
+    engines: {node: '>=6.9.0'}
+
   '@babel/template@7.27.2':
     resolution: {integrity: sha512-LPDZ85aEJyYSd18/DkjNh4/y1ntkE5KwUHWTiqgRxruuZL2F1yuHligVHLvcHY2vMHXttKFpJn6LwfI7cw7ODw==}
     engines: {node: '>=6.9.0'}
@@ -1620,28 +1624,24 @@ packages:
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
-    libc: [glibc]
 
   '@css-inline/css-inline-linux-arm64-musl@0.14.1':
     resolution: {integrity: sha512-FzknI+st8eA8YQSdEJU9ykcM0LZjjigBuynVF5/p7hiMm9OMP8aNhWbhZ8LKJpKbZrQsxSGS4g9Vnr6n6FiSdQ==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
-    libc: [musl]
 
   '@css-inline/css-inline-linux-x64-gnu@0.14.1':
     resolution: {integrity: sha512-yubbEye+daDY/4vXnyASAxH88s256pPati1DfVoZpU1V0+KP0BZ1dByZOU1ktExurbPH3gZOWisAnBE9xon0Uw==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
-    libc: [glibc]
 
   '@css-inline/css-inline-linux-x64-musl@0.14.1':
     resolution: {integrity: sha512-6CRAZzoy1dMLPC/tns2rTt1ZwPo0nL/jYBEIAsYTCWhfAnNnpoLKVh5Nm+fSU3OOwTTqU87UkGrFJhObD/wobQ==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
-    libc: [musl]
 
   '@css-inline/css-inline-win32-x64-msvc@0.14.1':
     resolution: {integrity: sha512-nzotGiaiuiQW78EzsiwsHZXbxEt6DiMUFcDJ6dhiliomXxnlaPyBfZb6/FMBgRJOf6sknDt/5695OttNmbMYzg==}
@@ -2961,67 +2961,56 @@ packages:
     resolution: {integrity: sha512-EHMUcDwhtdRGlXZsGSIuXSYwD5kOT9NVnx9sqzYiwAc91wfYOE1g1djOEDseZJKKqtHAHGwnGPQu3kytmfaXLQ==}
     cpu: [arm]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-arm-musleabihf@4.54.0':
     resolution: {integrity: sha512-+pBrqEjaakN2ySv5RVrj/qLytYhPKEUwk+e3SFU5jTLHIcAtqh2rLrd/OkbNuHJpsBgxsD8ccJt5ga/SeG0JmA==}
     cpu: [arm]
     os: [linux]
-    libc: [musl]
 
   '@rollup/rollup-linux-arm64-gnu@4.54.0':
     resolution: {integrity: sha512-NSqc7rE9wuUaRBsBp5ckQ5CVz5aIRKCwsoa6WMF7G01sX3/qHUw/z4pv+D+ahL1EIKy6Enpcnz1RY8pf7bjwng==}
     cpu: [arm64]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-arm64-musl@4.54.0':
     resolution: {integrity: sha512-gr5vDbg3Bakga5kbdpqx81m2n9IX8M6gIMlQQIXiLTNeQW6CucvuInJ91EuCJ/JYvc+rcLLsDFcfAD1K7fMofg==}
     cpu: [arm64]
     os: [linux]
-    libc: [musl]
 
   '@rollup/rollup-linux-loong64-gnu@4.54.0':
     resolution: {integrity: sha512-gsrtB1NA3ZYj2vq0Rzkylo9ylCtW/PhpLEivlgWe0bpgtX5+9j9EZa0wtZiCjgu6zmSeZWyI/e2YRX1URozpIw==}
     cpu: [loong64]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-ppc64-gnu@4.54.0':
     resolution: {integrity: sha512-y3qNOfTBStmFNq+t4s7Tmc9hW2ENtPg8FeUD/VShI7rKxNW7O4fFeaYbMsd3tpFlIg1Q8IapFgy7Q9i2BqeBvA==}
     cpu: [ppc64]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-riscv64-gnu@4.54.0':
     resolution: {integrity: sha512-89sepv7h2lIVPsFma8iwmccN7Yjjtgz0Rj/Ou6fEqg3HDhpCa+Et+YSufy27i6b0Wav69Qv4WBNl3Rs6pwhebQ==}
     cpu: [riscv64]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-riscv64-musl@4.54.0':
     resolution: {integrity: sha512-ZcU77ieh0M2Q8Ur7D5X7KvK+UxbXeDHwiOt/CPSBTI1fBmeDMivW0dPkdqkT4rOgDjrDDBUed9x4EgraIKoR2A==}
     cpu: [riscv64]
     os: [linux]
-    libc: [musl]
 
   '@rollup/rollup-linux-s390x-gnu@4.54.0':
     resolution: {integrity: sha512-2AdWy5RdDF5+4YfG/YesGDDtbyJlC9LHmL6rZw6FurBJ5n4vFGupsOBGfwMRjBYH7qRQowT8D/U4LoSvVwOhSQ==}
     cpu: [s390x]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-x64-gnu@4.54.0':
     resolution: {integrity: sha512-WGt5J8Ij/rvyqpFexxk3ffKqqbLf9AqrTBbWDk7ApGUzaIs6V+s2s84kAxklFwmMF/vBNGrVdYgbblCOFFezMQ==}
     cpu: [x64]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-x64-musl@4.54.0':
     resolution: {integrity: sha512-JzQmb38ATzHjxlPHuTH6tE7ojnMKM2kYNzt44LO/jJi8BpceEC8QuXYA908n8r3CNuG/B3BV8VR3Hi1rYtmPiw==}
     cpu: [x64]
     os: [linux]
-    libc: [musl]
 
   '@rollup/rollup-openharmony-arm64@4.54.0':
     resolution: {integrity: sha512-huT3fd0iC7jigGh7n3q/+lfPcXxBi+om/Rs3yiFxjvSxbSB6aohDFXbWvlspaqjeOh+hx7DDHS+5Es5qRkWkZg==}
@@ -3280,28 +3269,24 @@ packages:
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
-    libc: [glibc]
 
   '@tailwindcss/oxide-linux-arm64-musl@4.1.18':
     resolution: {integrity: sha512-1px92582HkPQlaaCkdRcio71p8bc8i/ap5807tPRDK/uw953cauQBT8c5tVGkOwrHMfc2Yh6UuxaH4vtTjGvHg==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
-    libc: [musl]
 
   '@tailwindcss/oxide-linux-x64-gnu@4.1.18':
     resolution: {integrity: sha512-v3gyT0ivkfBLoZGF9LyHmts0Isc8jHZyVcbzio6Wpzifg/+5ZJpDiRiUhDLkcr7f/r38SWNe7ucxmGW3j3Kb/g==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
-    libc: [glibc]
 
   '@tailwindcss/oxide-linux-x64-musl@4.1.18':
     resolution: {integrity: sha512-bhJ2y2OQNlcRwwgOAGMY0xTFStt4/wyU6pvI6LSuZpRgKQwxTec0/3Scu91O8ir7qCR3AuepQKLU/kX99FouqQ==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
-    libc: [musl]
 
   '@tailwindcss/oxide-wasm32-wasi@4.1.18':
     resolution: {integrity: sha512-LffYTvPjODiP6PT16oNeUQJzNVyJl1cjIebq/rWWBF+3eDst5JGEFSc5cWxyRCJ0Mxl+KyIkqRxk1XPEs9x8TA==}
@@ -3692,49 +3677,41 @@ packages:
     resolution: {integrity: sha512-34gw7PjDGB9JgePJEmhEqBhWvCiiWCuXsL9hYphDF7crW7UgI05gyBAi6MF58uGcMOiOqSJ2ybEeCvHcq0BCmQ==}
     cpu: [arm64]
     os: [linux]
-    libc: [glibc]
 
   '@unrs/resolver-binding-linux-arm64-musl@1.11.1':
     resolution: {integrity: sha512-RyMIx6Uf53hhOtJDIamSbTskA99sPHS96wxVE/bJtePJJtpdKGXO1wY90oRdXuYOGOTuqjT8ACccMc4K6QmT3w==}
     cpu: [arm64]
     os: [linux]
-    libc: [musl]
 
   '@unrs/resolver-binding-linux-ppc64-gnu@1.11.1':
     resolution: {integrity: sha512-D8Vae74A4/a+mZH0FbOkFJL9DSK2R6TFPC9M+jCWYia/q2einCubX10pecpDiTmkJVUH+y8K3BZClycD8nCShA==}
     cpu: [ppc64]
     os: [linux]
-    libc: [glibc]
 
   '@unrs/resolver-binding-linux-riscv64-gnu@1.11.1':
     resolution: {integrity: sha512-frxL4OrzOWVVsOc96+V3aqTIQl1O2TjgExV4EKgRY09AJ9leZpEg8Ak9phadbuX0BA4k8U5qtvMSQQGGmaJqcQ==}
     cpu: [riscv64]
     os: [linux]
-    libc: [glibc]
 
   '@unrs/resolver-binding-linux-riscv64-musl@1.11.1':
     resolution: {integrity: sha512-mJ5vuDaIZ+l/acv01sHoXfpnyrNKOk/3aDoEdLO/Xtn9HuZlDD6jKxHlkN8ZhWyLJsRBxfv9GYM2utQ1SChKew==}
     cpu: [riscv64]
     os: [linux]
-    libc: [musl]
 
   '@unrs/resolver-binding-linux-s390x-gnu@1.11.1':
     resolution: {integrity: sha512-kELo8ebBVtb9sA7rMe1Cph4QHreByhaZ2QEADd9NzIQsYNQpt9UkM9iqr2lhGr5afh885d/cB5QeTXSbZHTYPg==}
     cpu: [s390x]
     os: [linux]
-    libc: [glibc]
 
   '@unrs/resolver-binding-linux-x64-gnu@1.11.1':
     resolution: {integrity: sha512-C3ZAHugKgovV5YvAMsxhq0gtXuwESUKc5MhEtjBpLoHPLYM+iuwSj3lflFwK3DPm68660rZ7G8BMcwSro7hD5w==}
     cpu: [x64]
     os: [linux]
-    libc: [glibc]
 
   '@unrs/resolver-binding-linux-x64-musl@1.11.1':
     resolution: {integrity: sha512-rV0YSoyhK2nZ4vEswT/QwqzqQXw5I6CjoaYMOX0TqBlWhojUf8P94mvI7nuJTeaCkkds3QE4+zS8Ko+GdXuZtA==}
     cpu: [x64]
     os: [linux]
-    libc: [musl]
 
   '@unrs/resolver-binding-wasm32-wasi@1.11.1':
     resolution: {integrity: sha512-5u4RkfxJm+Ng7IWgkzi3qrFOvLvQYnPBmjmZQ8+szTK/b31fQCnleNl1GgEt7nIsZRIf5PLhPwT0WM+q45x/UQ==}
@@ -5535,6 +5512,10 @@ packages:
     resolution: {integrity: sha512-2Tth85cXwGFHfvRgZWszZSvdo+0Xsqmw8k8ZwxScfcBneNUraK+dxRxRm24nszx80Y0TVio8kKLt5sLE7ZCLlw==}
     engines: {node: '>=0.10.0'}
 
+  iconv-lite@0.7.2:
+    resolution: {integrity: sha512-im9DjEDQ55s9fL4EYzOAv0yMqmMBSZp6G0VvFyTMPKWxiSBHUj9NW/qqLmXUwXrrM7AvqSlTCfvqRb0cM8yYqw==}
+    engines: {node: '>=0.10.0'}
+
   ieee754@1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
 
@@ -5974,28 +5955,24 @@ packages:
     engines: {node: '>= 12.0.0'}
     cpu: [arm64]
     os: [linux]
-    libc: [glibc]
 
   lightningcss-linux-arm64-musl@1.30.2:
     resolution: {integrity: sha512-5Vh9dGeblpTxWHpOx8iauV02popZDsCYMPIgiuw97OJ5uaDsL86cnqSFs5LZkG3ghHoX5isLgWzMs+eD1YzrnA==}
     engines: {node: '>= 12.0.0'}
     cpu: [arm64]
     os: [linux]
-    libc: [musl]
 
   lightningcss-linux-x64-gnu@1.30.2:
     resolution: {integrity: sha512-Cfd46gdmj1vQ+lR6VRTTadNHu6ALuw2pKR9lYq4FnhvgBc4zWY1EtZcAc6EffShbb1MFrIPfLDXD6Xprbnni4w==}
     engines: {node: '>= 12.0.0'}
     cpu: [x64]
     os: [linux]
-    libc: [glibc]
 
   lightningcss-linux-x64-musl@1.30.2:
     resolution: {integrity: sha512-XJaLUUFXb6/QG2lGIW6aIk6jKdtjtcffUT0NKvIqhSBY3hh9Ch+1LCeH80dR9q9LBjG3ewbDjnumefsLsP6aiA==}
     engines: {node: '>= 12.0.0'}
     cpu: [x64]
     os: [linux]
-    libc: [musl]
 
   lightningcss-win32-arm64-msvc@1.30.2:
     resolution: {integrity: sha512-FZn+vaj7zLv//D/192WFFVA0RgHawIcHqLX9xuWiQt7P0PtdFEVaxgF9rjM/IRYHQXNnk61/H/gb2Ei+kUQ4xQ==}
@@ -6100,6 +6077,9 @@ packages:
 
   lodash@4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
+
+  lodash@4.17.23:
+    resolution: {integrity: sha512-LgVTMpQtIopCi79SJeDiP0TfWi5CNEc/L/aRdTh3yIvmZXTnheWpKjSZhnvMl8iXbC1tFg9gdHHDMLoV7CnG+w==}
 
   log-symbols@4.1.0:
     resolution: {integrity: sha512-8XPvpAA8uyhfteu8pIvQxpJZ7SYYdpUivZpGy6sFsBuKRY/7rQGavedeB8aK+Zkyq6upMFVL/9AW6vOYzfRyLg==}
@@ -8645,6 +8625,8 @@ snapshots:
 
   '@babel/runtime@7.28.4': {}
 
+  '@babel/runtime@7.28.6': {}
+
   '@babel/template@7.27.2':
     dependencies:
       '@babel/code-frame': 7.27.1
@@ -9379,7 +9361,7 @@ snapshots:
 
   '@mui/icons-material@5.18.0(@mui/material@7.3.6(@emotion/react@11.14.0(@types/react@19.2.7)(react@19.2.3))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.7)(react@19.2.3))(@types/react@19.2.7)(react@19.2.3))(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(@types/react@19.2.7)(react@19.2.3)':
     dependencies:
-      '@babel/runtime': 7.28.4
+      '@babel/runtime': 7.28.6
       '@mui/material': 7.3.6(@emotion/react@11.14.0(@types/react@19.2.7)(react@19.2.3))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.7)(react@19.2.3))(@types/react@19.2.7)(react@19.2.3))(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       react: 19.2.3
     optionalDependencies:
@@ -13159,6 +13141,11 @@ snapshots:
     dependencies:
       safer-buffer: 2.1.2
 
+  iconv-lite@0.7.2:
+    dependencies:
+      safer-buffer: 2.1.2
+    optional: true
+
   ieee754@1.2.1: {}
 
   ignore@5.3.2: {}
@@ -13717,6 +13704,8 @@ snapshots:
 
   lodash@4.17.21: {}
 
+  lodash@4.17.23: {}
+
   log-symbols@4.1.0:
     dependencies:
       chalk: 4.1.2
@@ -13865,7 +13854,7 @@ snapshots:
   mjml-accordion@4.18.0:
     dependencies:
       '@babel/runtime': 7.28.4
-      lodash: 4.17.21
+      lodash: 4.17.23
       mjml-core: 4.18.0
     transitivePeerDependencies:
       - encoding
@@ -13874,7 +13863,7 @@ snapshots:
   mjml-body@4.18.0:
     dependencies:
       '@babel/runtime': 7.28.4
-      lodash: 4.17.21
+      lodash: 4.17.23
       mjml-core: 4.18.0
     transitivePeerDependencies:
       - encoding
@@ -13883,7 +13872,7 @@ snapshots:
   mjml-button@4.18.0:
     dependencies:
       '@babel/runtime': 7.28.4
-      lodash: 4.17.21
+      lodash: 4.17.23
       mjml-core: 4.18.0
     transitivePeerDependencies:
       - encoding
@@ -13892,7 +13881,7 @@ snapshots:
   mjml-carousel@4.18.0:
     dependencies:
       '@babel/runtime': 7.28.4
-      lodash: 4.17.21
+      lodash: 4.17.23
       mjml-core: 4.18.0
     transitivePeerDependencies:
       - encoding
@@ -13905,7 +13894,7 @@ snapshots:
       glob: 10.3.12
       html-minifier: 4.0.0
       js-beautify: 1.15.4
-      lodash: 4.17.21
+      lodash: 4.17.23
       minimatch: 9.0.5
       mjml-core: 4.18.0
       mjml-migrate: 4.18.0
@@ -13919,7 +13908,7 @@ snapshots:
   mjml-column@4.18.0:
     dependencies:
       '@babel/runtime': 7.28.4
-      lodash: 4.17.21
+      lodash: 4.17.23
       mjml-core: 4.18.0
     transitivePeerDependencies:
       - encoding
@@ -13933,7 +13922,7 @@ snapshots:
       html-minifier: 4.0.0
       js-beautify: 1.15.4
       juice: 10.0.1
-      lodash: 4.17.21
+      lodash: 4.17.23
       mjml-migrate: 4.18.0
       mjml-parser-xml: 4.18.0
       mjml-validator: 4.18.0
@@ -13944,7 +13933,7 @@ snapshots:
   mjml-divider@4.18.0:
     dependencies:
       '@babel/runtime': 7.28.4
-      lodash: 4.17.21
+      lodash: 4.17.23
       mjml-core: 4.18.0
     transitivePeerDependencies:
       - encoding
@@ -13953,7 +13942,7 @@ snapshots:
   mjml-group@4.18.0:
     dependencies:
       '@babel/runtime': 7.28.4
-      lodash: 4.17.21
+      lodash: 4.17.23
       mjml-core: 4.18.0
     transitivePeerDependencies:
       - encoding
@@ -13962,7 +13951,7 @@ snapshots:
   mjml-head-attributes@4.18.0:
     dependencies:
       '@babel/runtime': 7.28.4
-      lodash: 4.17.21
+      lodash: 4.17.23
       mjml-core: 4.18.0
     transitivePeerDependencies:
       - encoding
@@ -13971,7 +13960,7 @@ snapshots:
   mjml-head-breakpoint@4.18.0:
     dependencies:
       '@babel/runtime': 7.28.4
-      lodash: 4.17.21
+      lodash: 4.17.23
       mjml-core: 4.18.0
     transitivePeerDependencies:
       - encoding
@@ -13980,7 +13969,7 @@ snapshots:
   mjml-head-font@4.18.0:
     dependencies:
       '@babel/runtime': 7.28.4
-      lodash: 4.17.21
+      lodash: 4.17.23
       mjml-core: 4.18.0
     transitivePeerDependencies:
       - encoding
@@ -13989,7 +13978,7 @@ snapshots:
   mjml-head-html-attributes@4.18.0:
     dependencies:
       '@babel/runtime': 7.28.4
-      lodash: 4.17.21
+      lodash: 4.17.23
       mjml-core: 4.18.0
     transitivePeerDependencies:
       - encoding
@@ -13998,7 +13987,7 @@ snapshots:
   mjml-head-preview@4.18.0:
     dependencies:
       '@babel/runtime': 7.28.4
-      lodash: 4.17.21
+      lodash: 4.17.23
       mjml-core: 4.18.0
     transitivePeerDependencies:
       - encoding
@@ -14007,7 +13996,7 @@ snapshots:
   mjml-head-style@4.18.0:
     dependencies:
       '@babel/runtime': 7.28.4
-      lodash: 4.17.21
+      lodash: 4.17.23
       mjml-core: 4.18.0
     transitivePeerDependencies:
       - encoding
@@ -14016,7 +14005,7 @@ snapshots:
   mjml-head-title@4.18.0:
     dependencies:
       '@babel/runtime': 7.28.4
-      lodash: 4.17.21
+      lodash: 4.17.23
       mjml-core: 4.18.0
     transitivePeerDependencies:
       - encoding
@@ -14025,7 +14014,7 @@ snapshots:
   mjml-head@4.18.0:
     dependencies:
       '@babel/runtime': 7.28.4
-      lodash: 4.17.21
+      lodash: 4.17.23
       mjml-core: 4.18.0
     transitivePeerDependencies:
       - encoding
@@ -14034,7 +14023,7 @@ snapshots:
   mjml-hero@4.18.0:
     dependencies:
       '@babel/runtime': 7.28.4
-      lodash: 4.17.21
+      lodash: 4.17.23
       mjml-core: 4.18.0
     transitivePeerDependencies:
       - encoding
@@ -14043,7 +14032,7 @@ snapshots:
   mjml-image@4.18.0:
     dependencies:
       '@babel/runtime': 7.28.4
-      lodash: 4.17.21
+      lodash: 4.17.23
       mjml-core: 4.18.0
     transitivePeerDependencies:
       - encoding
@@ -14053,7 +14042,7 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.28.4
       js-beautify: 1.15.4
-      lodash: 4.17.21
+      lodash: 4.17.23
       mjml-core: 4.18.0
       mjml-parser-xml: 4.18.0
       yargs: 17.7.2
@@ -14064,7 +14053,7 @@ snapshots:
   mjml-navbar@4.18.0:
     dependencies:
       '@babel/runtime': 7.28.4
-      lodash: 4.17.21
+      lodash: 4.17.23
       mjml-core: 4.18.0
     transitivePeerDependencies:
       - encoding
@@ -14075,7 +14064,7 @@ snapshots:
       '@babel/runtime': 7.28.4
       detect-node: 2.1.0
       htmlparser2: 9.1.0
-      lodash: 4.17.21
+      lodash: 4.17.23
     optional: true
 
   mjml-preset-core@4.18.0:
@@ -14113,7 +14102,7 @@ snapshots:
   mjml-raw@4.18.0:
     dependencies:
       '@babel/runtime': 7.28.4
-      lodash: 4.17.21
+      lodash: 4.17.23
       mjml-core: 4.18.0
     transitivePeerDependencies:
       - encoding
@@ -14122,7 +14111,7 @@ snapshots:
   mjml-section@4.18.0:
     dependencies:
       '@babel/runtime': 7.28.4
-      lodash: 4.17.21
+      lodash: 4.17.23
       mjml-core: 4.18.0
     transitivePeerDependencies:
       - encoding
@@ -14131,7 +14120,7 @@ snapshots:
   mjml-social@4.18.0:
     dependencies:
       '@babel/runtime': 7.28.4
-      lodash: 4.17.21
+      lodash: 4.17.23
       mjml-core: 4.18.0
     transitivePeerDependencies:
       - encoding
@@ -14140,7 +14129,7 @@ snapshots:
   mjml-spacer@4.18.0:
     dependencies:
       '@babel/runtime': 7.28.4
-      lodash: 4.17.21
+      lodash: 4.17.23
       mjml-core: 4.18.0
     transitivePeerDependencies:
       - encoding
@@ -14149,7 +14138,7 @@ snapshots:
   mjml-table@4.18.0:
     dependencies:
       '@babel/runtime': 7.28.4
-      lodash: 4.17.21
+      lodash: 4.17.23
       mjml-core: 4.18.0
     transitivePeerDependencies:
       - encoding
@@ -14158,7 +14147,7 @@ snapshots:
   mjml-text@4.18.0:
     dependencies:
       '@babel/runtime': 7.28.4
-      lodash: 4.17.21
+      lodash: 4.17.23
       mjml-core: 4.18.0
     transitivePeerDependencies:
       - encoding
@@ -14172,7 +14161,7 @@ snapshots:
   mjml-wrapper@4.18.0:
     dependencies:
       '@babel/runtime': 7.28.4
-      lodash: 4.17.21
+      lodash: 4.17.23
       mjml-core: 4.18.0
       mjml-section: 4.18.0
     transitivePeerDependencies:
@@ -14258,7 +14247,7 @@ snapshots:
       aws-ssl-profiles: 1.1.2
       denque: 2.1.0
       generate-function: 2.3.1
-      iconv-lite: 0.7.1
+      iconv-lite: 0.7.2
       long: 5.3.2
       lru.min: 1.1.3
       named-placeholders: 1.1.6
@@ -14299,7 +14288,7 @@ snapshots:
 
   node-emoji@1.11.0:
     dependencies:
-      lodash: 4.17.21
+      lodash: 4.17.23
 
   node-fetch-native@1.6.7: {}
 
