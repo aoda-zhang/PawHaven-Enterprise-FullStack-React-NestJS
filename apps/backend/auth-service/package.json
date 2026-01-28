@@ -8,7 +8,7 @@
     "dev": "nest start --watch",
     "build": "nest build",
     "turbo:build": "turbo run build --filter=@pawhaven/auth-service --env-mode=loose",
-    "install:auth-service": "pnpm --filter=@pawhaven/auth-service install",
+    "install:auth-service": "pnpm --filter=@pawhaven/auth-service... install",
     "start": "node dist/main.js",
     "typecheck": "tsc --noEmit"
   },

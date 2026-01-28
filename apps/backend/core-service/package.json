@@ -6,7 +6,7 @@
     "postinstall": "pnpm run prisma:generate-mongodb",
     "dev": "nest start --watch",
     "build": "nest build",
-    "install:core-service": "pnpm --filter=@pawhaven/core-service install",
+    "install:core-service": "pnpm --filter=@pawhaven/core-service... install",
     "turbo:build": "turbo run build --filter=@pawhaven/core-service --env-mode=loose",
     "start": "node dist/main.js",
     "prisma:generate-mongodb": "prisma generate --schema=./src/prisma/mongodb/schema.prisma",

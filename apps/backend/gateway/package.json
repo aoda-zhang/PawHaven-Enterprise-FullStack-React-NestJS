@@ -7,7 +7,7 @@
     "dev": "nest start --watch",
     "build": "nest build",
     "turbo:build": "turbo run build --filter=@pawhaven/gateway --env-mode=loose",
-    "install:gateway": "pnpm --filter=@pawhaven/gateway install",
+    "install:gateway": "pnpm --filter=@pawhaven/gateway... install",
     "start": "node dist/main.js",
     "typecheck": "tsc --noEmit"
   },
