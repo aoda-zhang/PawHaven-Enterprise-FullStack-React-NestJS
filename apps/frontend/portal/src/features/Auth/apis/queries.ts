@@ -25,6 +25,7 @@ export const useVerify = (routerMeta: RouterMeta) => {
   return useQuery({
     queryKey: ['auth', 'verify'],
     queryFn: AuthAPI.verify,
+    refetchOnMount: 'always',
     enabled: routerMeta?.isRequireUserLogin,
   });
 };
