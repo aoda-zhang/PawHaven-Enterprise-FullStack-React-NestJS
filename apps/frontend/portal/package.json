@@ -53,6 +53,7 @@
     "dev": "vite --mode dev",
     "build": "vite build",
     "turbo:build": "turbo run build --filter=@pawhaven/portal --env-mode=loose",
+    "install:portal": "pnpm --filter=@pawhaven/protal... install",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit"
   },
