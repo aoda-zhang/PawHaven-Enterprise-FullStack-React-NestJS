@@ -12,7 +12,9 @@
     "lint-staged": "lint-staged",
     "build:gateway": "turbo run build --filter=@pawhaven/gateway",
     "build:portal": "turbo run build --filter=@pawhaven/portal",
+    "install:core-service": "pnpm --filter=@pawhaven/core-service install",
     "build:core-service": "turbo run build --filter=@pawhaven/core-service",
+    "install:auth-service": "pnpm --filter=@pawhaven/auth-service install",
     "build:auth-service": "turbo run build --filter=@pawhaven/auth-service"
   },
   "lint-staged": {
