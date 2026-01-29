@@ -131,7 +131,6 @@
   "rescueGuide": {
     "title": "Rescue Guide",
     "intro": "Learn how to safely and kindly help stray animals. Here are five simple steps 💙",
-    "quote": "Every gentle encounter makes the world a little warmer.",
     "steps": [
       {
         "icon": "🕵️‍♀️",
@@ -158,7 +157,8 @@
         "title": "Submit a Rescue Report",
         "desc": "Record and share your rescue story on PawHaven to help connect more volunteers."
       }
-    ]
+    ],
+    "download_guide": "Download the details of the rescue guide"
   },
   "errorMessage": {
     "TOKEN_EXPIRED": "Your session has expired. Please log in again.",
