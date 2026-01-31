@@ -158,7 +158,8 @@
         "desc": "Teile deine Rettungsgeschichte auf PawHaven, damit mehr Menschen helfen können."
       }
     ],
-    "download_guide": "Laden Sie die Details des Rettungsleitfadens herunter"
+    "download_guide": "Laden Sie die Details des Rettungsleitfadens herunter",
+    "download_failed": "Download fehlgeschlagen. Bitte versuchen Sie es erneut."
   },
   "errorMessage": {
     "TOKEN_EXPIRED": "Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an.",

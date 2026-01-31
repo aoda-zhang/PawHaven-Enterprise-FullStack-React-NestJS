@@ -11,6 +11,7 @@ import { getLocale } from '../utils/locale/getLocale';
 import { getUTCTimestamp } from './encrypt';
 import { normalizeHttpError } from './errorHandle';
 import type { ApiClientOptions } from './types';
+import { RequestMode } from './types';
 
 /**
  * Configuration options for creating an API client instance.
@@ -20,7 +21,14 @@ import type { ApiClientOptions } from './types';
  * Factory function to create a reusable API client with common interceptors and headers.
  */
 export const createApiClient = (options: ApiClientOptions) => {
-  const { baseURL, timeout = 20000, withCredentials = true } = options;
+  const {
+    baseURL = '/api',
+    timeout = 20000,
+    withCredentials = true,
+    requestMode = RequestMode.http,
+  } = options as ApiClientOptions & {
+    requestMode?: keyof typeof RequestMode;
+  };
 
   const Http: AxiosInstance = axios.create({
     baseURL,
@@ -31,10 +39,14 @@ export const createApiClient = (options: ApiClientOptions) => {
   const getHttpHeaders = () => {
     const timestamp = `${getUTCTimestamp()}`;
     const headers: Record<string, any> = {
-      Accept: 'application/json',
       'X-timestamp': timestamp,
       'X-locale': getLocale(),
     };
+
+    if (requestMode === RequestMode.http) {
+      headers.Accept = 'application/json';
+    }
+
     return headers;
   };
 
@@ -52,6 +64,10 @@ export const createApiClient = (options: ApiClientOptions) => {
   // ✅ Response interceptor
   Http.interceptors.response.use(
     (response: AxiosResponse<any>) => {
+      if (requestMode === RequestMode.resource) {
+        return response;
+      }
+
       if (
         response?.data?.status >= 200 &&
         response?.data?.status < 400 &&
@@ -59,6 +75,7 @@ export const createApiClient = (options: ApiClientOptions) => {
       ) {
         return response.data.data;
       }
+
       return Promise.reject(normalizeHttpError(response.data));
     },
     (error) => {
@@ -94,6 +111,13 @@ export const createApiClient = (options: ApiClientOptions) => {
       config?: AxiosRequestConfig,
     ): Promise<T> {
       return Http.put(url, data, { ...config });
+    },
+    download(url: string, config?: AxiosRequestConfig): Promise<Blob> {
+      return Http.get(url, {
+        responseType: 'blob',
+        transformResponse: (r) => r,
+        ...config,
+      }).then((res: AxiosResponse<Blob>) => res.data);
     },
   };
 };

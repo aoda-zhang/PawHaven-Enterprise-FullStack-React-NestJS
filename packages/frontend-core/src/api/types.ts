@@ -13,12 +13,18 @@ export const httpRequestErrors = {
   NETWORK: 'NETWORK',
 } as const;
 
+export const RequestMode = {
+  http: 'http',
+  resource: 'resource',
+} as const;
+
 export interface ApiClientOptions {
-  baseURL: string; // The base URL for API requests
+  baseURL?: string; // The base URL for API requests
   timeout?: number; // Optional request timeout
   enableSign?: boolean; // Whether to use signature validation
-  prefix: string; // endpoint prefix
+  prefix?: string; // endpoint prefix
   withCredentials?: boolean; // Is send cookies to backend automatically
+  requestMode?: keyof typeof RequestMode;
 }
 
 export type HttpRequestErrorType =
@@ -39,6 +45,7 @@ export interface ApiResponseType {
   status: number;
   code: string;
 }
+
 export enum extraRequestHeader {
   'access-token' = 'access-token',
   refreshToken = 'refreshToken',

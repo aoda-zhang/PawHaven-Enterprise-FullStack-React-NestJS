@@ -24,7 +24,7 @@ interface ShowNotificationProps {
 }
 
 export const showToast = ({
-  type = notificationType.error,
+  type = notificationType.info,
   message,
   notificationOption,
 }: ShowNotificationProps) => {
@@ -33,6 +33,7 @@ export const showToast = ({
     toast.dismiss(globalNotificationID);
     toast?.[type](message, {
       id: globalNotificationID,
+      duration: notificationOption?.duration ?? 3000,
       ...(notificationOption ?? {}),
     });
   }

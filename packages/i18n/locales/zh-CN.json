@@ -158,7 +158,8 @@
         "desc": "在 PawHaven 中记录救助信息，上传图片与位置，让更多志愿者提供帮助。"
       }
     ],
-    "download_guide": "下载救助指南详情"
+    "download_guide": "下载救助指南详情",
+    "download_failed": "下载失败，请重试"
   },
   "errorMessage": {
     "TOKEN_EXPIRED": "登录已过期，请重新登录。",

@@ -1,7 +1,10 @@
-import { Box, Container, Typography } from '@mui/material';
+import { Alert, Box, Container, Typography } from '@mui/material';
+import { FileDownloadButton } from '@pawhaven/frontend-core';
+import { showToast } from '@pawhaven/ui';
 import { ArrowDownToLine } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
+import { getRescueGuideDocs } from './apis/request';
 import { StepCard } from './components/StepCard';
 
 export const RescueGuide = () => {
@@ -38,10 +41,20 @@ export const RescueGuide = () => {
         </Box>
 
         <p className="flex justify-center m-6">
-          <button className="flex items-center text-2xl bold cursor-pointer p-4 bg-surface rounded-2xl">
+          <FileDownloadButton
+            fileFetchRequest={getRescueGuideDocs}
+            onError={() => {
+              showToast({
+                type: 'error',
+                message: t('rescueGuide.download_failed'),
+              });
+            }}
+            fileType="PDF"
+            contentClassName="flex items-center text-2xl bold cursor-pointer p-4 rounded-2xl"
+          >
             <ArrowDownToLine />
             <span>{t('rescueGuide.download_guide')}</span>
-          </button>
+          </FileDownloadButton>
         </p>
       </Container>
     </div>
