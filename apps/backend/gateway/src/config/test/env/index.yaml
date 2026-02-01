@@ -37,7 +37,7 @@ microServices:
     enable: true
     options:
       host: ${DOCUMENT_SERVICE_HOST}
-      port: 8082
+      port: 8083
       gatewayPrefix: /api/document
       pathRewrite: /document-service
 
