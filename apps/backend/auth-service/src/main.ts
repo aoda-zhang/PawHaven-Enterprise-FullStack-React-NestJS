@@ -7,7 +7,9 @@ import { AppModule } from './app.module';
 
 async function bootstrap(): Promise<void> {
   const logger = new Logger('Bootstrap');
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    bufferLogs: true,
+  });
   const configService = app.get(ConfigService) as ConfigService;
   app.setGlobalPrefix(configService.get('http.prefix')!);
   const port = configService.get('http.port');

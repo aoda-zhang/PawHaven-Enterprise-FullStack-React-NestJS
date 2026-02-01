@@ -1,48 +1,28 @@
-import { ValidationPipe, VersioningType } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
-import { NestFactory } from '@nestjs/core'
-import { NestExpressApplication } from '@nestjs/platform-express'
-import helmet from 'helmet'
-import i18n from 'i18n'
+import type { NestExpressApplication } from '@nestjs/platform-express';
+import { NestFactory } from '@nestjs/core';
+import { ConfigService } from '@nestjs/config';
+import { Logger } from '@nestjs/common';
 
-import { AppModule } from './app.module'
+import { AppModule } from './app.module';
 
-async function bootstrap() {
-  // Hybrid application
-  // can be used as a microservice or a web service both
+async function bootstrap(): Promise<void> {
+  const logger = new Logger('Bootstrap');
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-    bufferLogs: true
-  })
+    bufferLogs: true,
+  });
+  const configService = app.get(ConfigService) as ConfigService;
+  app.setGlobalPrefix(configService.get('http.prefix')!);
+  const port = configService.get('http.port');
 
-  // Initialize i18n
-  app.use(i18n.init)
-
-  // global service prefix
-  const prefix = app.get(ConfigService).get('http.prefix') ?? ''
-  app.setGlobalPrefix(prefix)
-
-  // Version control like v1 v2
-  app.enableVersioning({
-    type: VersioningType.URI
-  })
-
-  // DTO pipe settings
-  app.useGlobalPipes(
-    new ValidationPipe({
-      transform: true,
-      whitelist: true
-    })
-  )
-
-  // avoid attack
-  app.use(helmet())
-
-  const port = app.get(ConfigService).get('http.port') ?? 8082
-  // As a web service
-  await app
-    .listen(port, '0.0.0.0')
-    .catch((error) => {
-      console.error(`MS_Document start error:${error}`)
-    })
+  try {
+    await app.listen(port, '0.0.0.0');
+    logger.log(`document-service running at http://localhost:${port}`);
+  } catch (error) {
+    logger.error('Failed to start document-service', error);
+    throw new Error(
+      `Bootstrap failed: ${error instanceof Error ? error.message : error}`,
+    );
+  }
 }
-bootstrap()
+
+bootstrap();

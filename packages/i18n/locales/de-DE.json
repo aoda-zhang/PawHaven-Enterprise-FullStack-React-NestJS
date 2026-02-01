@@ -131,7 +131,6 @@
   "rescueGuide": {
     "title": "Rettungsleitfaden",
     "intro": "Lerne Schritt für Schritt, wie du herrenlosen Tieren sicher und mit Mitgefühl helfen kannst 💙",
-    "quote": "Jede freundliche Tat macht die Welt ein wenig wärmer.",
     "steps": [
       {
         "icon": "🕵️‍♀️",
@@ -158,7 +157,9 @@
         "title": "Rettung auf PawHaven teilen",
         "desc": "Teile deine Rettungsgeschichte auf PawHaven, damit mehr Menschen helfen können."
       }
-    ]
+    ],
+    "download_guide": "Laden Sie die Details des Rettungsleitfadens herunter",
+    "download_failed": "Download fehlgeschlagen. Bitte versuchen Sie es erneut."
   },
   "errorMessage": {
     "TOKEN_EXPIRED": "Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an.",

@@ -1,6 +1,10 @@
-import { Container, Typography, Box } from '@mui/material';
+import { Alert, Box, Container, Typography } from '@mui/material';
+import { FileDownloadButton } from '@pawhaven/frontend-core';
+import { showToast } from '@pawhaven/ui';
+import { ArrowDownToLine } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
+import { getRescueGuideDocs } from './apis/request';
 import { StepCard } from './components/StepCard';
 
 export const RescueGuide = () => {
@@ -13,28 +17,46 @@ export const RescueGuide = () => {
     desc: string;
   }>;
   return (
-    <Container maxWidth="md" sx={{ py: 6 }}>
-      <Typography variant="h3" gutterBottom fontWeight="bold">
-        {t('rescueGuide.title')}
-      </Typography>
+    <div className="bg-[url('/images/hero1.png')] bg-cover bg-center">
+      <Container sx={{ py: 6 }}>
+        <Typography variant="h3" gutterBottom fontWeight="bold">
+          {t('rescueGuide.title')}
+        </Typography>
 
-      <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
-        {t('rescueGuide.intro')}
-      </Typography>
+        <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
+          {t('rescueGuide.intro')}
+        </Typography>
 
-      <Box>
-        {stepsContent?.map((step) => (
-          <StepCard key={step?.title} {...step} />
-        ))}
-      </Box>
+        <Box
+          display="grid"
+          gap={3}
+          gridTemplateColumns={{
+            xs: '1fr',
+            md: 'repeat(5,1fr)',
+          }}
+        >
+          {stepsContent.map((step) => (
+            <StepCard key={step.title} {...step} />
+          ))}
+        </Box>
 
-      <Typography
-        variant="body2"
-        color="text.secondary"
-        sx={{ mt: 5, textAlign: 'center', fontStyle: 'italic' }}
-      >
-        {t('rescueGuide.quote')}
-      </Typography>
-    </Container>
+        <p className="flex justify-center m-6">
+          <FileDownloadButton
+            fileFetchRequest={getRescueGuideDocs}
+            onError={() => {
+              showToast({
+                type: 'error',
+                message: t('rescueGuide.download_failed'),
+              });
+            }}
+            fileType="PDF"
+            contentClassName="flex items-center text-2xl bold cursor-pointer p-4 rounded-2xl"
+          >
+            <ArrowDownToLine />
+            <span>{t('rescueGuide.download_guide')}</span>
+          </FileDownloadButton>
+        </p>
+      </Container>
+    </div>
   );
 };
