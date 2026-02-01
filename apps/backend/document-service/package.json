@@ -3,15 +3,15 @@
   "name": "@pawhaven/document-service",
   "version": "1.0.0",
   "scripts": {
-    "postinstall": "pnpm run prisma:generate-mongodb",
     "dev": "nest start --watch",
     "build": "nest build",
-    "install:core-service": "pnpm --filter=@pawhaven/document-service... install",
+    "install:document-service": "pnpm --filter=@pawhaven/document-service... install",
     "turbo:build": "turbo run build --filter=@pawhaven/document-service --env-mode=loose",
     "start": "node dist/main.js",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@pawhaven/backend-core": "workspace:*",
     "@nestjs-modules/mailer": "^2.0.2",
     "@nestjs/axios": "^4.0.1",
     "@nestjs/common": "^11.1.6",

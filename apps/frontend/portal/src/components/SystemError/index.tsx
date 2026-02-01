@@ -4,16 +4,16 @@ import { useTranslation } from 'react-i18next';
 
 interface SystemErrorProps {
   error?: unknown;
-  resetErrorBoundary?: () => void;
 }
 
-export const SystemError: React.FC<SystemErrorProps> = ({
-  resetErrorBoundary,
-}) => {
+export const SystemError: React.FC<SystemErrorProps> = () => {
   const { t } = useTranslation();
 
   const handleGoHome = () => {
     window.location.href = '/';
+  };
+  const retry = () => {
+    window.location.reload();
   };
 
   return (
@@ -29,7 +29,7 @@ export const SystemError: React.FC<SystemErrorProps> = ({
       </p>
 
       <div className="flex gap-10">
-        <Button variant="contained" onClick={resetErrorBoundary}>
+        <Button variant="contained" onClick={retry}>
           {t('common.retry', { defaultValue: 'Try Again' })}
         </Button>
         <Button variant="outlined" onClick={handleGoHome}>

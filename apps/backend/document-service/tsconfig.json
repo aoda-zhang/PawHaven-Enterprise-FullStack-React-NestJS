@@ -1,7 +1,11 @@
 {
   "extends": "@pawhaven/tsconfig/node",
   "compilerOptions": {
-    "outDir": "dist"
+    "outDir": "dist",
+    "jsx": "react-jsx",
+    "paths": {
+      "@modules/*": ["./src/modules/*"]
+    }
   },
   "include": ["src"]
 }
