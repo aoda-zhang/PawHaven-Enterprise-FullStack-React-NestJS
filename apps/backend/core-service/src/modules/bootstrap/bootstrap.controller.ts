@@ -13,11 +13,11 @@ export class BootstrapController {
 
   @Post('/menu')
   createMenu(@Body() menu: any) {
-    return this.bootService.createMenu(menu);
+    return this.bootService.addMenuItem(menu);
   }
 
   @Post('/router')
   createRouter(@Body() router: any) {
-    return this.bootService.createRouter(router);
+    return this.bootService.addAppRouter(router);
   }
 }

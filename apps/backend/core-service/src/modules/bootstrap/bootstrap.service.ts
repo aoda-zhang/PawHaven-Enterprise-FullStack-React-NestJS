@@ -9,7 +9,7 @@ export class BootstrapService {
     private readonly prisma: MongoPrismaClient,
   ) {}
 
-  async createMenu(menu: any) {
+  async addMenuItem(menu: any) {
     try {
       const menuCreated = await this.prisma.menu.create({
         data: menu,
@@ -51,7 +51,7 @@ export class BootstrapService {
     }
   }
 
-  async createRouter(menu: any) {
+  async addAppRouter(menu: any) {
     try {
       const menuCreated = this.prisma.route.create({
         data: menu,
@@ -87,13 +87,16 @@ export class BootstrapService {
         handle: true,
         parentId: true,
         order: true,
+        status: true,
       },
       orderBy: { order: 'asc' },
     });
 
+    const activeRoutes = routes.filter((route) => route.status === 'active');
+
     const routeMap = new Map<string, any>();
 
-    routes.forEach((r) => {
+    activeRoutes.forEach((r) => {
       routeMap.set(r.id, {
         path: r.path ?? undefined,
         element: r.element,
@@ -103,7 +106,7 @@ export class BootstrapService {
 
     const result: any[] = [];
 
-    routes.forEach((r) => {
+    activeRoutes.forEach((r) => {
       const current = routeMap.get(r.id);
 
       if (r.parentId) {

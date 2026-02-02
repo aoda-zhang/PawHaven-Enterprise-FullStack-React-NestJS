@@ -13,7 +13,7 @@ interface GetHTMLContentParams {
 
 interface GeneratePDFPayload {
   template: string;
-  locale?: string;
+  locale: string;
   PDFContentData?: Record<string, unknown>;
   PDFHeaderData?: Record<string, unknown>;
   PDFFooterData?: Record<string, unknown>;
