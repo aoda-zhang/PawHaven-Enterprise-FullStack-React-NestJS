@@ -1,6 +1,7 @@
 import { BootstrapModule } from '@modules/bootstrap/bootstrap.module';
 import { ReportAnimalModule } from '@modules/reportAnimal/index.module';
 import { Module } from '@nestjs/common';
+import { APP_PIPE } from '@nestjs/core';
 import {
   databaseEngines,
   microServiceNames,
@@ -8,6 +9,7 @@ import {
   SharedModuleFeatures,
 } from '@pawhaven/backend-core';
 import { PrismaClient as MongoPrismaClient } from '@prisma/client';
+import { ZodValidationPipe } from 'nestjs-zod';
 
 @Module({
   imports: [
@@ -28,6 +30,12 @@ import { PrismaClient as MongoPrismaClient } from '@prisma/client';
     }),
     ReportAnimalModule,
     BootstrapModule,
+  ],
+  providers: [
+    {
+      provide: APP_PIPE,
+      useClass: ZodValidationPipe,
+    },
   ],
 })
 export class AppModule {}
