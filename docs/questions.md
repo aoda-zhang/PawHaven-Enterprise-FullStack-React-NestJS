@@ -11,3 +11,7 @@
 ## Create Banner provider
 
 ## Different system error page
+
+## How to manage thirty-party in common packages
+
+## HOw to manage export files in shared packages

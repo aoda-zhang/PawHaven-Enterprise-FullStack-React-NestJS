@@ -1,4 +1,4 @@
-import type { ReactElement } from 'react';
+import type { MenuItem } from '@pawhaven/shared/types/menus.schema';
 import type { NavigateFunction } from 'react-router-dom';
 
 export const menuTypes = {
@@ -7,21 +7,8 @@ export const menuTypes = {
 } as const;
 
 export type MenuType = (typeof menuTypes)[keyof typeof menuTypes];
-
-export interface MenuItemType {
-  label: string;
-  to?: string;
-  classNames?: string[];
-  isAvailableOnMobile?: boolean;
-  isOnlyMobile?: boolean;
-  component?: string | ReactElement;
-  action?: string;
-  props?: Record<string, unknown>;
-  type: MenuType;
-}
-
 export interface MenuRenderType {
-  menuItems: MenuItemType[];
+  menuItems: MenuItem[];
   activePath?: string;
   navigate: NavigateFunction;
 }
@@ -50,7 +37,7 @@ export interface RouterEle {
 }
 
 export interface RootLayoutHeaderProps {
-  menuItems: MenuItemType[];
+  menuItems: MenuItem[];
   navigate: NavigateFunction;
   currentRouterInfo?: RouterInfoType;
 }

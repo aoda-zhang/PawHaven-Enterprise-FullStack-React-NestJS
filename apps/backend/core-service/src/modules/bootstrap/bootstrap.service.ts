@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { databaseEngines, InjectPrisma } from '@pawhaven/backend-core';
+import { MenuItem, Menu } from '@pawhaven/shared/types/menus.schema';
 import { PrismaClient as MongoPrismaClient } from '@prisma/client';
 
 @Injectable()
@@ -9,7 +10,7 @@ export class BootstrapService {
     private readonly prisma: MongoPrismaClient,
   ) {}
 
-  async addMenuItem(menu: any) {
+  async addMenuItem(menu: MenuItem): Promise<MenuItem> {
     try {
       const menuCreated = await this.prisma.menu.create({
         data: menu,
@@ -30,7 +31,7 @@ export class BootstrapService {
     }
   }
 
-  async getAppMenus() {
+  async getAppMenus(): Promise<Menu> {
     try {
       const menus = await this.prisma.menu.findMany({
         select: {

@@ -952,6 +952,9 @@ importers:
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.1
+      nestjs-zod:
+        specifier: ^5.1.1
+        version: 5.1.1(@nestjs/common@11.1.10(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/swagger@11.2.3(@nestjs/common@11.1.10(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.10)(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2))(rxjs@7.8.2)(zod@4.3.6)
       passport:
         specifier: ^0.7.0
         version: 0.7.0
@@ -970,6 +973,9 @@ importers:
       uuid:
         specifier: ^8.3.2
         version: 8.3.2
+      zod:
+        specifier: ^4.3.6
+        version: 4.3.6
     devDependencies:
       '@nestjs/cli':
         specifier: ^11.0.10
@@ -12550,8 +12556,8 @@ snapshots:
       '@babel/parser': 7.28.5
       eslint: 8.57.1
       hermes-parser: 0.25.1
-      zod: 4.2.1
-      zod-validation-error: 4.0.2(zod@4.2.1)
+      zod: 4.3.6
+      zod-validation-error: 4.0.2(zod@4.3.6)
     transitivePeerDependencies:
       - supports-color
 
@@ -16307,9 +16313,9 @@ snapshots:
       grammex: 3.1.12
     optional: true
 
-  zod-validation-error@4.0.2(zod@4.2.1):
+  zod-validation-error@4.0.2(zod@4.3.6):
     dependencies:
-      zod: 4.2.1
+      zod: 4.3.6
 
   zod@3.25.76: {}
 

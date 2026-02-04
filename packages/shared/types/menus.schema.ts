@@ -6,22 +6,11 @@ const BaseMenuSchema = z.object({
   order: z.number().int().nonnegative(),
 });
 
-export const LinkMenuSchema = BaseMenuSchema.extend({
-  type: z.literal('link'),
-  to: z.string().min(1),
-  component: z.null(),
+export const MenuItemSchema = BaseMenuSchema.extend({
+  type: z.enum(['link', 'component']),
+  to: z.string().min(1).nullable(),
+  component: z.string().min(1).nullable(),
 });
-
-export const ComponentMenuSchema = BaseMenuSchema.extend({
-  type: z.literal('component'),
-  to: z.null(),
-  component: z.string().min(1),
-});
-
-export const MenuItemSchema = z.discriminatedUnion('type', [
-  LinkMenuSchema,
-  ComponentMenuSchema,
-]);
 
 export const MenuSchema = z.array(MenuItemSchema);
 
