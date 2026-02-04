@@ -8,9 +8,15 @@ const BaseMenuSchema = z.object({
 
 export const MenuItemSchema = BaseMenuSchema.extend({
   type: z.enum(['link', 'component']),
-  to: z.string().min(1).nullable(),
-  component: z.string().min(1).nullable(),
-});
+  to: z.string().min(1).optional(),
+  component: z.string().min(1).optional(),
+})
+  .strict()
+  .transform((v) => ({
+    ...v,
+    to: v.to ?? null,
+    component: v.component ?? null,
+  }));
 
 export const MenuSchema = z.array(MenuItemSchema);
 

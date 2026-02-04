@@ -34,6 +34,9 @@ export class BootstrapService {
   async getAppMenus(): Promise<Menu> {
     try {
       const menus = await this.prisma.menu.findMany({
+        where: {
+          status: 'active',
+        },
         select: {
           id: false,
           label: true,

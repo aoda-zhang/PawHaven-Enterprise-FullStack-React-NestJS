@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 
 import { BootstrapService } from './bootstrap.service';
+import { MenuItemDto } from './DTO/menu.DTO';
 
 @Controller('/app')
 export class BootstrapController {
@@ -12,7 +13,7 @@ export class BootstrapController {
   }
 
   @Post('/menu')
-  createMenu(@Body() menu: any) {
+  createMenu(@Body() menu: MenuItemDto): Promise<MenuItemDto> {
     return this.bootService.addMenuItem(menu);
   }
 
