@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { databaseEngines, InjectPrisma } from '@pawhaven/backend-core';
 import { MenuItem, Menu } from '@pawhaven/shared/types/menus.schema';
+import { Router, RouterItem } from '@pawhaven/shared/types/router.schema';
 import { PrismaClient as MongoPrismaClient } from '@prisma/client';
 
 @Injectable()
@@ -55,10 +56,10 @@ export class BootstrapService {
     }
   }
 
-  async addAppRouter(menu: any) {
+  async addAppRouter(router: any): Promise<any> {
     try {
-      const menuCreated = this.prisma.route.create({
-        data: menu,
+      const createdRouterItem = this.prisma.route.create({
+        data: router,
         select: {
           id: true,
           path: true,
@@ -66,14 +67,14 @@ export class BootstrapService {
           handle: true,
         },
       });
-      return menuCreated;
+      return createdRouterItem;
     } catch (error) {
       console.error('error-------', error);
-      throw new BadRequestException(`add menu :${menu?.label} failed`);
+      throw new BadRequestException(`add menu :${router?.path} failed`);
     }
   }
 
-  async getAppBootstrap() {
+  async getAppBootstrap(): Promise<{ menus: Menu; routers: Router }> {
     const menus = await this.getAppMenus();
     const routers = await this.getAppRouters();
     return {
@@ -82,7 +83,7 @@ export class BootstrapService {
     };
   }
 
-  async getAppRouters(): Promise<any[]> {
+  async getAppRouters(): Promise<Router> {
     const routes = await this.prisma.route.findMany({
       select: {
         id: true,
@@ -108,7 +109,7 @@ export class BootstrapService {
       });
     });
 
-    const result: any[] = [];
+    const result: RouterItem[] = [];
 
     activeRoutes.forEach((r) => {
       const current = routeMap.get(r.id);

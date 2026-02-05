@@ -9,69 +9,52 @@ import { AuthGuard } from '@/features/Auth/AuthGuard';
 import { useLandingContext } from '@/features/Landing/landingContext';
 import type { RouterEle } from '@/types/LayoutType';
 
-export interface RouteMetaType {
-  isRequireUserLogin?: boolean;
-  children?: ReactNode;
-}
-
-const applyRouteWrappers = (router: ReactNode) => {
-  /**
-   * Route-level wrappers.
-   * Order matters: outer → inner.
-   * Add new guards/layouts here when needed.
-   */
+// Applies route-level guards such as AuthGuard to a route element
+const wrapWithGuards = (node: ReactNode, handle?: RouterEle['handle']) => {
   const routeWrappers = [
-    (node: ReactNode) => <AuthGuard>{node}</AuthGuard>,
-    // (node: ReactNode) => <PermissionGuard>{node}</PermissionGuard>,
-    // (node: ReactNode) => <FeatureFlagGuard>{node}</FeatureFlagGuard>,
+    (childNode: ReactNode) =>
+      handle?.isRequireUserLogin ? (
+        <AuthGuard>{childNode}</AuthGuard>
+      ) : (
+        childNode
+      ),
   ];
 
-  return routeWrappers.reduceRight((node, wrap) => wrap(node), router);
+  return routeWrappers.reduceRight((childNode, wrap) => wrap(childNode), node);
 };
 
-const buildRouteElement = (route: RouterEle) => {
-  const handle = route?.handle ?? {};
-  const isLazyLoadElement = handle.isLazyLoad ?? true;
-  const isChildRoute = !route?.children;
-
-  const rawElement = isLazyLoadElement ? (
-    <SuspenseWrapper>{routerElementMapping[route?.element]}</SuspenseWrapper>
+const createRouteElement = (route: RouterEle): ReactNode => {
+  const handle = route.handle ?? {};
+  const componentElement = handle.isLazyLoad ? (
+    <SuspenseWrapper>{routerElementMapping[route.element]}</SuspenseWrapper>
   ) : (
-    routerElementMapping[route?.element]
+    routerElementMapping[route.element]
   );
 
-  if (!isChildRoute) {
-    return rawElement;
-  }
-
-  return applyRouteWrappers(rawElement);
+  return wrapWithGuards(componentElement, handle);
 };
 
-const routesMapping = (routesFromAPI: RouterEle[]): RouteObject[] => {
-  const routes = routesFromAPI.map((route) => {
+const generateRoutes = (routesConfig: RouterEle[]): RouteObject[] => {
+  return routesConfig.map((route) => {
     const mappedRoute: RouteObject = {
-      path: route?.path,
-      element: buildRouteElement(route),
-      handle: route?.handle,
-      errorElement: routerElementMapping.errorFallback,
+      path: route.path,
+      element: createRouteElement(route),
+      handle: route.handle,
     };
 
-    if (route?.children) {
-      mappedRoute.children = routesMapping(route?.children);
+    if (route.children?.length) {
+      mappedRoute.children = generateRoutes(route.children);
     }
 
     return mappedRoute;
   });
-
-  return routes;
 };
 
 export const AppRouterProvider = () => {
   const { routers } = useLandingContext();
-  if (!routers || routers?.length === 0) {
-    return null;
-  }
-  return (
-    <RouterProvider router={createBrowserRouter(routesMapping(routers))} />
-  );
+  if (!routers || routers?.length === 0) return null;
+
+  const routes: RouteObject[] = generateRoutes(routers);
+
+  return <RouterProvider router={createBrowserRouter(routes)} />;
 };
