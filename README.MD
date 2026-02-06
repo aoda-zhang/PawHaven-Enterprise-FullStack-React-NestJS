@@ -39,7 +39,3 @@ This project provides a structured, enterprise-ready architecture for developers
 - ⚠️ Error Handling & Monitoring
 - 🔐 Security & Access Control
 - 🌐 Deployment & DevOps
-
----
-
-**PawHaven** — where technology meets compassion, and every paw matters 🐾❤️
