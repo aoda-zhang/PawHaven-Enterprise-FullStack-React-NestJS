@@ -1,15 +1,15 @@
+import type { MenuItem } from '@pawhaven/shared/types/menus.schema';
+import type { RouterItem } from '@pawhaven/shared/types/routers.schema';
 import { createContext, useContext } from 'react';
 
-import type { MenuItemType, RouterEle } from '@/types/LayoutType';
-
 export interface LandingDataType {
-  menus: MenuItemType[];
-  routers: RouterEle[];
+  menus: MenuItem[];
+  routers: RouterItem[];
 }
 
 export const LandingContext = createContext<LandingDataType>({
-  menus: [] as MenuItemType[],
-  routers: [] as RouterEle[],
+  menus: [] as MenuItem[],
+  routers: [] as RouterItem[],
 });
 
 export const useLandingContext = (): LandingDataType => {

@@ -1,18 +1,13 @@
 import { I18nSwitch } from '@pawhaven/frontend-core';
+import type { MenuItem } from '@pawhaven/shared/types/menus.schema';
 import clsx from 'clsx';
 import { cloneElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import {
   menuTypes,
-  type MenuItemType,
   type MenuRenderType,
-} from '@/types/LayoutType';
-
-const HeaderActionKeys = {
-  openSidebarMenu: 'openSidebarMenu',
-  toggleDark: 'toggleDark',
-};
+} from '@/features/Landing/landing.type';
 
 const rootLayoutClassNames = {
   menuItem:
@@ -28,23 +23,7 @@ export const RootLayoutMenuRender = (props: MenuRenderType) => {
   const { menuItems, activePath, navigate } = props;
   const { t } = useTranslation();
 
-  const toggleDark = (theme: string) => {
-    return `props_${theme}`;
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleHeaderAction = (action: string, actionProps: any) => {
-    switch (action) {
-      case HeaderActionKeys.toggleDark:
-        toggleDark(actionProps);
-        break;
-      // Add more cases for different actions as needed
-      default:
-        console.warn(`Unknown header action: ${action}`);
-    }
-  };
-
-  const handleLinkMenu = (item: MenuItemType) => {
+  const handleLinkMenu = (item: MenuItem) => {
     if (item?.to) {
       const isActiveMenuItem =
         item.type === menuTypes.link && activePath === item?.to;
@@ -83,7 +62,7 @@ export const RootLayoutMenuRender = (props: MenuRenderType) => {
     return null;
   };
 
-  const handleComponentMenu = (item: MenuItemType) => {
+  const handleComponentMenu = (item: MenuItem) => {
     if (item?.component) {
       const itemClassNames = item?.classNames ?? [];
       const Component =
@@ -96,19 +75,8 @@ export const RootLayoutMenuRender = (props: MenuRenderType) => {
           key={item?.label}
           role="button"
           tabIndex={0}
-          onClick={() => {
-            if (!item.action) return;
-            handleHeaderAction(item.action, item?.props ?? {});
-          }}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              if (!item.action) return;
-              handleHeaderAction(item.action, item?.props ?? {});
-            }
-          }}
         >
-          {Component && cloneElement(Component, item.props ?? {})}
+          {Component && cloneElement(Component)}
         </div>
       );
     }

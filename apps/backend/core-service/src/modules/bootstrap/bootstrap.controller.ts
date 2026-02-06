@@ -2,7 +2,7 @@ import { Body, Controller, Get, Post } from '@nestjs/common';
 
 import { BootstrapService } from './bootstrap.service';
 import { MenuItemDto } from './DTO/menu.DTO';
-import { RouterItemDTO } from './DTO/router.DTO';
+import { CreatedRouteDTO, RouterItemDTO } from './DTO/router.DTO';
 
 @Controller('/app')
 export class BootstrapController {
@@ -22,7 +22,7 @@ export class BootstrapController {
   }
 
   @Post('/router')
-  createRouter(@Body() router: RouterItemDTO): Promise<RouterItemDTO> {
+  createRouter(@Body() router: RouterItemDTO): Promise<CreatedRouteDTO> {
     return this.bootService.addAppRouter(router);
   }
 }

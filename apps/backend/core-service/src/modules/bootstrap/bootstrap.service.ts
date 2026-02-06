@@ -4,6 +4,8 @@ import { MenuItem, Menu } from '@pawhaven/shared/types/menus.schema';
 import { Router, RouterItem } from '@pawhaven/shared/types/router.schema';
 import { PrismaClient as MongoPrismaClient } from '@prisma/client';
 
+import { CreatedRouteDTO } from './DTO/router.DTO';
+
 @Injectable()
 export class BootstrapService {
   constructor(
@@ -56,22 +58,28 @@ export class BootstrapService {
     }
   }
 
-  async addAppRouter(router: any): Promise<any> {
-    try {
-      const createdRouterItem = this.prisma.route.create({
-        data: router,
-        select: {
-          id: true,
-          path: true,
-          element: true,
-          handle: true,
-        },
-      });
-      return createdRouterItem;
-    } catch (error) {
-      console.error('error-------', error);
-      throw new BadRequestException(`add menu :${router?.path} failed`);
-    }
+  async addAppRouter(
+    router: RouterItem & { parentId?: string },
+  ): Promise<CreatedRouteDTO> {
+    const createdRouterItem = await this.prisma.route.create({
+      data: {
+        path: router.path,
+        element: router.element,
+        handle: router.handle,
+        ...(router?.parentId
+          ? {
+              parent: { connect: { id: router.parentId } },
+            }
+          : {}),
+      },
+      select: {
+        path: true,
+        element: true,
+        handle: true,
+      },
+    });
+
+    return createdRouterItem;
   }
 
   async getAppBootstrap(): Promise<{ menus: Menu; routers: Router }> {

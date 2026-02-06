@@ -14,4 +14,6 @@
 
 ## How to manage thirty-party in common packages
 
-## HOw to manage export files in shared packages
+## How to manage export files in shared packages
+
+## How to generate fake data

@@ -8,31 +8,34 @@ export interface RouterHandle {
   isRequireUserLogin?: boolean;
   isMenuAvailable?: boolean;
   isLazyLoad?: boolean;
-  [key: string]: any;
+  [key: string]: boolean | string | number | null | undefined;
 }
 
 export interface RouterItem {
   element: string;
-  path?: string;
+  path: string | null;
   children?: RouterItem[];
-  handle?: RouterHandle;
+  handle: RouterHandle;
 }
 
 /**
  * Zod schemas
  */
-const HandleSchema = z.object({
-  isRequireUserLogin: z.boolean().optional(),
-  isMenuAvailable: z.boolean().optional(),
-  isLazyLoad: z.boolean().optional(),
-});
+const HandleSchema = z
+  .object({
+    isRequireUserLogin: z.boolean().optional(),
+    isMenuAvailable: z.boolean().optional(),
+    isLazyLoad: z.boolean().optional(),
+  })
+  .default({});
 
 export const RouterItemSchema: z.ZodType<RouterItem> = z.lazy(() =>
   z.object({
     element: z.string(),
-    path: z.string().optional(),
-    children: z.array(RouterItemSchema).optional(),
-    handle: HandleSchema.optional(),
+    path: z.string().nullable().default(null),
+    children: z.array(RouterItemSchema).default([]),
+    handle: HandleSchema.default({}),
+    parentId: z.string().optional(),
   }),
 );
 
