@@ -35,7 +35,4 @@ This project provides a structured, enterprise-ready architecture for developers
 - 🧱 Shared Packages & UI Library
 - 📡 API & Backend Architecture
 - 🗃️ Frontend Architecture & State Management
-- 🧪 Testing Strategy
 - ⚠️ Error Handling & Monitoring
-- 🔐 Security & Access Control
-- 🌐 Deployment & DevOps
