@@ -7,8 +7,7 @@
 ![pnpm](https://img.shields.io/badge/Package-pnpm-F69220?logo=pnpm&logoColor=white)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
-[![logo.png](https://i.postimg.cc/XvtGZv64/logo.png)](https://postimg.cc/f3jTpDbr)
-[![1-1.png](https://i.postimg.cc/6p27CNmY/1-1.png)](https://postimg.cc/87GPVxD6)
+[![image.png](https://i.postimg.cc/qqWcLRHN/image.png)](https://postimg.cc/y3XS67dK)
 
 这是一个稳健、可维护且可扩展的全栈企业级项目，基于前端 React 和后端 NestJS 构建。  
 它是学习真实全栈开发的优秀示例，展示了生产就绪应用的完整生命周期，包括模块化架构、清晰编码、CI/CD、测试、部署和监控，同时应用于流浪动物救助的使命。  
