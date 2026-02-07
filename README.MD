@@ -8,7 +8,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
 [![logo.png](https://i.postimg.cc/XvtGZv64/logo.png)](https://postimg.cc/f3jTpDbr)
-[![1-1.png](https://i.postimg.cc/6p27CNmY/1-1.png)](https://postimg.cc/87GPVxD6)
+[![image.png](https://i.postimg.cc/qqWcLRHN/image.png)](https://postimg.cc/y3XS67dK)
 
 A robust, maintainable, and scalable full-stack enterprise project built with React (frontend) and NestJS (backend).  
 It serves as an excellent real-world example for learning full-stack development, demonstrating a production-ready lifecycle including modular architecture, clean code, CI/CD, testing, deployment, and monitoring—applied to the mission of stray animal rescue.  
