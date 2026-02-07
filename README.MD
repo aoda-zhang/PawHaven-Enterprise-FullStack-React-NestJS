@@ -7,7 +7,6 @@
 ![pnpm](https://img.shields.io/badge/Package-pnpm-F69220?logo=pnpm&logoColor=white)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
-[![logo.png](https://i.postimg.cc/XvtGZv64/logo.png)](https://postimg.cc/f3jTpDbr)
 [![image.png](https://i.postimg.cc/qqWcLRHN/image.png)](https://postimg.cc/y3XS67dK)
 
 A robust, maintainable, and scalable full-stack enterprise project built with React (frontend) and NestJS (backend).  
