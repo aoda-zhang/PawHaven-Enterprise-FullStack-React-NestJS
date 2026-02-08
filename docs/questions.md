@@ -6,14 +6,8 @@
 
 ## How to take token refresh automatically
 
-## How to set a high-level maintenance page
-
-## Create Banner provider
-
-## Different system error page
-
-## How to manage thirty-party in common packages
-
 ## How to manage export files in shared packages
 
 ## How to generate fake data
+
+## How to avoid different lib versions between shared and business apps
