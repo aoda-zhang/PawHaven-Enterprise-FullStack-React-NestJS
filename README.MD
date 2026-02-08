@@ -1,5 +1,5 @@
 [English](README.MD) | [中文](READMECN.MD)
-
+# 🐾 PawHaven
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
 ![React](https://img.shields.io/badge/React-20232a?logo=react&logoColor=61dafb)
 ![Node.js](https://img.shields.io/badge/Node.js-43853D?logo=node.js&logoColor=white)
@@ -7,23 +7,46 @@
 ![pnpm](https://img.shields.io/badge/Package-pnpm-F69220?logo=pnpm&logoColor=white)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
-[![logo.png](https://i.postimg.cc/XvtGZv64/logo.png)](https://postimg.cc/f3jTpDbr)
-[![1-1.png](https://i.postimg.cc/6p27CNmY/1-1.png)](https://postimg.cc/87GPVxD6)
 
-A robust, maintainable, and scalable full-stack enterprise project built with React (frontend) and NestJS (backend).  
-It serves as an excellent real-world example for learning full-stack development, demonstrating a production-ready lifecycle including modular architecture, clean code, CI/CD, testing, deployment, and monitoring—applied to the mission of stray animal rescue.  
-This project provides a structured, enterprise-ready architecture for developers to understand professional full-stack application practices.
+An open-source animal rescue platform that **empowers volunteers, shelters, and adopters** with digital tools to report, track, and share animal rescue cases.
+
+[![image.png](https://i.postimg.cc/qqWcLRHN/image.png)](https://postimg.cc/y3XS67dK)
 
 🌍 **Live:** [PawHaven](https://pawhaven.work)
 
 ---
 
-## 🎯 Why this project?
+## ✨ Highlights
 
-- **Purpose‑Driven**: PawHaven is not just a sample project—it’s a nonprofit initiative committed to rescuing stray animals.
-- **Enterprise‑Ready Stack**: Comes with clear structure, best practices, and end‑to‑end full stack using React & NestJS.
-- **Real‑world Challenges**: Tackles issues like team collaboration, modular codebase, CI/CD pipelines, monitoring, scalability.
-- **Educational Resource**: Designed for developers who want to level up to large‑scale TypeScript applications.
+- Built around **real animal rescue workflows**, not generic CRUD
+
+- **Monorepo setup** that keeps frontend, backend, and shared code in one place, helping the team work with consistent rules and making the project easier to maintain and grow over time
+
+- Supports multiple **user roles**: volunteers, shelters, and community adopters
+
+- **Feature-driven frontend** with domain-aligned modules for reporting, tracking, and story sharing
+
+- **Backend modules** mirror business domains to ensure maintainable, scalable services
+
+- Comprehensive **documentation-first approach** to support contributors and future growth
+
+---
+
+## 🧠 Core Domains & Features
+
+- **Identity & Trust** – user authentication, role-based access, and volunteer credibility  
+- **Rescue Case Management** – report rescues, track progress, assign status, and handle guides  
+- **Knowledge & Rescue Guides** – practical guidance for volunteers and shelters  
+- **Community & Stories** – share rescue outcomes, raise awareness, and engage adopters
+
+---
+
+## ⚙️ Project Structure & Tooling
+
+- **Frontend:** React + Redux Toolkit (global state) + React Query (server state) + React Hook Form  
+- **Backend:** NestJS + Prisma + MongoDB  
+- **Shared Packages:** reusable UI components, types, and utilities  
+- **Infrastructure:** Monorepo with pnpm, GitHub Actions CI/CD 
 
 ---
 
@@ -35,11 +58,12 @@ This project provides a structured, enterprise-ready architecture for developers
 - 🧱 Shared Packages & UI Library
 - 📡 API & Backend Architecture
 - 🗃️ Frontend Architecture & State Management
-- 🧪 Testing Strategy
 - ⚠️ Error Handling & Monitoring
-- 🔐 Security & Access Control
-- 🌐 Deployment & DevOps
 
 ---
 
-**PawHaven** — where technology meets compassion, and every paw matters 🐾❤️
+## 🚀 Getting Started
+
+To run PawHaven locally, please refer to the **Development Guide** for detailed instructions:
+
+👉 [Development Guide](./docs/development.md)
