@@ -41,7 +41,7 @@ An open-source animal rescue platform that **empowers volunteers, shelters, and 
 
 ---
 
-## ⚙️ Tech stacks & Tooling
+## 🧰 Tech Stack & Tooling
 
 - **Frontend:** React + Redux Toolkit (global state) + React Query (server state) + React Hook Form  
 - **Backend:** NestJS + Prisma + MongoDB  
