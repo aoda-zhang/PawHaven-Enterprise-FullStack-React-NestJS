@@ -19,15 +19,15 @@ An open-source animal rescue platform that **empowers volunteers, shelters, and 
 
 ## ✨ Highlights
 
-- Designed and built around **real-world animal rescue needs and workflows**, based on **in-depth research and interviews with industry practitioners**
+- Built around **real-world animal rescue needs**, informed by **research and industry interviews**
 
-- Uses a **Monorepo architecture** for project management, centralizing frontend, backend, and shared code to ensure consistent standards and provide a solid foundation for **long-term planning, multi-party collaboration, and sustainable evolution**
+- Uses a **Monorepo architecture** to unify frontend, backend, and shared code, supporting **consistent standards, collaboration, and long-term evolution**
 
-- From the very beginning, the system is designed for **multi-role collaboration**, enabling volunteers, rescue organizations, and community adopters to participate and form a collaborative rescue ecosystem
+- Designed for **multi-role collaboration**, enabling volunteers, rescue organizations, and adopters to work together
 
-- The frontend architecture is designed with **core feature modularization** from the outset, splitting reporting, tracking, and story-sharing into independently manageable modules to support **future multi-maintainer development and feature expansion**
+- Frontend modules follow **core feature modularization**, making reporting, tracking, and story-sharing independently maintainable and extendable
 
-- The backend follows a **classic microservices-oriented design**, ensuring long-term **maintainability and scalability**
+- Backend follows a **microservices-oriented modular design** for maintainability and scalability
 
 ---
 
