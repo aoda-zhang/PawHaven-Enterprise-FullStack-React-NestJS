@@ -1,5 +1,5 @@
 import { I18nSwitch } from '@pawhaven/frontend-core';
-import type { MenuItem } from '@pawhaven/shared/types/menus.schema';
+import type { MenuItem } from '@pawhaven/shared/types';
 import clsx from 'clsx';
 import { cloneElement } from 'react';
 import { useTranslation } from 'react-i18next';

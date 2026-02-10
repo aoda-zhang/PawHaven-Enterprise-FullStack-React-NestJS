@@ -14,10 +14,15 @@
       "import": "./dist/esm/index.js",
       "require": "./dist/cjs/index.js"
     },
-    "./types/*": {
-      "types": "./dist/types/*.d.ts",
-      "import": "./dist/esm/types/*.js",
-      "require": "./dist/cjs/types/*.js"
+    "./types": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/esm/types/index.js",
+      "require": "./dist/cjs/types/index.js"
+    },
+    "./utils": {
+      "types": "./dist/utils/index.d.ts",
+      "import": "./dist/esm/utils/index.js",
+      "require": "./dist/cjs/utils/index.js"
     }
   },
   "scripts": {

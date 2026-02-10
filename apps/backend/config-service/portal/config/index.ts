@@ -1,4 +1,4 @@
-import { resolveAppConfig } from '@pawhaven/shared';
+import { resolveAppConfig } from '@pawhaven/shared/utils';
 
 import { ConfigSchema, type ConfigType } from './config.schema';
 import devYaml from './dev/env/index.yaml';

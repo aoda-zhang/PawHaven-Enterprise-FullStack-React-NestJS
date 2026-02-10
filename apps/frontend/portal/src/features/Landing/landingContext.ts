@@ -1,5 +1,4 @@
-import type { MenuItem } from '@pawhaven/shared/types/menus.schema';
-import type { RouterItem } from '@pawhaven/shared/types/routers.schema';
+import type { MenuItem, RouterItem } from '@pawhaven/shared/types';
 import { createContext, useContext } from 'react';
 
 export interface LandingDataType {

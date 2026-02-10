@@ -1,4 +1,4 @@
-import type { MenuItem } from '@pawhaven/shared/types/menus.schema';
+import type { MenuItem } from '@pawhaven/shared/types';
 import type { RouteObject } from 'react-router-dom';
 
 import { apiClient } from '@/utils/apiClient';
