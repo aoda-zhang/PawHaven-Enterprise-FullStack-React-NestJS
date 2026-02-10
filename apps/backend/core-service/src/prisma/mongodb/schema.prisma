@@ -50,7 +50,7 @@ model Route {
   children Route[] @relation("RouteTree")
 
   path    String?
-  element String? @unique
+  element String  @unique
   handle  Json?
 
   order Int?

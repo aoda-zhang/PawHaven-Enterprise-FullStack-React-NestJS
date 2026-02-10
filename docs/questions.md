@@ -1,9 +1,13 @@
 # High level questions
 
+## How to share ts types in frontend and backend
+
+- Shared type between front and backend
+
 ## How to take token refresh automatically
 
-## How to show maintenance page
+## How to manage export files in shared packages
 
-## Create Banner provider
+## How to generate fake data
 
-## Different system error page
+## How to avoid different lib versions between shared and business apps

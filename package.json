@@ -10,10 +10,9 @@
   "scripts": {
     "prepare": "husky",
     "lint-staged": "lint-staged",
-    "build:gateway": "turbo run build --filter=@pawhaven/gateway",
-    "build:portal": "turbo run build --filter=@pawhaven/portal",
-    "build:core-service": "turbo run build --filter=@pawhaven/core-service",
-    "build:auth-service": "turbo run build --filter=@pawhaven/auth-service"
+    "build:backend-core": "turbo run build --filter=@pawhaven/backend-core...",
+    "build:frontend-core": "turbo run build --filter=@pawhaven/frontend-core...",
+    "build:shared": "turbo run build --filter=@pawhaven/shared..."
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,mjs,cjs}": [
@@ -68,5 +67,5 @@
     "turbo": "^2.7.1",
     "typescript": "^5.9.3"
   },
-  "packageManager": "pnpm@10.28.2"
+  "packageManager": "pnpm@10.29.2"
 }

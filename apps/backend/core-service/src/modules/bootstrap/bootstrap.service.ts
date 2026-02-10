@@ -1,6 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { databaseEngines, InjectPrisma } from '@pawhaven/backend-core';
+import { MenuItem, Menu, Router, RouterItem } from '@pawhaven/shared/types';
 import { PrismaClient as MongoPrismaClient } from '@prisma/client';
+
+import { CreatedRouteDTO } from './DTO/router.DTO';
 
 @Injectable()
 export class BootstrapService {
@@ -9,7 +12,7 @@ export class BootstrapService {
     private readonly prisma: MongoPrismaClient,
   ) {}
 
-  async createMenu(menu: any) {
+  async addMenuItem(menu: MenuItem): Promise<MenuItem> {
     try {
       const menuCreated = await this.prisma.menu.create({
         data: menu,
@@ -30,9 +33,12 @@ export class BootstrapService {
     }
   }
 
-  async getAppMenus() {
+  async getAppMenus(): Promise<Menu> {
     try {
       const menus = await this.prisma.menu.findMany({
+        where: {
+          status: 'active',
+        },
         select: {
           id: false,
           label: true,
@@ -51,25 +57,31 @@ export class BootstrapService {
     }
   }
 
-  async createRouter(menu: any) {
-    try {
-      const menuCreated = this.prisma.route.create({
-        data: menu,
-        select: {
-          id: true,
-          path: true,
-          element: true,
-          handle: true,
-        },
-      });
-      return menuCreated;
-    } catch (error) {
-      console.error('error-------', error);
-      throw new BadRequestException(`add menu :${menu?.label} failed`);
-    }
+  async addAppRouter(
+    router: RouterItem & { parentId?: string },
+  ): Promise<CreatedRouteDTO> {
+    const createdRouterItem = await this.prisma.route.create({
+      data: {
+        path: router.path,
+        element: router.element,
+        handle: router.handle,
+        ...(router?.parentId
+          ? {
+              parent: { connect: { id: router.parentId } },
+            }
+          : {}),
+      },
+      select: {
+        path: true,
+        element: true,
+        handle: true,
+      },
+    });
+
+    return createdRouterItem;
   }
 
-  async getAppBootstrap() {
+  async getAppBootstrap(): Promise<{ menus: Menu; routers: Router }> {
     const menus = await this.getAppMenus();
     const routers = await this.getAppRouters();
     return {
@@ -78,7 +90,7 @@ export class BootstrapService {
     };
   }
 
-  async getAppRouters(): Promise<any[]> {
+  async getAppRouters(): Promise<Router> {
     const routes = await this.prisma.route.findMany({
       select: {
         id: true,
@@ -87,13 +99,16 @@ export class BootstrapService {
         handle: true,
         parentId: true,
         order: true,
+        status: true,
       },
       orderBy: { order: 'asc' },
     });
 
+    const activeRoutes = routes.filter((route) => route.status === 'active');
+
     const routeMap = new Map<string, any>();
 
-    routes.forEach((r) => {
+    activeRoutes.forEach((r) => {
       routeMap.set(r.id, {
         path: r.path ?? undefined,
         element: r.element,
@@ -101,9 +116,9 @@ export class BootstrapService {
       });
     });
 
-    const result: any[] = [];
+    const result: RouterItem[] = [];
 
-    routes.forEach((r) => {
+    activeRoutes.forEach((r) => {
       const current = routeMap.get(r.id);
 
       if (r.parentId) {

@@ -1,5 +1,5 @@
 import { Loading } from '@pawhaven/ui';
-import { useMemo, type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 
 import { useGetAppBootstrap } from './apis/queries';
 import type { LandingDataType } from './landingContext';

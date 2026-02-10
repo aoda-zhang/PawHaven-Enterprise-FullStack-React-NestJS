@@ -5,7 +5,7 @@ import { join } from 'node:path';
 import { DynamicModule, Global, Module } from '@nestjs/common';
 import { ConfigModule, ConfigFactory } from '@nestjs/config';
 import * as yaml from 'js-yaml';
-import { getRuntimeEnv, resolveAppConfig } from '@pawhaven/shared';
+import { getRuntimeEnv, resolveAppConfig } from '@pawhaven/shared/utils';
 import type { RuntimeEnvType } from '@pawhaven/shared';
 
 @Global()

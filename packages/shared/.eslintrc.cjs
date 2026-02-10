@@ -1,3 +1,3 @@
 module.exports = {
-  extends: ['@pawhaven/eslint-config/web'],
+  extends: ['@pawhaven/eslint-config/base'],
 };
