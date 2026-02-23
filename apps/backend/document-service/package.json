@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@pawhaven/backend-core": "workspace:*",
+    "@pawhaven/shared": "workspace:*",
     "@nestjs-modules/mailer": "^2.0.2",
     "@nestjs/axios": "^4.0.1",
     "@nestjs/common": "^11.1.6",

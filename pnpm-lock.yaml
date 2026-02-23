@@ -394,6 +394,9 @@ importers:
       '@pawhaven/backend-core':
         specifier: workspace:*
         version: link:../../../packages/backend-core
+      '@pawhaven/shared':
+        specifier: workspace:*
+        version: link:../../../packages/shared
       '@react-email/components':
         specifier: ^0.5.6
         version: 0.5.7(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
