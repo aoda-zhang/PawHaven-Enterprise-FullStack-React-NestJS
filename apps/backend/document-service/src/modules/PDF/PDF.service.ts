@@ -34,10 +34,18 @@ export class PdfService implements OnModuleInit, OnModuleDestroy {
   constructor() {}
 
   async onModuleInit() {
-    this.browser = await puppeteer.launch({
-      headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    });
+    try {
+      // Force Puppeteer to install or locate Chromium
+      // await puppeteer.createBrowserFetcher().download(puppeteer.executableRevision());
+      this.browser = await puppeteer.launch({
+        headless: true,
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      });
+      // this.browser = await puppeteer.launch();
+    } catch (error) {
+      console.error('Puppeteer bootstrap failed:', error);
+      throw new Error('Puppeteer failed to bootstrap Chromium');
+    }
   }
 
   async onModuleDestroy() {

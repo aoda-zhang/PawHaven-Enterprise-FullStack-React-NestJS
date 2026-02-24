@@ -51,7 +51,7 @@
 
 ## 📚 目录导航
 
-- [💻 应用概览](./docs/applicationAbout.md)
+- [💻 应用概览](./docs/app_overview.md)
 - ⚙️ Monorepo 架构与项目规范
 - 🗄️ 仓库结构说明
 - 🧱 共享包与 UI 组件库

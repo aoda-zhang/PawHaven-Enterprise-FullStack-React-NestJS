@@ -51,7 +51,7 @@ An open-source animal rescue platform that **empowers volunteers, shelters, and 
 
 ## 📚 Table of Contents
 
-- [💻 Application Overview](./docs/applicationAbout.md)
+- [💻 Application Overview](./docs/app_overview.md)
 - ⚙️ Monorepo & Project Standards
 - 🗄️ Repository Structure
 - 🧱 Shared Packages & UI Library
