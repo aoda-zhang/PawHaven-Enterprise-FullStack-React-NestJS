@@ -51,11 +51,10 @@ PawHaven is a full-stack platform designed to provide a safe rescue and adoption
 
 ## 📚 Table of Contents
 
-- [💻 Application Overview](./docs/overview.md)
-- 🏗 Architecture Design
-- ⚙️ Monorepo & Project Standards
-- 🧩 Development Standards
-- 🗄 Project Structure
+- [💻 Application Overview](./docs/application_overview.md)
+- [🏗 Architecture Design](./docs/architecture_design.md)
+- [🗄 Project Structure](./docs/project_structure.md)
+- [⚙️ Monorepo & Project Standards](./docs/project_standards.md)
 - 🧱 Shared Packages & Design System
 - 📡 API & Service Layer
 - 🗃 Frontend State & Data Flow
