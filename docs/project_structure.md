@@ -6,7 +6,7 @@ This layered structure ensures clear responsibility boundaries and long-term sca
 
 ---
 
-# 1️⃣ Applications Layer (`apps`)
+## 1️⃣ Applications Layer (`apps`)
 
 The `apps` directory contains all runnable systems:
 
@@ -37,7 +37,7 @@ This prevents the system from becoming a tightly coupled monolith.
 
 ---
 
-# 2️⃣ Shared Packages Layer (`packages`)
+## 2️⃣ Shared Packages Layer (`packages`)
 
 The `packages` directory contains reusable abstractions shared across applications.
 
@@ -77,7 +77,7 @@ By isolating shared abstractions, PawHaven enables reuse while preserving strict
 
 ---
 
-# 3️⃣ Tooling Layer (`libs`)
+## 3️⃣ Tooling Layer (`libs`)
 
 The `libs` directory centralizes repository-wide tooling configuration.
 
@@ -108,7 +108,7 @@ Centralizing it:
 
 ---
 
-# 🔁 Architectural Model
+## 🔁 Architectural Model
 
 The repository enforces a strict unidirectional dependency flow:
 libs → packages → apps
