@@ -1,135 +1,141 @@
-// import type { CreateUserDTO } from '@modules/User/dto/create-user.dto';
-// import type { UserService } from '@modules/User/user.service';
-import { Injectable } from '@nestjs/common';
-// import type { ConfigService } from '@nestjs/config';
-// import type { JwtService } from '@nestjs/jwt';
-// import { InjectModel } from '@nestjs/mongoose';
-// import * as bcrypt from 'bcrypt';
-// import type { Model, Schema } from 'mongoose';
+import {
+  Injectable,
+  BadRequestException,
+  ConflictException,
+} from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import type { PrismaClient } from '@prisma/client';
+import {
+  httpBusinessMappingCodes,
+  InjectPrisma,
+  databaseEngines,
+} from '@pawhaven/backend-core';
+import { JwtPayload, AuthResponseDto } from '@pawhaven/shared/types';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
-  // private tokenSecret: string;
+  constructor(
+    private jwtService: JwtService,
+    @InjectPrisma(databaseEngines.mongodb)
+    private prisma: PrismaClient & {
+      user: any;
+    },
+  ) {}
 
-  // private tokenExpiresIn: string;
-
-  // private refreshTokenSecret: string;
-
-  // private refreshTokenExpiresIn: string;
-
-  constructor() {
-    // @InjectModel(GatewayDBCollections.USER) private UserModel: Model<User>,
-    // private jwtService: JwtService,
-    // private configService: ConfigService,
-    // private userService: UserService,
-    // this.tokenSecret = this.configService.get('auth.secret')!;
-    // this.tokenExpiresIn = this.configService.get('auth.ttl')!;
-    // this.refreshTokenSecret = this.configService.get('auth.refreshSecret')!;
-    // this.refreshTokenExpiresIn = this.configService.get('auth.refreshTTL')!;
+  /**
+   * Sign and return JWT token
+   */
+  private signToken(payload: Omit<JwtPayload, 'iat' | 'exp'>): string {
+    return this.jwtService.sign(payload);
   }
 
-  // register = async (userInfo: CreateUserDTO) => {
-  //   const salt = bcrypt.genSaltSync(
-  //     Number(this.configService.get<number>('auth.saltRounds')),
-  //   );
+  /**
+   * Hash password using bcrypt
+   */
+  private async hashPassword(password: string): Promise<string> {
+    const saltRounds = 10;
+    return bcrypt.hash(password, saltRounds);
+  }
 
-  //   const hashPwd = bcrypt.hashSync(userInfo?.password, salt);
-  //   try {
-  //     await new this.UserModel({ ...userInfo, password: hashPwd, salt }).save();
-  //     return true;
-  //   } catch (error) {
-  //     throw new BadRequestException(`注册失败:${error}`);
-  //   }
-  // };
+  private async comparePassword(
+    password: string,
+    hashedPassword: string,
+  ): Promise<boolean> {
+    return bcrypt.compare(password, hashedPassword);
+  }
 
-  // login = async (userName: string, password: string) => {
-  //   const userInfo = await this.verifyUser(userName, password);
-  //   // Token中需要饱含的值,可包含一切用户标示用户身份的信息，如用户角色，国家等等
-  //   return this.generateLoginInfo(this.setTokenPayload(userInfo));
-  // };
+  async verifyToken(token: string): Promise<JwtPayload> {
+    try {
+      const payload = await this.jwtService.verifyAsync<JwtPayload>(token);
+      return payload;
+    } catch {
+      throw new BadRequestException(
+        httpBusinessMappingCodes.invalidToken || 'Invalid or expired token',
+      );
+    }
+  }
 
-  // refresh = async (refreshToken: {
-  //   userName: string;
-  //   userID: Schema.Types.ObjectId;
-  // }) => {
-  //   try {
-  //     const userInfo = await this.UserModel.findOne({
-  //       userName: refreshToken?.userName,
-  //     });
-  //     if (
-  //       userInfo?.userName === refreshToken?.userName &&
-  //       userInfo?._id === refreshToken?.userID
-  //     ) {
-  //       return await this.generateLoginInfo(this.setTokenPayload(userInfo));
-  //     }
-  //     throw new BadRequestException('用户信息不匹配');
-  //   } catch (error) {
-  //     throw new BadRequestException(`生成token错误:${error}`);
-  //   }
-  // };
+  /**
+   * Login user with email and password
+   */
+  async login(email: string, password: string): Promise<AuthResponseDto> {
+    // Find user by email
+    const user = await this.prisma.user.findUnique({
+      where: { email },
+    });
 
-  // verifyRefreshToken = async (token: string) => {
-  //   try {
-  //     return await this.jwtService.verifyAsync(token, {
-  //       secret: this.refreshTokenSecret,
-  //     });
-  //   } catch (error) {
-  //     throw new BadRequestException(`生成refresh-token错误:${error}`);
-  //   }
-  // };
+    if (!user) {
+      throw new BadRequestException('Invalid email or password');
+    }
 
-  // verifyUser = async (userName: string, pwd: string) => {
-  //   try {
-  //     const userInfo = await this.userService.getUserInfo(userName);
-  //     const isPasswordMatch = bcrypt.compareSync(pwd, userInfo?.password);
-  //     if (!isPasswordMatch || !userInfo) {
-  //       throw new UnauthorizedException('账户名与密码输入有误,请重新输入');
-  //     }
-  //     return this.setTokenPayload(userInfo);
-  //   } catch (error) {
-  //     throw new UnauthorizedException(
-  //       `${error?.message ?? '账户名与密码输入有误,请重新输入'}`,
-  //     );
-  //   }
-  // };
+    // Verify password
+    const isPasswordValid = await this.comparePassword(password, user.password);
 
-  // generateLoginInfo = async (userAccess: UserAccessInfo) => {
-  //   try {
-  //     const accessToken = this.jwtService.sign(userAccess, {
-  //       expiresIn: this.tokenExpiresIn,
-  //       secret: this.tokenSecret,
-  //     });
-  //     const refreshToken = this.jwtService.sign(userAccess, {
-  //       expiresIn: this.refreshTokenExpiresIn,
-  //       secret: this.refreshTokenSecret,
-  //     });
-  //     return {
-  //       accessToken,
-  //       refreshToken,
-  //       baseUserInfo: userAccess,
-  //     };
-  //   } catch (error) {
-  //     throw new BadRequestException(`Token生成出错：${error}`);
-  //   }
-  // };
+    if (!isPasswordValid) {
+      throw new BadRequestException('Invalid email or password');
+    }
 
-  // getBaseUserInfo = (userInfo: UserInfoDTO) => {
-  //   const { userName } = userInfo;
-  //   return {
-  //     userName,
-  //   };
-  // };
+    // Sign JWT token
+    const token = this.signToken({ userId: user.id, email: user.email });
 
-  // setTokenPayload = (userInfo: Record<string, any>): UserAccessInfo => {
-  //   return {
-  //     userName: userInfo?.userName ?? '',
-  //     userID: userInfo?._id ?? '',
-  //     roles: userInfo?.roles ?? [],
-  //   };
-  // };
+    return {
+      access_token: token,
+      expires_in: 86400, // 24 hours in seconds
+      user: {
+        id: user.id,
+        email: user.email,
+        username: user.username || undefined,
+      },
+    };
+  }
 
-  verify() {
-    // TODO
-    return true;
+  /**
+   * Register new user
+   */
+  async register(
+    email: string,
+    password: string,
+    username?: string,
+  ): Promise<AuthResponseDto> {
+    const existingUser = await this.prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (existingUser) {
+      throw new ConflictException('User with this email already exists');
+    }
+
+    const hashedPassword = await this.hashPassword(password);
+
+    const newUser = await this.prisma.user.create({
+      data: {
+        email,
+        password: hashedPassword,
+        username: username || null,
+      },
+    });
+
+    const token = this.signToken({
+      userId: newUser.id,
+      email: newUser.email,
+    });
+
+    return {
+      access_token: token,
+      expires_in: 86400,
+      user: {
+        id: newUser.id,
+        email: newUser.email,
+        username: newUser?.username,
+      },
+    };
+  }
+
+  /**
+   * Verify token from header
+   */
+  async verify(token: string): Promise<JwtPayload> {
+    return this.verifyToken(token);
   }
 }

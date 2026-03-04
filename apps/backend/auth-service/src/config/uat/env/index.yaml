@@ -15,8 +15,8 @@ swagger:
 DBConnections:
   - enable: true
     options:
-      name: CORE_SERVICE_DB
-      uri: ${CORE_SERVICE_DB}
+      name: AUTH_SERVICE_MONGODB
+      uri: ${AUTH_SERVICE_MONGODB}
 
 cors:
   allowedHeaders:

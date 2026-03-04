@@ -21,13 +21,13 @@ export class JWTGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     const token = request?.headers?.[HttpReqHeader.accessToken];
-    const isNoTokenReq = this.reflector.getAllAndOverride<boolean>(
-      decoratorsKeys.noToken,
+    const isPublicReq = this.reflector.getAllAndOverride<boolean>(
+      decoratorsKeys.public,
       [context.getHandler(), context.getClass()],
     );
 
     try {
-      const valid = await this.verifyToken(isNoTokenReq, token);
+      const valid = await this.verifyToken(isPublicReq, token);
       return valid;
     } catch (error) {
       throw new BadRequestException(
@@ -38,10 +38,10 @@ export class JWTGuard implements CanActivate {
   }
 
   private async verifyToken(
-    isNoTokenDecorator: boolean,
+    isPublicDecorator: boolean,
     token: string,
   ): Promise<boolean> {
-    if (isNoTokenDecorator) return true;
+    if (isPublicDecorator) return true;
     if (!token) return false;
 
     try {
@@ -54,6 +54,7 @@ export class JWTGuard implements CanActivate {
       }
 
       return true;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       return false;
     }

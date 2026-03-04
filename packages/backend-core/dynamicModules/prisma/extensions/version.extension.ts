@@ -1,10 +1,11 @@
 function hasVersionField(args: any): boolean {
   if (!args?.data) return false;
-
-  if (typeof args?.data?.version === 'number') return true;
-  if (typeof args?.data?.version === 'object') return true;
-
-  return true;
+  // Only treat model as having a version field when the caller
+  // actually provided one (or attempted to provide one). The
+  // previous implementation always returned true, causing Prisma
+  // to inject a `version` property even on models that don't have
+  // the column defined, which breaks `create`/`update` calls.
+  return Object.prototype.hasOwnProperty.call(args.data, 'version');
 }
 
 export const versionExtension = {

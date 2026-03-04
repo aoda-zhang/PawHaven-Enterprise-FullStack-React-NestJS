@@ -1,6 +1,6 @@
 /* eslint-disable max-classes-per-file */
 import { createZodDto } from 'nestjs-zod';
-import { RouterItemSchema } from '@pawhaven/shared/types/router.schema';
+import { RouterItemSchema } from '@pawhaven/shared/types';
 
 export class RouterItemDTO extends createZodDto(RouterItemSchema) {}
 export class CreatedRouteDTO {

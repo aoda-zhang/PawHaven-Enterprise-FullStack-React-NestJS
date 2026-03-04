@@ -47,7 +47,7 @@
   },
   "auth": {
     "login": "Log in",
-    "auth": "Log in / Sigh up",
+    "auth": "Sign in / Sign up",
     "sighup": "Sign up",
     "newUser": "register",
     "userName": "User name or Email",
