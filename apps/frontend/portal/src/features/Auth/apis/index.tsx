@@ -1,19 +1,20 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@mui/material';
-import { RegisterSchema } from '@pawhaven/shared/types';
+import { RegisterSchema, type RegisterDto } from '@pawhaven/shared/types';
 import { FormInput } from '@pawhaven/ui';
 import { type FC } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
-import { useRegister } from '../apis/queries';
 import { AuthLayout } from '../authLayout';
+
+import { useRegister } from './queries';
 
 import { routePaths } from '@/router/routePaths';
 
 export const Register: FC = () => {
-  const formProps = useForm({
+  const formProps = useForm<RegisterDto>({
     resolver: zodResolver(RegisterSchema),
   });
   const navigate = useNavigate();
@@ -45,7 +46,7 @@ export const Register: FC = () => {
             variant="contained"
             onClick={formProps.handleSubmit((data) => {
               mutate({
-                email: data.email,
+                userName: data.email,
                 password: data.password,
               });
             })}

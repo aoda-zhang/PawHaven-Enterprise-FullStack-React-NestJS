@@ -39,5 +39,5 @@ cors:
     - PATCH
     - OPTIONS
 auth:
-  jwtSecret: ${AUTH_SERVICE_JWT_SECRET}
+  jwtSecret: ${JWT_SECRET}
   jwtExpiresIn: 3600

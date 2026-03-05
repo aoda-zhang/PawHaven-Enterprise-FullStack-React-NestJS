@@ -8,6 +8,30 @@
     ".": {
       "require": "./dist/index.js",
       "types": "./dist/index.d.ts"
+    },
+    "./constants": {
+      "require": "./dist/constants/index.js",
+      "types": "./dist/constants/index.d.ts"
+    },
+    "./decorators": {
+      "require": "./dist/decorators/index.js",
+      "types": "./dist/decorators/index.d.ts"
+    },
+    "./middlewares": {
+      "require": "./dist/middlewares/index.js",
+      "types": "./dist/middlewares/index.d.ts"
+    },
+    "./types": {
+      "require": "./dist/types/index.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./guards": {
+      "require": "./dist/guards/index.js",
+      "types": "./dist/guards/index.d.ts"
+    },
+    "./utils": {
+      "require": "./dist/utils/index.js",
+      "types": "./dist/utils/index.d.ts"
     }
   },
   "scripts": {
@@ -25,14 +49,7 @@
     "crypto-js": "^4.2.0",
     "csurf": "^1.11.0",
     "dayjs": "^1.11.18",
-    "dotenv": "^17.2.3",
-    "helmet": "^8.1.0",
     "js-yaml": "^4.1.0",
-    "nestjs-zod": "^5.1.1",
-    "passport": "^0.7.0",
-    "passport-jwt": "^4.0.1",
-    "passport-local": "^1.0.0",
-    "rxjs": "^7.8.2",
     "uuid": "^8.3.2",
     "zod": "^4.3.6"
   },
@@ -48,6 +65,12 @@
     "@nestjs/swagger": "^11.0.0",
     "@nestjs/terminus": "^11.0.0",
     "@nestjs/throttler": "^6.0.0",
+    "dotenv": "^17.2.0",
+    "helmet": "^8.0.0",
+    "nestjs-zod": "^5.1.0",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.0"
   },
@@ -59,6 +82,24 @@
       "optional": true
     },
     "@nestjs/jwt": {
+      "optional": true
+    },
+    "dotenv": {
+      "optional": true
+    },
+    "helmet": {
+      "optional": true
+    },
+    "nestjs-zod": {
+      "optional": true
+    },
+    "passport": {
+      "optional": true
+    },
+    "passport-jwt": {
+      "optional": true
+    },
+    "passport-local": {
       "optional": true
     }
   },

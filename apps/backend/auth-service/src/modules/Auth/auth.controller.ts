@@ -6,23 +6,19 @@ import {
   Headers,
   BadRequestException,
 } from '@nestjs/common';
-import {
-  httpBusinessMappingCodes,
-  HttpReqHeader,
-} from '@pawhaven/backend-core';
 import { AuthResponseDto, VerifyResponseDto } from '@pawhaven/shared/types';
+import { HttpReqHeader } from '@pawhaven/backend-core/types';
+import { httpBusinessMappingCodes } from '@pawhaven/backend-core/constants';
+import { PublicAPI } from '@pawhaven/backend-core/decorators';
 
 import { LoginDTO } from './dtos/login.dto';
 import { RegisterDTO } from './dtos/register.dto';
 import { AuthService } from './auth.service';
 
-@Controller('auth')
+@Controller()
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  /**
-   * Verify JWT token from Authorization header
-   */
   @Get('/verify')
   async verify(
     @Headers(HttpReqHeader.accessToken) token?: string,
@@ -37,19 +33,13 @@ export class AuthController {
     };
   }
 
-  /**
-   * Login endpoint - authenticates user and returns JWT token
-   * Body: { "email": "user@example.com", "password": "password123" }
-   */
+  @PublicAPI()
   @Post('/login')
   async login(@Body() loginDto: LoginDTO): Promise<AuthResponseDto> {
     return this.authService.login(loginDto.email, loginDto.password);
   }
 
-  /**
-   * Register endpoint - creates new user and returns JWT token
-   * Body: { "email": "user@example.com", "password": "password123", "username": "john_doe" }
-   */
+  @PublicAPI()
   @Post('/register')
   async register(@Body() registerDto: RegisterDTO): Promise<AuthResponseDto> {
     return this.authService.register(

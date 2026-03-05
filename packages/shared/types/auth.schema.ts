@@ -8,7 +8,7 @@ import { z } from 'zod';
  * Login Request Schema
  */
 export const LoginSchema = z.object({
-  email: z.string().email({ message: 'Invalid email address' }),
+  email: z.email({ message: 'Invalid email address' }),
   password: z.string().min(6, 'Password must be at least 6 characters'),
 });
 
@@ -18,7 +18,7 @@ export type LoginDto = z.infer<typeof LoginSchema>;
  * Register Request Schema
  */
 export const RegisterSchema = z.object({
-  email: z.string().email({ message: 'Invalid email address' }),
+  email: z.email({ message: 'Invalid email address' }),
   password: z.string().min(6, 'Password must be at least 6 characters'),
   username: z.string().optional(),
 });

@@ -1,25 +1,26 @@
+import { join } from 'path';
+
 import { Module } from '@nestjs/common';
 import { FileModule } from '@modules/File/file.module';
-import {
-  microServiceNames,
-  SharedModule,
-  SharedModuleFeatures,
-} from '@pawhaven/backend-core';
+import { SharedModule, SharedModuleFeatures } from '@pawhaven/backend-core';
 import { EmailModule } from '@modules/Email/email.module';
-import { PDFModule } from '@modules/Pdf/pdf.module';
+// import { PDFModule } from '@modules/Pdf/pdf.module';
 
 @Module({
   imports: [
     SharedModule.forRoot({
-      serviceName: microServiceNames.DOCUMENT,
+      serviceRoot: join(__dirname, '..'),
       modules: [
+        {
+          module: SharedModuleFeatures.JWTModule,
+        },
         {
           module: SharedModuleFeatures.SwaggerModule,
         },
       ],
     }),
     EmailModule,
-    PDFModule,
+    // PDFModule,
     FileModule,
   ],
   providers: [],

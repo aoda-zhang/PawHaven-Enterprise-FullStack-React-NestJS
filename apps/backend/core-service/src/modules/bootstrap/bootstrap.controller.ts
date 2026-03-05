@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
+import { PublicAPI } from '@pawhaven/backend-core/decorators';
 
 import { BootstrapService } from './bootstrap.service';
 import { MenuItemDto } from './DTO/menu.DTO';
@@ -8,6 +9,7 @@ import { CreatedRouteDTO, RouterItemDTO } from './DTO/router.DTO';
 export class BootstrapController {
   constructor(private readonly bootService: BootstrapService) {}
 
+  @PublicAPI()
   @Get('/bootstrap')
   getAppBootstrap(): Promise<{
     menus: MenuItemDto[];

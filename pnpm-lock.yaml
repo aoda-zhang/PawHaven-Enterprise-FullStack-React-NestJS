@@ -760,7 +760,7 @@ importers:
         specifier: 6.0.0-beta.4
         version: 6.0.0-beta.4(typescript@5.9.3)(vite@7.3.0(@types/node@24.10.4)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.2))
       zod:
-        specifier: ^4.1.12
+        specifier: ^4.3.6
         version: 4.3.6
     devDependencies:
       '@pawhaven/eslint-config':
@@ -923,8 +923,8 @@ importers:
         specifier: 6.0.0-beta.4
         version: 6.0.0-beta.4(typescript@5.9.3)(vite@7.3.0(@types/node@24.10.4)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.2))
       zod:
-        specifier: ^4.1.12
-        version: 4.2.1
+        specifier: ^4.3.6
+        version: 4.3.6
     devDependencies:
       '@pawhaven/eslint-config':
         specifier: workspace:*
@@ -1074,22 +1074,22 @@ importers:
         specifier: ^1.11.18
         version: 1.11.19
       dotenv:
-        specifier: ^17.2.3
+        specifier: ^17.2.0
         version: 17.2.3
       helmet:
-        specifier: ^8.1.0
+        specifier: ^8.0.0
         version: 8.1.0
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.1
       nestjs-zod:
-        specifier: ^5.1.1
+        specifier: ^5.1.0
         version: 5.1.1(@nestjs/common@11.1.10(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/swagger@11.2.3(@nestjs/common@11.1.10(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.10)(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2))(rxjs@7.8.2)(zod@4.3.6)
       passport:
         specifier: ^0.7.0
         version: 0.7.0
       passport-jwt:
-        specifier: ^4.0.1
+        specifier: ^4.0.0
         version: 4.0.1
       passport-local:
         specifier: ^1.0.0
@@ -1098,7 +1098,7 @@ importers:
         specifier: ^0.2.2
         version: 0.2.2
       rxjs:
-        specifier: ^7.8.2
+        specifier: ^7.8.0
         version: 7.8.2
       uuid:
         specifier: ^8.3.2
@@ -1298,8 +1298,8 @@ importers:
   packages/shared:
     dependencies:
       zod:
-        specifier: ^4.2.1
-        version: 4.2.1
+        specifier: ^4.3.6
+        version: 4.3.6
     devDependencies:
       '@pawhaven/eslint-config':
         specifier: workspace:*
@@ -8358,9 +8358,6 @@ packages:
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
 
-  zod@4.2.1:
-    resolution: {integrity: sha512-0wZ1IRqGGhMP76gLqz8EyfBXKk0J2qo2+H3fi4mcUP/KtTocoX08nmIAHl1Z2kJIZbZee8KOpBCSNPRgauucjw==}
-
   zod@4.3.6:
     resolution: {integrity: sha512-rftlrkhHZOcjDwkGlnUtZZkvaPHCsDATp4pGpuOOMDaTdDDXF91wuVDJoWoPsKX/3YPQ5fHuF3STjcYyKr+Qhg==}
 
@@ -12352,7 +12349,7 @@ snapshots:
 
   dotenv-expand@12.0.1:
     dependencies:
-      dotenv: 16.4.7
+      dotenv: 16.6.1
 
   dotenv@16.4.7: {}
 
@@ -16511,7 +16508,5 @@ snapshots:
       zod: 4.3.6
 
   zod@3.25.76: {}
-
-  zod@4.2.1: {}
 
   zod@4.3.6: {}

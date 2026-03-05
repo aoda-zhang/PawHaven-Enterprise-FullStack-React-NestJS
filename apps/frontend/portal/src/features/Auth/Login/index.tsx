@@ -23,8 +23,8 @@ export const Login: FC = () => {
           <FormInput
             variant="outlined"
             size="small"
-            label={t('auth.userName')}
-            name="userName"
+            label={t('auth.email')}
+            name="email"
             required
           />
           <FormInput
@@ -43,7 +43,7 @@ export const Login: FC = () => {
             variant="contained"
             onClick={formProps.handleSubmit((data) => {
               mutate({
-                userName: data?.userName,
+                email: data?.email,
                 password: data?.password,
               });
             })}

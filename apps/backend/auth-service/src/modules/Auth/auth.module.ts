@@ -10,8 +10,10 @@ import { AuthService } from './auth.service';
     JwtModule.registerAsync({
       useFactory: (configService: ConfigService) => {
         const secret = configService.get<string>('auth.jwtSecret');
-        const expiresIn =
-          configService.get<number>('auth.jwtExpiresIn') || 3600; // Default to 1 hour if not set
+        const expiresIn = configService.get<number>('auth.jwtExpiresIn');
+        if (!secret) {
+          throw new Error('JWT config is not correct!');
+        }
         return {
           secret,
           signOptions: {
@@ -24,6 +26,6 @@ import { AuthService } from './auth.service';
   ],
   controllers: [AuthController],
   providers: [AuthService],
-  exports: [AuthService, JwtModule],
+  exports: [AuthService],
 })
 export class AuthModule {}

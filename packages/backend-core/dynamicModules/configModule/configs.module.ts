@@ -13,18 +13,19 @@ import type { RuntimeEnvType } from '@pawhaven/shared';
 export class ConfigsModule {
   /**
    * dynamic configuration
-   * @param serviceName service name
+   * @param serviceRoot absolute path to service root directory
    */
-  static forRoot(serviceName: string): DynamicModule {
+  static forRoot(serviceRoot: string): DynamicModule {
     const runtimeEnv = process.env.NODE_ENV as RuntimeEnvType;
     const currentEnv = getRuntimeEnv(runtimeEnv);
+
     const yamlContent = this.loadYamlContent<Record<string, unknown>>(
       currentEnv,
-      serviceName,
+      serviceRoot,
     );
     const appConfig = resolveAppConfig(yamlContent, process.env) ?? {};
     const configFactory: ConfigFactory = () => ({
-      ...(appConfig ?? {}),
+      ...appConfig,
     });
 
     const DynamicConfigModule = ConfigModule.forRoot({
@@ -32,10 +33,10 @@ export class ConfigsModule {
       cache: true,
       expandVariables: true,
       envFilePath: [
-        `.env.local.${currentEnv}`,
-        `.env.${currentEnv}`,
-        '.env.local',
-        '.env',
+        join(serviceRoot, `.env.local.${currentEnv}`),
+        join(serviceRoot, `.env.${currentEnv}`),
+        join(serviceRoot, '.env.local'),
+        join(serviceRoot, '.env'),
       ],
       load: [configFactory],
     });
@@ -49,12 +50,13 @@ export class ConfigsModule {
 
   private static loadYamlContent<T = unknown>(
     runtimeEnv: string,
-    serviceName: string,
+    serviceRoot: string,
   ): T {
-    const PROJECT_ROOT = join(__dirname, '../../../../../');
     const conventionalConfigPath = join(
-      PROJECT_ROOT,
-      `apps/backend/${serviceName}/src/config/${runtimeEnv}/env/index.yaml`,
+      serviceRoot,
+      'src/config',
+      runtimeEnv,
+      'env/index.yaml',
     );
     try {
       return yaml.load(readFileSync(conventionalConfigPath, 'utf8')) as T;
