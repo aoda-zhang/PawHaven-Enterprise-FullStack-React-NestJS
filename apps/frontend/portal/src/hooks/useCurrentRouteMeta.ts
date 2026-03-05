@@ -1,9 +1,8 @@
+import type { RouterHandle } from '@pawhaven/shared/types';
 import { useMatches } from 'react-router-dom';
 
-import type { RouterMeta } from '@/types/LayoutType';
-
 export interface RouteMetaResult {
-  routerMeta?: RouterMeta;
+  routerMeta?: RouterHandle;
   path?: string;
 }
 
@@ -21,7 +20,7 @@ export const useCurrentRouteMeta = (): RouteMetaResult => {
   const currentMatch = matches[matches.length - 1];
 
   return {
-    routerMeta: currentMatch?.handle ?? {},
+    routerMeta: currentMatch?.handle as RouterHandle | undefined,
     path: currentMatch.pathname,
   };
 };

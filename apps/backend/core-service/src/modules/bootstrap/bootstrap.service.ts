@@ -1,7 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { databaseEngines, InjectPrisma } from '@pawhaven/backend-core';
+import { InjectPrisma } from '@pawhaven/backend-core';
 import { MenuItem, Menu, Router, RouterItem } from '@pawhaven/shared/types';
 import { PrismaClient as MongoPrismaClient } from '@prisma/client';
+import { databaseEngines } from '@pawhaven/backend-core/constants';
 
 import { CreatedRouteDTO } from './DTO/router.DTO';
 

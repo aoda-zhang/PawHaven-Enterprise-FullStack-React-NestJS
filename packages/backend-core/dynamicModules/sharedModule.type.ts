@@ -11,6 +11,7 @@ export const SharedModuleFeatures = {
   PrismaModule: 'PrismaModule',
   SwaggerModule: 'SwaggerModule',
   MonitoringModule: 'MonitoringModule',
+  JWTModule: 'JWTModule',
 } as const;
 
 export type SharedModuleName = keyof typeof SharedModuleFeatures;
@@ -23,6 +24,7 @@ export interface SharedModuleOptionMap {
   [SharedModuleFeatures.PrismaModule]: PrismaModuleOptions;
   [SharedModuleFeatures.SwaggerModule]: never;
   [SharedModuleFeatures.MonitoringModule]: never;
+  [SharedModuleFeatures.JWTModule]: never;
 }
 
 /**

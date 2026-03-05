@@ -1,8 +1,8 @@
 import { DynamicModule, Global, Module, Provider, Type } from '@nestjs/common';
-import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
+import { ZodValidationPipe } from 'nestjs-zod';
 
 import { MiddlewareModule } from '../middlewares/index.module';
-import { MicroServiceNameType } from '../constants/microServices';
 
 import { HttpSuccessInterceptor } from './httpClient/httpInterceptor';
 import { HttpExceptionFilter } from './httpClient/httpExceptionFilter';
@@ -10,10 +10,11 @@ import { SwaggerModule } from './swagger/swagger.module';
 import { ConfigsModule } from './configModule/configs.module';
 import { HttpClientModule } from './httpClient/httpClient.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { JWTModule } from './jwt/JWT.module';
 import { SharedModuleFeatures, SharedModuleItem } from './sharedModule.type';
 
 interface SharedModuleForRootOptions {
-  serviceName: MicroServiceNameType;
+  serviceRoot: string;
   modules?: SharedModuleItem[];
   providers?: Provider[];
 }
@@ -22,9 +23,9 @@ interface SharedModuleForRootOptions {
 @Module({})
 export class SharedModule {
   static forRoot(options: SharedModuleForRootOptions): DynamicModule {
-    const { serviceName, modules = [], providers = [] } = options;
+    const { serviceRoot, modules = [], providers = [] } = options;
 
-    const defaultModules = this.getDefaultModules(serviceName);
+    const defaultModules = this.getDefaultModules(serviceRoot);
 
     const loadedExtraModules = this.loadExtraModules(modules);
 
@@ -41,9 +42,9 @@ export class SharedModule {
   }
 
   private static getDefaultModules(
-    serviceName: MicroServiceNameType,
+    serviceRoot: string,
   ): Array<Type<any> | DynamicModule> {
-    return [ConfigsModule.forRoot(serviceName), HttpClientModule];
+    return [ConfigsModule.forRoot(serviceRoot), HttpClientModule];
   }
 
   private static loadExtraModules(
@@ -60,6 +61,9 @@ export class SharedModule {
         case SharedModuleFeatures.MonitoringModule:
           return MiddlewareModule;
 
+        case SharedModuleFeatures.JWTModule:
+          return JWTModule;
+
         default:
           throw new Error(`Unknown module: ${item}`);
       }
@@ -68,8 +72,15 @@ export class SharedModule {
 
   private static getDefaultProviders(): Provider[] {
     return [
+      // Global exception filter - catches and formats all thrown HTTP exceptions
       { provide: APP_FILTER, useClass: HttpExceptionFilter },
+      // Global interceptor - wraps all successful responses with consistent response format
       { provide: APP_INTERCEPTOR, useClass: HttpSuccessInterceptor },
+      // Global pipe - validates request body/query/params using Zod schemas from nestjs-zod
+      {
+        provide: APP_PIPE,
+        useClass: ZodValidationPipe,
+      },
     ];
   }
 

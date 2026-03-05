@@ -1,23 +1,18 @@
+import { join } from 'path';
+
 import { BootstrapModule } from '@modules/bootstrap/bootstrap.module';
-import { ReportAnimalModule } from '@modules/reportAnimal/index.module';
 import { Module } from '@nestjs/common';
-import { APP_PIPE } from '@nestjs/core';
-import {
-  databaseEngines,
-  microServiceNames,
-  SharedModule,
-  SharedModuleFeatures,
-} from '@pawhaven/backend-core';
+import { SharedModule, SharedModuleFeatures } from '@pawhaven/backend-core';
+import { databaseEngines } from '@pawhaven/backend-core/constants';
 import { PrismaClient as MongoPrismaClient } from '@prisma/client';
-import { ZodValidationPipe } from 'nestjs-zod';
 
 @Module({
   imports: [
     SharedModule.forRoot({
-      serviceName: microServiceNames.CORE,
+      serviceRoot: join(__dirname, '..'),
       modules: [
         {
-          module: SharedModuleFeatures.SwaggerModule,
+          module: SharedModuleFeatures.JWTModule,
         },
         {
           module: SharedModuleFeatures.PrismaModule,
@@ -26,16 +21,12 @@ import { ZodValidationPipe } from 'nestjs-zod';
             Client: MongoPrismaClient,
           },
         },
+        {
+          module: SharedModuleFeatures.SwaggerModule,
+        },
       ],
     }),
-    ReportAnimalModule,
     BootstrapModule,
-  ],
-  providers: [
-    {
-      provide: APP_PIPE,
-      useClass: ZodValidationPipe,
-    },
   ],
 })
 export class AppModule {}

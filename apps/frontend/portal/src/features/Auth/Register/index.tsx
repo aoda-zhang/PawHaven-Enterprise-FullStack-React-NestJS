@@ -1,4 +1,6 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@mui/material';
+import { RegisterSchema } from '@pawhaven/shared/types';
 import { FormInput } from '@pawhaven/ui';
 import { type FC } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -11,7 +13,9 @@ import { AuthLayout } from '../authLayout';
 import { routePaths } from '@/router/routePaths';
 
 export const Register: FC = () => {
-  const formProps = useForm({});
+  const formProps = useForm({
+    resolver: zodResolver(RegisterSchema),
+  });
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { mutate, isPending } = useRegister();
@@ -23,8 +27,8 @@ export const Register: FC = () => {
           <FormInput
             variant="outlined"
             size="small"
-            label={t('auth.userName')}
-            name="userName"
+            label={t('auth.email')}
+            name="email"
           />
           <FormInput
             type="password"
@@ -41,7 +45,7 @@ export const Register: FC = () => {
             variant="contained"
             onClick={formProps.handleSubmit((data) => {
               mutate({
-                userName: data.userName,
+                email: data.email,
                 password: data.password,
               });
             })}

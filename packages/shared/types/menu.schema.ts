@@ -18,7 +18,8 @@ export const MenuItemSchema = BaseMenuSchema.extend({
     component: v.component ?? null,
   }));
 
+export type MenuItem = z.infer<typeof MenuItemSchema>;
+
 export const MenuSchema = z.array(MenuItemSchema);
 
-export type MenuItem = z.infer<typeof MenuItemSchema>;
 export type Menu = z.infer<typeof MenuSchema>;
