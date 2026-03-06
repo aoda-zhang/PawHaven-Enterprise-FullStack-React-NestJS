@@ -1,6 +1,6 @@
 # 🐾 PawHaven - 动物救援平台
 
-[English](README.md) | [中文](READMECN.md)
+[English](./README.md) | [中文](./READMECN.md)
 
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
 ![React](https://img.shields.io/badge/React-20232a?logo=react&logoColor=61dafb)
