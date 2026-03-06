@@ -1,6 +1,6 @@
-[English](README.MD) | [中文](READMECN.MD)
-
 # 🐾 PawHaven - Animal Rescue Platform
+
+[English](README.md) | [中文](READMECN.md)
 
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
 ![React](https://img.shields.io/badge/React-20232a?logo=react&logoColor=61dafb)
@@ -8,57 +8,92 @@
 ![NestJS](https://img.shields.io/badge/NestJS-E0234E?logo=nestjs&logoColor=white)
 ![pnpm](https://img.shields.io/badge/Package-pnpm-F69220?logo=pnpm&logoColor=white)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
-[![Discord](https://img.shields.io/badge/Discord-7289DA?logo=discord&logoColor=white)](https://discord.gg/你的Discord邀请链接)
+[![Discord](https://img.shields.io/badge/Discord-Community-7289DA?logo=discord&logoColor=white)](https://discord.gg/znnG258E)
 
-PawHaven is a full-stack platform designed to provide a safe rescue and adoption environment for stray animals, connecting volunteers, adopters, and the community. Users can report rescue cases, share stories, participate in community interactions, and enable efficient flow and sharing of rescue information.
+**PawHaven** is a full-stack platform designed to support **stray animal rescue and adoption**, connecting volunteers, adopters, and the community.
+
+The platform allows users to report rescue cases, track rescue progress, share rescue stories, and improve the visibility and coordination of rescue efforts.
+
+In addition to the application itself, PawHaven also serves as a **practice of modern full-stack engineering**, focusing on scalable architecture, maintainable code, and efficient development workflows.
 
 ---
 
-## 🧠 Core Modules & Technical Practices
+# ✨ Key Features
+
+- **Rescue Case Management**  
+  Create and track rescue cases, helping volunteers coordinate rescue operations.
 
 - **Authentication & Authorization**  
-  Implements role-based access control to ensure user data security and operational compliance. Utilizes JWT and permission strategies, with unified validation across frontend and backend, enhancing system security.
+  Secure authentication with JWT and role-based access control.
 
-- **Rescue Case Management Module**  
-  Supports creation, review, status tracking, and operational guidance of rescue cases, automating business processes.
+- **Knowledge Base**  
+  Provide rescue guides and adoption knowledge through a centralized content system.
 
-- **Knowledge Base & Content Management**  
-  Provides dynamic content updates and multi-platform synchronization, supporting knowledge sharing such as rescue guides and adoption processes. Integrated with CMS and API design for centralized management and real-time updates.
-
-- **Community Interaction & Story Sharing**  
-  Builds information exchange and emotional connection among users, supporting comments, likes, and sharing features. Combines frontend componentization and backend event push for smooth interactive experience.
+- **Community Interaction**  
+  Share rescue stories and exchange experiences within the community.
 
 ---
 
-## ✨ Technical Highlights
+# 🧠 Technical Highlights
 
-- Monorepo architecture with modular design for unified management of frontend, backend, and shared components, enabling efficient collaboration.
-- Shared type definitions and reusable components across frontend and backend, reducing duplicate development and improving code consistency.
-- Frontend modular structure using React Hook Form and React Query to optimize form management and data caching.
-- Backend microservices architecture supporting independent deployment and data isolation, improving scalability and system stability.
-- Complete CI/CD pipeline with automated build, testing, and deployment for reliable continuous delivery.
-- Emphasis on engineering practices, supporting scalable architecture design and code standards, enhancing team collaboration efficiency.
-
----
-
-## 🤝 Community & Support
-
-Join our Discord community to connect with developers, volunteers, and animal rescue enthusiasts:
-- **Discord Server**: [https://discord.gg/znnG258E](https://discord.gg/znnG258E)
+- **Monorepo architecture** using `pnpm workspace`
+- **Full-stack TypeScript** with shared types between frontend and backend
+- **React + React Query + React Hook Form** for scalable frontend architecture
+- **NestJS microservices** for backend service isolation
+- **Engineering practices** including ESLint, Prettier, Husky, and CI/CD pipelines
 
 ---
 
-## 📚 Table of Contents
+# 🚀 Tech Stack
 
-- [💻 Application Overview](./docs/application_overview.md)
-- [🏗 Architecture Design](./docs/architecture_design.md)
-- [🗄 Project Structure](./docs/project_structure.md)
-- [⚙️ Monorepo & Project Standards](./docs/project_standards.md)
-- 🧱 Shared Packages
-- 📡 API & Service Layer
-- 🗃 Frontend State & Data Flow
-- 🔐 Authentication & Security
-- ⚠️ Error Handling & Observability
-- 🚄 Performance & Scalability
-- 🧪 Testing Strategy
-- 🌐 CI/CD & Deployment
+| Layer | Technology |
+|------|------------|
+| Frontend | React, TypeScript, React Query, React Hook Form |
+| Backend | NestJS, Node.js |
+| Architecture | Microservices, Monorepo |
+| Package Management | pnpm workspace |
+| Code Quality | ESLint, Prettier, Husky |
+| CI/CD | GitHub Actions |
+
+---
+
+# 🤝 Community
+
+PawHaven is an open and evolving project.  
+If you are interested in animal rescue, open-source development, or project architecture discussions, you are welcome to join the community.
+
+💬 **Discord**  
+👉 https://discord.gg/znnG258E
+
+You can use the Discord server to:
+
+- discuss project ideas and features
+- talk about technical architecture
+- ask development questions
+- collaborate with other contributors
+
+---
+
+# 📚 Documentation
+
+Detailed documentation can be found in the `/docs` directory.
+
+- [Application Overview](./docs/application_overview.md)
+- [Architecture Design](./docs/architecture_design.md)
+- [Project Structure](./docs/project_structure.md)
+- [Monorepo & Project Standards](./docs/project_standards.md)
+
+---
+
+# 🌟 Contributing
+
+Contributions are welcome.
+
+If you would like to contribute:
+
+1. Open an issue to discuss ideas
+2. Fork the repository
+3. Create a feature branch
+4. Submit a pull request
+
+---
