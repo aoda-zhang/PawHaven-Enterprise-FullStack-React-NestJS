@@ -48,15 +48,6 @@ Join our Discord community to connect with developers, volunteers, and animal re
 
 ---
 
-## 🧰 Tech Stack & Tooling
-
-- **Frontend:** React + Redux Toolkit (state management) + React Query (data caching) + React Hook Form (form management)
-- **Backend:** NestJS (microservices framework) + Prisma (database ORM) + MongoDB (document database)
-- **Shared Packages:** UI component library, TypeScript types, and utility functions for cross-platform reuse and consistent standards
-- **Infrastructure:** pnpm + TurboRepo monorepo setup with GitHub Actions for automated CI/CD
-
----
-
 ## 📚 Table of Contents
 
 - [💻 Application Overview](./docs/application_overview.md)
