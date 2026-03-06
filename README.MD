@@ -1,4 +1,4 @@
-[English](README.MD) | [中文](READMECN.MD)
+[English](./README.MD) | [中文](./READMECN.MD)
 
 # 🐾 PawHaven - Animal Rescue Platform
 
