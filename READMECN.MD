@@ -1,58 +1,96 @@
-[English](README.MD) | [中文](READMECN.MD)
+# 🐾 PawHaven - 动物救援平台
 
-# 🐾 PawHaven - 流浪动物救助平台
+[English](README.md) | [中文](READMECN.md)
 
-PawHaven 致力于为流浪动物提供一个安全的救助和领养平台，连接救助志愿者、领养者与社区。用户可以发布救助案例、分享故事，参与社区互动，实现救助信息的高效流转和资源共享。
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
+![React](https://img.shields.io/badge/React-20232a?logo=react&logoColor=61dafb)
+![Node.js](https://img.shields.io/badge/Node.js-43853D?logo=node.js&logoColor=white)
+![NestJS](https://img.shields.io/badge/NestJS-E0234E?logo=nestjs&logoColor=white)
+![pnpm](https://img.shields.io/badge/Package-pnpm-F69220?logo=pnpm&logoColor=white)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+[![Discord](https://img.shields.io/badge/Discord-社区-7289DA?logo=discord&logoColor=white)](https://discord.gg/znnG258E)
 
----
+**PawHaven** 是一个全栈平台，旨在支持**流浪动物救援和领养**，连接志愿者、领养者和社区。
 
-## 🧠 核心模块与技术实践
+平台允许用户报告救援案例、跟踪救援进度、分享救援故事，并提升动物救援信息的可见性与协调效率。
 
-- **身份认证与权限管理**  
-  实现基于角色的访问控制，保障用户数据安全与操作合规。采用 JWT 与权限策略，结合前后端统一验证机制，提升系统安全性。
-
-- **救助案例管理模块**  
-  支持救助案例的创建、审核、状态流转和操作指引，自动化业务流程。
-
-- **知识库与内容管理**  
-  提供动态内容更新和多端同步，支持救助指南、领养流程等知识共享。通过 CMS 集成与 API 设计，实现内容的统一管理与实时更新。
-
-- **社区互动与故事分享**  
-  构建用户之间的信息交流和情感连接，支持评论、点赞和分享功能。结合前端组件化和后端事件推送，打造流畅的交互体验。
+除了应用功能外，PawHaven 也是**现代全栈工程实践**的展示，注重可扩展架构、可维护代码和高效开发流程。
 
 ---
 
-## ✨ 技术亮点
+# ✨ 核心功能
 
-- 采用 Monorepo 架构与模块化设计，实现前端、后端及共享组件的统一管理与高效协作。
-- 实现前后端共享类型定义和复用组件，减少重复开发，提升代码一致性。
-- 前端采用模块化结构，结合 React Hook Form 和 React Query，优化表单管理与数据缓存。
-- 后端基于微服务架构，支持独立部署与数据隔离，提升系统扩展性与稳定性。
-- 完善的 CI/CD 流程，实现自动化构建、测试与部署，保障持续交付质量。
-- 注重工程化实践，支持可扩展架构设计和代码规范，提升团队协作效率。
+- **救援案例管理**  
+  创建和跟踪救援案例，帮助志愿者协调救援行动。
 
----
+- **认证与权限**  
+  使用 JWT 和基于角色的访问控制保证用户安全。
 
-## 🧰 技术栈与工具链
+- **知识库**  
+  提供救援指南和领养知识，通过集中式内容系统管理。
 
-- **前端：** React + Redux Toolkit（状态管理）+ React Query（数据缓存）+ React Hook Form（表单管理）
-- **后端：** NestJS（微服务架构）+ Prisma（数据库 ORM）+ MongoDB（文档数据库）
-- **共享包：** UI 组件库、类型定义与通用工具，支持跨端复用与统一规范
-- **基础设施：** pnpm + TurboRepo Monorepo 架构，GitHub Actions 实现自动化 CI/CD
+- **社区互动**  
+  分享救援故事、交流经验，增强社区互动与连接。
 
 ---
 
-## 📚 目录导航
+# 🧠 技术亮点
 
-- [💻 应用概览](./docs/application_overview.md)
-- [🏗 架构设计](./docs/architecture_design.md)
-- [🗄 项目结构](./docs/project_structure.md)
-- [⚙️ Monorepo 与项目规范](./docs/project_standards.md)
-- 🧱 共享包
-- 📡 API 与服务层
-- 🗃 前端状态与数据流
-- 🔐 身份认证与安全
-- ⚠️ 错误处理与可观测性
-- 🚄 性能与可扩展性
-- 🧪 测试策略
-- 🌐 CI/CD 与部署
+- **Monorepo 架构**，使用 `pnpm workspace`
+- **全栈 TypeScript**，前后端共享类型
+- **React + React Query + React Hook Form** 实现可扩展前端架构
+- **NestJS 微服务** 提供后台服务隔离
+- **工程实践**：ESLint、Prettier、Husky、CI/CD 自动化流程
+
+---
+
+# 🚀 技术栈
+
+| 层级 | 技术 |
+|------|------|
+| 前端 | React, TypeScript, React Query, React Hook Form |
+| 后端 | NestJS, Node.js |
+| 架构 | 微服务, Monorepo |
+| 包管理 | pnpm workspace |
+| 代码规范 | ESLint, Prettier, Husky |
+| CI/CD | GitHub Actions |
+
+---
+
+# 🤝 社区
+
+PawHaven 是一个开放且持续发展的项目，欢迎对动物救援、开源开发或项目架构讨论感兴趣的朋友加入社区。
+
+💬 **Discord**  
+👉 https://discord.gg/znnG258E
+
+在 Discord 你可以：
+
+- 讨论项目想法和功能设计
+- 探讨技术架构
+- 提问开发相关问题
+- 与其他贡献者协作
+
+---
+
+# 📚 文档
+
+详细文档请查看 `/docs` 目录：
+
+- [应用概览](./docs/application_overview.md)
+- [架构设计](./docs/architecture_design.md)
+- [项目结构](./docs/project_structure.md)
+- [Monorepo 与项目规范](./docs/project_standards.md)
+
+---
+
+# 🌟 贡献指南
+
+欢迎贡献代码与想法：
+
+1. 打开 issue 讨论想法
+2. Fork 仓库
+3. 创建功能分支
+4. 提交 Pull Request
+
+详情请查看 [LICENSE](./LICENSE) 文件。
