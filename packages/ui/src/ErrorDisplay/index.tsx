@@ -54,9 +54,7 @@ export interface ErrorDisplayProps {
   notificationOption?: ToastOptions;
 }
 
-export interface ShowErrorProps extends Omit<ErrorDisplayProps, 'displayStyle'> {
-  displayStyle?: DisplayStyle;
-}
+export interface ShowErrorProps extends ErrorDisplayProps {}
 
 /**
  * Renders error message with appropriate styling and actions
@@ -67,6 +65,27 @@ const ErrorMessage: React.FC<{
   onRetry?: () => void;
   onDismiss?: () => void;
 }> = ({ message, errorType, onRetry, onDismiss }) => {
+  const getErrorTypeLabel = (type: ErrorType): string => {
+    switch (type) {
+      case 'NETWORK':
+        return '🌐 Network Error';
+      case 'SERVER':
+        return '⚠️ Server Error';
+      case 'AUTH':
+        return '🔐 Auth Error';
+      case 'PERMISSION':
+        return '🚫 Permission Denied';
+      case 'VALIDATION':
+        return '❌ Invalid Input';
+      case 'RATE_LIMIT':
+        return '⏱️ Too Many Requests';
+      case 'MAINTENANCE':
+        return '🔧 Maintenance Mode';
+      default:
+        return '⚠️ Error';
+    }
+  };
+
   return (
     <div
       style={{
@@ -78,12 +97,24 @@ const ErrorMessage: React.FC<{
     >
       <div
         style={{
+          fontSize: '0.75rem',
+          fontWeight: 600,
+          color: 'inherit',
+          opacity: 0.8,
+          textTransform: 'uppercase',
+          letterSpacing: '0.05em',
+        }}
+      >
+        {getErrorTypeLabel(errorType)}
+      </div>
+      <div
+        style={{
           fontSize: '0.875rem',
           fontWeight: 500,
           color: 'inherit',
         }}
       >
-        {typeof message === 'string' ? message : message}
+        {message}
       </div>
       {(onRetry || onDismiss) && (
         <div
@@ -111,7 +142,10 @@ const ErrorMessage: React.FC<{
           )}
           {onDismiss && (
             <button
-              onClick={onDismiss}
+              onClick={(e) => {
+                e.stopPropagation();
+                onDismiss();
+              }}
               style={{
                 background: 'none',
                 border: 'none',
@@ -144,6 +178,29 @@ const showErrorToast = (
 ) => {
   const globalErrorID = `PAWHAVEN_ERROR_${errorType}`;
 
+  // Merge options carefully: only override defaults if explicitly provided
+  const toastOptions: ToastOptions = {
+    id: globalErrorID,
+    duration: notificationOption?.duration ?? Infinity,
+    position: notificationOption?.position ?? 'top-center',
+    style: notificationOption?.style ?? {
+      backgroundColor: designTokens.colors.error,
+      color: designTokens.colors.surface,
+      maxWidth: '31.25rem',
+      padding: '1rem',
+    },
+    iconTheme: notificationOption?.iconTheme ?? {
+      primary: designTokens.colors.surface,
+      secondary: designTokens.colors.error,
+    },
+  };
+
+  // Only merge remaining properties from notificationOption (not duration, position, style, iconTheme)
+  if (notificationOption) {
+    const { duration, position, style, iconTheme, ...rest } = notificationOption;
+    Object.assign(toastOptions, rest);
+  }
+
   toast.error(
     (t) => (
       <div
@@ -163,22 +220,7 @@ const showErrorToast = (
         />
       </div>
     ),
-    {
-      id: globalErrorID,
-      duration: notificationOption?.duration ?? Infinity,
-      position: notificationOption?.position ?? 'top-center',
-      style: notificationOption?.style ?? {
-        backgroundColor: designTokens.colors.error,
-        color: designTokens.colors.surface,
-        maxWidth: '31.25rem',
-        padding: '1rem',
-      },
-      iconTheme: notificationOption?.iconTheme ?? {
-        primary: designTokens.colors.surface,
-        secondary: designTokens.colors.error,
-      },
-      ...(notificationOption ?? {}),
-    },
+    toastOptions,
   );
 };
 
