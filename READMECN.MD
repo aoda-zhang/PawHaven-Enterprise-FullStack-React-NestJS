@@ -1,6 +1,4 @@
-# 🐾 PawHaven - 动物救援平台
-
-[English](./README.md) | [中文](./READMECN.md)
+[English](./README.MD) | [中文](./READMECN.MD)
 
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
 ![React](https://img.shields.io/badge/React-20232a?logo=react&logoColor=61dafb)
@@ -46,14 +44,14 @@
 
 # 🚀 技术栈
 
-| 层级 | 技术 |
-|------|------|
-| 前端 | React, TypeScript, React Query, React Hook Form |
-| 后端 | NestJS, Node.js |
-| 架构 | 微服务, Monorepo |
-| 包管理 | pnpm workspace |
-| 代码规范 | ESLint, Prettier, Husky |
-| CI/CD | GitHub Actions |
+| 层级     | 技术                                            |
+| -------- | ----------------------------------------------- |
+| 前端     | React, TypeScript, React Query, React Hook Form |
+| 后端     | NestJS, Node.js                                 |
+| 架构     | 微服务, Monorepo                                |
+| 包管理   | pnpm workspace                                  |
+| 代码规范 | ESLint, Prettier, Husky                         |
+| CI/CD    | GitHub Actions                                  |
 
 ---
 

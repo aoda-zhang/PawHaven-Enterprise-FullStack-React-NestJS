@@ -1,6 +1,6 @@
-# 🐾 PawHaven - Animal Rescue Platform
+[English](./README.MD) | [中文](./READMECN.MD)
 
-[English](./README.md) | [中文](./READMECN.md)
+# 🐾 PawHaven - Animal Rescue Platform
 
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
 ![React](https://img.shields.io/badge/React-20232a?logo=react&logoColor=61dafb)
@@ -46,14 +46,14 @@ In addition to the application itself, PawHaven also serves as a **practice of m
 
 # 🚀 Tech Stack
 
-| Layer | Technology |
-|------|------------|
-| Frontend | React, TypeScript, React Query, React Hook Form |
-| Backend | NestJS, Node.js |
-| Architecture | Microservices, Monorepo |
-| Package Management | pnpm workspace |
-| Code Quality | ESLint, Prettier, Husky |
-| CI/CD | GitHub Actions |
+| Layer              | Technology                                      |
+| ------------------ | ----------------------------------------------- |
+| Frontend           | React, TypeScript, React Query, React Hook Form |
+| Backend            | NestJS, Node.js                                 |
+| Architecture       | Microservices, Monorepo                         |
+| Package Management | pnpm workspace                                  |
+| Code Quality       | ESLint, Prettier, Husky                         |
+| CI/CD              | GitHub Actions                                  |
 
 ---
 

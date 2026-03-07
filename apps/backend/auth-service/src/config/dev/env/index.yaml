@@ -40,4 +40,5 @@ cors:
     - OPTIONS
 auth:
   jwtSecret: ${JWT_SECRET}
-  jwtExpiresIn: 3600
+  jwtExpiresIn: 1800
+  refreshTokenExpiresIn: 604800
