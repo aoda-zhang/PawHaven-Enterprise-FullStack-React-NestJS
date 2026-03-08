@@ -18,6 +18,52 @@ PawHaven uses a cookie-based JWT authentication system across multiple microserv
 - Domain Services: core/document/etc; verify tokens and use their own databases
 - Shared Auth Infrastructure: JWT Guard, JWT Strategy, and PublicAPI decorator
 
+## System Architecture
+
+```mermaid
+graph TB
+    subgraph "Frontend"
+        Portal[Portal Frontend]
+    end
+
+    subgraph "Gateway"
+        Gateway[API Gateway]
+    end
+
+    subgraph "Microservices"
+        AuthService[Auth Service]
+        CoreService[Core Service]
+        DocumentService[Document Service]
+    end
+
+    subgraph "Service Databases"
+        AuthDB[(Auth Service DB)]
+        CoreDB[(Core Service DB)]
+        DocumentDB[(Document Service DB)]
+    end
+
+    subgraph "Shared Auth Infrastructure"
+        JWTGuard[JWT Guard]
+        JWTStrategy[JWT Strategy]
+        PublicAPI[PublicAPI Decorator]
+    end
+
+    Portal --> Gateway
+    Gateway --> AuthService
+    Gateway --> CoreService
+    Gateway --> DocumentService
+
+    AuthService --> AuthDB
+    CoreService --> CoreDB
+    DocumentService --> DocumentDB
+
+    AuthService --> JWTGuard
+    CoreService --> JWTGuard
+    DocumentService --> JWTGuard
+    JWTGuard --> JWTStrategy
+    JWTGuard -.-> PublicAPI
+```
+
 ## Authentication Flows
 
 ### 1. Login and Registration
@@ -31,7 +77,7 @@ sequenceDiagram
     participant AuthDB as Auth Service DB
 
     User->>Portal: Enter credentials
-    Portal->>Gateway: POST /api/auth/login or /api/auth/register
+    Portal->>Gateway: Login or registration request
     Gateway->>AuthService: Proxy request
 
     Note over AuthService: @PublicAPI bypasses JWT Guard
@@ -135,7 +181,7 @@ sequenceDiagram
     participant AuthService as Auth Service
     participant AuthDB as Auth Service DB
 
-    Portal->>Gateway: POST /api/auth/refresh
+    Portal->>Gateway: Refresh request
     Gateway->>AuthService: Proxy request
 
     Note over AuthService: @PublicAPI bypasses JWT Guard
