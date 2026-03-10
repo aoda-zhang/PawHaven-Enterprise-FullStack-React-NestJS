@@ -6,10 +6,10 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { JwtVerifyInfo, AuthResponseDto } from '@pawhaven/shared/types';
 import { isProd } from '@pawhaven/shared/utils';
-import { cookieKeys } from '@pawhaven/shared/constants';
 import * as bcrypt from 'bcrypt';
 import {
   databaseEngines,
+  cookieKeys,
   httpBusinessMappingCodes,
 } from '@pawhaven/backend-core/constants';
 import { InjectPrisma } from '@pawhaven/backend-core';

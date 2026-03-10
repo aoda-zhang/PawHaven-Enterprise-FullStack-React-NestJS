@@ -4,7 +4,10 @@ import { JwtService } from '@nestjs/jwt';
 import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
 import { JwtVerifyInfo } from '@pawhaven/shared/types';
-import { AUTH_PUBLIC_PATHS, cookieKeys } from '@pawhaven/shared/constants';
+import {
+  AUTH_PUBLIC_PATHS,
+  cookieKeys,
+} from '@pawhaven/backend-core/constants';
 import { isProd } from '@pawhaven/shared/utils';
 import { firstValueFrom } from 'rxjs';
 

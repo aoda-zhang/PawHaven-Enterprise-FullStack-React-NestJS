@@ -7,7 +7,10 @@ import {
 import type { NextFunction, Request, Response } from 'express';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '@pawhaven/shared/types';
-import { AUTH_PUBLIC_PATHS, cookieKeys } from '@pawhaven/shared/constants';
+import {
+  AUTH_PUBLIC_PATHS,
+  cookieKeys,
+} from '@pawhaven/backend-core/constants';
 
 /**
  * JWT Verification Middleware

@@ -16,6 +16,11 @@ export class BootstrapController {
     return this.bootService.getAppBootstrap();
   }
 
+  @Get('/menu')
+  getMenus(): Promise<MenuItemDto[]> {
+    return this.bootService.getAppMenus();
+  }
+
   @Post('/menu')
   createMenu(@Body() menu: MenuItemDto): Promise<MenuItemDto> {
     return this.bootService.addMenuItem(menu);
