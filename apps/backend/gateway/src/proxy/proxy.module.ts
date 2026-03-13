@@ -7,7 +7,7 @@ import { ConfigService } from '@nestjs/config';
 import { JwtRefreshGuard } from '../guards/jwt-refresh.guard';
 import { JwtVerificationGuard } from '../guards/jwt-verification.guard';
 
-import { ProtectedProxyController } from './proxy.controller';
+import { ProtectedProxyController } from './protected-proxy.controller';
 import { PublicProxyController } from './public-proxy.controller';
 import { ProxyService } from './proxy.service';
 
