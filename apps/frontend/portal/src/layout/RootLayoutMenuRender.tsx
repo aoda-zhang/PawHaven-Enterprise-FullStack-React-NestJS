@@ -21,7 +21,11 @@ const rootLayoutClassNames = {
 };
 export const RootLayoutMenuRender = (props: MenuRenderType) => {
   const HeaderComponentMappings = {
-    I18nSwitch: <I18nSwitch />,
+    I18nSwitch: (
+      <div className="shrink-0 rounded-full border border-border bg-white px-1 py-1 shadow-sm [&>div]:!mb-0 [&>div]:!min-w-fit [&>div]:px-3 [&>div]:py-1 [&>div]:text-sm">
+        <I18nSwitch />
+      </div>
+    ),
   };
   const { menuItems, activePath, navigate } = props;
   const { t } = useTranslation();
@@ -92,12 +96,7 @@ export const RootLayoutMenuRender = (props: MenuRenderType) => {
           item.component as unknown as keyof typeof HeaderComponentMappings
         ];
       return (
-        <div
-          className={clsx(itemClassNames)}
-          key={item?.label}
-          role="button"
-          tabIndex={0}
-        >
+        <div className={clsx(itemClassNames)} key={item?.label}>
           {Component && cloneElement(Component)}
         </div>
       );
