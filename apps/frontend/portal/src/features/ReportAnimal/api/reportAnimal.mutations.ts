@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { createReportAnimal } from './reportAnimal.api';
 
-import { homeQueryKeys } from '@/api/home.queryKeys';
+import { homeQueryKeys } from '@/features/Home/api/home.queryKeys';
 import { rescueCasesQueryKeys } from '@/features/RescueCases/api/rescueCases.queryKeys';
 
 export const useCreateReportAnimal = () => {

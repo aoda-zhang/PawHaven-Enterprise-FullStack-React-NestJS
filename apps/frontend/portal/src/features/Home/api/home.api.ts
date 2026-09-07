@@ -1,7 +1,7 @@
-import type { AdoptablePet } from '@pawhaven/shared/types';
+import type { HomeData } from '@pawhaven/shared/types';
 
 import { apiClient } from '@/utils/apiClient';
 
-export const getAdoptablePets = async (): Promise<AdoptablePet[]> => {
-  return apiClient.get<AdoptablePet[]>('/core/adoptable-pets');
+export const getHomeData = async (): Promise<HomeData> => {
+  return apiClient.get<HomeData>('core/home');
 };
