@@ -1054,15 +1054,9 @@ importers:
       '@pawhaven/eslint-config':
         specifier: workspace:*
         version: link:../../libs/eslint-config
-      '@pawhaven/tsconfig':
-        specifier: workspace:*
-        version: link:../../libs/tsconfig
       tailwindcss:
         specifier: ^4.1.14
         version: 4.3.3
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
 
   packages/frontend-core:
     dependencies:
