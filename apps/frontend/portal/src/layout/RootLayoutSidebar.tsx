@@ -1,7 +1,7 @@
+import { cn } from '@pawhaven/frontend-core';
 import type { NavigateFunction } from 'react-router-dom';
 
 import { useMenuNavigation } from './hooks/useMenuNavigation';
-import { SidebarMenuItem } from './SidebarMenuItem';
 
 import type { MenuItemType } from '@/types/LayoutType';
 
@@ -12,6 +12,16 @@ interface RootLayoutSidebarProps {
   onCloseSidebar: () => void;
   activePath: string;
 }
+
+const SIDEBAR_MENU_ITEM_CLASS =
+  'flex w-full items-center rounded-xl px-4 py-3 text-base font-medium transition-colors';
+
+const AUTH_MENU_CLASS_NAMES = ['login', 'logout'];
+
+const isAuthItem = (item: MenuItemType) =>
+  item.classNames.some((className) =>
+    AUTH_MENU_CLASS_NAMES.includes(className),
+  );
 
 export const RootLayoutSidebar = ({
   menuItems,
@@ -34,9 +44,7 @@ export const RootLayoutSidebar = ({
 
   if (!isSidebarOpen) return null;
 
-  const authItems = resolvedItems.filter((item) =>
-    (item.classNames as string[]).some((c) => c === 'login' || c === 'logout'),
-  );
+  const authItems = resolvedItems.filter(isAuthItem);
   const navItems = resolvedItems.filter((item) => !authItems.includes(item));
 
   return (
@@ -45,7 +53,17 @@ export const RootLayoutSidebar = ({
         <ul className="flex flex-col gap-1">
           {navItems.map((item) => (
             <li key={item.label}>
-              <SidebarMenuItem item={item} onClick={navigateAndClose} />
+              <button
+                type="button"
+                className={cn(
+                  SIDEBAR_MENU_ITEM_CLASS,
+                  item.className,
+                  isAuthItem(item) && 'justify-center',
+                )}
+                onClick={() => navigateAndClose(item.to)}
+              >
+                <span>{item.label}</span>
+              </button>
             </li>
           ))}
         </ul>
@@ -53,11 +71,18 @@ export const RootLayoutSidebar = ({
       {authItems.length > 0 && (
         <div className="border-border border-t px-3 py-3">
           {authItems.map((item) => (
-            <SidebarMenuItem
+            <button
               key={item.label}
-              item={item}
-              onClick={navigateAndClose}
-            />
+              type="button"
+              className={cn(
+                SIDEBAR_MENU_ITEM_CLASS,
+                item.className,
+                isAuthItem(item) && 'justify-center',
+              )}
+              onClick={() => navigateAndClose(item.to)}
+            >
+              <span>{item.label}</span>
+            </button>
           ))}
         </div>
       )}

@@ -5,8 +5,8 @@ import { postLogin, postLogout, postRegister } from './auth.api';
 import { authQueryKeys } from './auth.queryKeys';
 
 import type { ProfileType } from '@/features/Auth/types';
-import { landingQueryKeys } from '@/features/Landing/api/landing.queryKeys';
 import { useReduxDispatch } from '@/hooks/reduxHooks';
+import { bootstrapQueryKeys } from '@/layout/api/bootstrap.queryKeys';
 import { emptyProfile, setProfile } from '@/store/globalReducer';
 
 const toProfile = (session: SessionDto): ProfileType => ({
@@ -27,7 +27,7 @@ export const useLogin = () => {
     onSuccess: (data) => {
       dispatch(setProfile(toProfile(data)));
       queryClient.invalidateQueries({ queryKey: authQueryKeys.all });
-      queryClient.invalidateQueries({ queryKey: landingQueryKeys.all });
+      queryClient.invalidateQueries({ queryKey: bootstrapQueryKeys.all });
     },
   });
 };
@@ -46,7 +46,7 @@ export const useLogout = () => {
     onSuccess: () => {
       dispatch(setProfile(emptyProfile));
       queryClient.invalidateQueries({ queryKey: authQueryKeys.all });
-      queryClient.invalidateQueries({ queryKey: landingQueryKeys.all });
+      queryClient.invalidateQueries({ queryKey: bootstrapQueryKeys.all });
     },
   });
 };

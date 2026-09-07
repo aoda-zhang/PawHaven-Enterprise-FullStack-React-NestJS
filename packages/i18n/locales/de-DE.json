@@ -338,9 +338,7 @@
     "carousel_previous": "Vorheriges Foto",
     "carousel_next": "Nächstes Foto",
     "basic_info": "Grundinformation",
-    "urgent": "Dringend",
-    "safety_first_title": "Sicherheit geht vor",
-    "safety_first_body": "Die genaue GPS-Position wird nicht öffentlich angezeigt. Kontaktieren Sie den Melder erst nach der Übernahme über die In-App-Nachrichten."
+    "urgent": "Dringend"
   },
   "footer": {
     "columns": {

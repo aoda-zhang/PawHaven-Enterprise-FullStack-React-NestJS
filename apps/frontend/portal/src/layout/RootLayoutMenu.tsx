@@ -1,8 +1,8 @@
-import { Brand, LanguageSelector } from '@pawhaven/frontend-core';
+import { Brand, LanguageSelector, cn } from '@pawhaven/frontend-core';
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
 
-import { RootLayoutMenuRender } from './RootLayoutMenuRender';
+import { useMenuNavigation } from './hooks/useMenuNavigation';
 import { RootLayoutSidebar } from './RootLayoutSidebar';
 
 import type { MenuItemType } from '@/types/LayoutType';
@@ -13,6 +13,13 @@ interface RootLayoutMenuProps {
   activePath: string;
 }
 
+const AUTH_MENU_CLASS_NAMES = ['login', 'logout'];
+
+const isAuthItem = (item: MenuItemType) =>
+  item.classNames.some((className) =>
+    AUTH_MENU_CLASS_NAMES.includes(className),
+  );
+
 export const RootLayoutMenu = ({
   menuItems,
   navigate,
@@ -20,12 +27,14 @@ export const RootLayoutMenu = ({
 }: RootLayoutMenuProps) => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
-  const authItems = menuItems.filter((item) =>
-    (item.classNames as string[]).some(
-      (className) => className === 'login' || className === 'logout',
-    ),
-  );
-  const navItems = menuItems.filter((item) => !authItems.includes(item));
+  const { resolvedItems, handleMenuClick } = useMenuNavigation({
+    menuItems,
+    activePath,
+    navigate,
+  });
+
+  const authItems = resolvedItems.filter(isAuthItem);
+  const navItems = resolvedItems.filter((item) => !authItems.includes(item));
 
   return (
     <nav aria-label="Main navigation">
@@ -33,22 +42,36 @@ export const RootLayoutMenu = ({
         <Brand navigate={navigate} />
 
         <div className="flex flex-1 justify-center">
-          <RootLayoutMenuRender
-            className="hidden md:flex"
-            menuItems={navItems}
-            activePath={activePath}
-            navigate={navigate}
-          />
+          <div className={cn('flex gap-1', 'hidden md:flex')}>
+            {navItems.map((item) => (
+              <button
+                type="button"
+                className={item.className}
+                key={item.label}
+                onClick={() => handleMenuClick(item)}
+                aria-current={activePath === item.to ? 'page' : undefined}
+              >
+                <span>{item.label}</span>
+              </button>
+            ))}
+          </div>
         </div>
 
         <div className="flex items-center gap-2">
           {authItems.length > 0 && (
-            <RootLayoutMenuRender
-              className="hidden md:flex"
-              menuItems={authItems}
-              activePath={activePath}
-              navigate={navigate}
-            />
+            <div className={cn('flex gap-1', 'hidden md:flex')}>
+              {authItems.map((item) => (
+                <button
+                  type="button"
+                  className={item.className}
+                  key={item.label}
+                  onClick={() => handleMenuClick(item)}
+                  aria-current={activePath === item.to ? 'page' : undefined}
+                >
+                  <span>{item.label}</span>
+                </button>
+              ))}
+            </div>
           )}
           <div className="hidden md:flex">
             <LanguageSelector />

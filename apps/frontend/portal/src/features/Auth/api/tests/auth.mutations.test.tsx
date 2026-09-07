@@ -9,7 +9,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { useLogin, useLogout } from '../auth.mutations';
 import { authQueryKeys } from '../auth.queryKeys';
 
-import { landingQueryKeys } from '@/features/Landing/api/landing.queryKeys';
+import { bootstrapQueryKeys } from '@/layout/api/bootstrap.queryKeys';
 
 const { mockSetProfile, mockEmptyProfile } = vi.hoisted(() => ({
   mockSetProfile: vi.fn((payload: unknown) => ({
@@ -66,7 +66,7 @@ describe('Auth mutations — profile sync + bootstrap invalidation', () => {
     });
     mockSetProfile.mockClear();
     // Pre-populate cache with bootstrap and auth queries.
-    queryClient.setQueryData(landingQueryKeys.all, { menus: [], routers: [] });
+    queryClient.setQueryData(bootstrapQueryKeys.all, { menus: [] });
     queryClient.setQueryData(authQueryKeys.all, { user: null });
   });
 
@@ -90,7 +90,7 @@ describe('Auth mutations — profile sync + bootstrap invalidation', () => {
 
     // Both queries should be marked stale after invalidation.
     const authState = queryClient.getQueryState(authQueryKeys.all);
-    const landingState = queryClient.getQueryState(landingQueryKeys.all);
+    const landingState = queryClient.getQueryState(bootstrapQueryKeys.all);
 
     expect(authState?.isInvalidated).toBe(true);
     expect(landingState?.isInvalidated).toBe(true);
@@ -108,7 +108,7 @@ describe('Auth mutations — profile sync + bootstrap invalidation', () => {
     expect(mockSetProfile).toHaveBeenCalledWith(mockEmptyProfile);
 
     const authState = queryClient.getQueryState(authQueryKeys.all);
-    const landingState = queryClient.getQueryState(landingQueryKeys.all);
+    const landingState = queryClient.getQueryState(bootstrapQueryKeys.all);
 
     expect(authState?.isInvalidated).toBe(true);
     expect(landingState?.isInvalidated).toBe(true);

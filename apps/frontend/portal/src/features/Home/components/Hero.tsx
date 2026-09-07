@@ -3,14 +3,15 @@ import { preload } from 'react-dom';
 import { Trans, useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
-import { useLandingContext } from '@/features/Landing/landingContext';
+import { EMPTY_HERO_STATS, useHomeData } from '@/api/home.queries';
 
 preload('/images/hero-banner.webp', { as: 'image', type: 'image/webp' });
 
 export const Hero = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
-  const { heroStats } = useLandingContext();
+  const { data: homeData } = useHomeData();
+  const heroStats = homeData?.heroStats ?? EMPTY_HERO_STATS;
 
   const stats = [
     {

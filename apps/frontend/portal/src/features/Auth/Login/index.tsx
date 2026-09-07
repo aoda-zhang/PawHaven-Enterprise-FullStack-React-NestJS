@@ -4,25 +4,23 @@ import { Button } from '@pawhaven/ui';
 import { FormInput } from '@pawhaven/ui/form';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { useLogin } from '../api/auth.mutations';
 import { AuthLayout } from '../authLayout';
 
-import { routePaths } from '@/router/routePaths';
+import { routePaths, routeSearchParams } from '@/router/routePaths';
 
 export const Login = () => {
   const formProps = useForm<CredentialsDto>({
     resolver: zodResolver(CredentialsSchema),
   });
   const navigate = useNavigate();
-  const location = useLocation();
+  const [searchParams] = useSearchParams();
   const { t } = useTranslation();
   const { mutate, isPending } = useLogin();
 
-  const from =
-    (location.state as { from?: { pathname?: string } })?.from?.pathname ||
-    routePaths.home;
+  const from = searchParams.get(routeSearchParams.redirect) ?? routePaths.home;
 
   return (
     <AuthLayout>

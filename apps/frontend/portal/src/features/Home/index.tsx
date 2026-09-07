@@ -6,11 +6,13 @@ import { AdoptablePetsSection } from './components/AdoptablePetsSection';
 import { Hero } from './components/Hero';
 import { StrayCTA } from './components/StrayCTA';
 
-import { useLandingContext } from '@/features/Landing/landingContext';
+import { useHomeData } from '@/api/home.queries';
 
 export const Home = () => {
   const navigate = useNavigate();
-  const { latestRescues, adoptablePets } = useLandingContext();
+  const { data: homeData } = useHomeData();
+  const latestRescues = homeData?.latestRescues ?? [];
+  const adoptablePets = homeData?.adoptablePets ?? [];
 
   const handleCaseClick = (id: string) => {
     navigate(`/rescue/detail/${id}`);

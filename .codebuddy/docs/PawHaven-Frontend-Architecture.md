@@ -204,7 +204,7 @@ Apps (portal, admin)      → ALL packages
 │  App Shell (apps/*/src/)                                 │
 │  ├── Providers (I18n → Store → Query → Router)           │
 │  ├── Layout (Header, Sidebar, Footer, Outlet)            │
-│  └── Router (React Router config + component registry)   │
+│  └── Router (React Router v7 static route tree)          │
 ├─────────────────────────────────────────────────────────┤
 │  Features (features/*/)                                  │
 │  ├── Business-specific components, hooks, API calls      │
@@ -249,67 +249,87 @@ Feature A needs Component X
 
 ## 5. Routing Architecture
 
-### 5.1 Server-Driven Routing
+### 5.1 Frontend-Owned Static Routing (React Router v7 Data Mode)
+
+The frontend owns the route tree. The backend never decides which React component renders for a URL.
 
 ```
-App Start
+src/router/router.tsx
   │
-  ▼
-Landing Feature (bootstraps first)
-  │
-  ├── Fetches bootstrap API → { menus, routes }
-  │     Backend defines what pages exist and their layout configuration
-  │
-  ▼
-AppRouterProvider
-  │
-  ├── Reads route config
-  ├── Maps route keys → React components via routerElementMapping
-  ├── Generates React Router route tree dynamically
-  │
-  ▼
-Page Renders
+  ├── Shell route: RootLayout + rootLoader + ErrorBoundary + HydrateFallback
+  ├── Composes feature routes (only)
+  └── createBrowserRouter([rootRoute])  →  <RouterProvider router={router} />
 ```
 
-### 5.2 Why Server-Driven Routing
-
-| Without Server-Driven                 | With Server-Driven                                        |
-| ------------------------------------- | --------------------------------------------------------- |
-| Routes hardcoded in frontend          | Backend decides which pages/features are available        |
-| Feature toggle = frontend deploy      | Feature toggle = backend config change                    |
-| All users get same routes             | Role-based menus + routes per user                        |
-| Adding a page = frontend + backend PR | Adding a page = backend config + component registry entry |
-
-### 5.3 Component Registry
+Router instance is created **once at module scope** — never inside a React component.
 
 ```
-routerElementMapping.tsx — static map of page keys → React components
-
-  Eager-loaded (always included):
-    · Landing (bootstrap)
-    · Auth (login/register)
-    · Home (landing page)
-
-  Lazy-loaded (code-split, loaded on first visit):
-    · Rescue, Report, Adoption, Content, Volunteer, Profile, Discovery
+/ (RootLayout, loader: rootLoader)
+├── /                        → Home                       features/Home/route.tsx
+├── /auth/login              → Login                      features/Auth/route.tsx
+├── /auth/register           → Register                   features/Auth/route.tsx
+├── /rescue/guides           → RescueGuide     (lazy)     features/RescueGuide/route.tsx
+├── /rescue-cases            → RescueCasesPage (lazy)     features/RescueCases/route.tsx
+├── /rescue/detail/:animalID → RescueDetail    (lazy)     features/RescueDetail/route.tsx
+├── authenticated (loader: requireUser)
+│   └── /report-animal       → ReportAnimal    (lazy)     features/ReportAnimal/route.tsx
+└── *                        → NotFound
 ```
 
-### 5.4 Routing Rules
+### 5.2 File Layout
+
+| Location                   | Owns                                                         |
+| -------------------------- | ------------------------------------------------------------ |
+| `src/router/router.tsx`    | Shell route + `createBrowserRouter` singleton + composition  |
+| `src/router/routePaths.ts` | `routePaths` and `routeSearchParams` (URL vocabulary)        |
+| `src/layout/index.tsx`     | `RootLayout` + `rootLoader` (app-shell data)                 |
+| `features/<X>/route.tsx`   | That feature's route object(s), loader and `handle` metadata |
+
+### 5.3 Routing Rules
 
 ```
-✅ Route paths are defined in the backend bootstrap API — not hardcoded
-✅ Route-to-component mapping is the ONLY legal cross-feature reference
-✅ All routes go through AppRouterProvider — no manual <Route> in features
-✅ Lazy-loaded features use React.lazy + SuspenseWrapper from @pawhaven/ui
-✅ All internal navigation uses React Router (`useNavigate().navigate(path)` / `<Link>` / `<Navigate>`)
-✅ External links use a real anchor (`<a href="https://...">`) or `window.open`
+✅ The frontend owns the route tree — no backend `element` strings
+✅ `createBrowserRouter` is called once at module scope (stable router identity)
+✅ Each feature owns route.tsx — route, loader and page stay together
+✅ Components are referenced directly (no string → component registry)
+✅ Route-critical data is loaded by route loaders via queryClient.ensureQueryData(...)
+✅ Pages read initial data from useLoaderData() — not from React Query hooks
+✅ React Query owns caching/refetch/mutations; the router owns "when data must be ready"
+✅ Lazy routes use route-level `lazy:` for code splitting
+✅ Protected routes live under the authenticated parent route (loader: requireUser)
 
-❌ Features do NOT import from other features' index.tsx
-❌ Features do NOT reference other features' route paths
-❌ Features do NOT use `window.history.pushState` / `window.history.replaceState` for internal navigation
-❌ Features do NOT use `window.history.back()` / `window.history.forward()` for internal navigation (use `navigate(-1)` / `navigate(1)`)
-❌ Features do NOT use `window.location.href = ...` / `window.location.assign(...)` for internal navigation
+❌ No generated route trees or component registries
+❌ No router creation inside a React component
+❌ Features do NOT import other features' route modules — only the shell composes them
+❌ Features do NOT use window.history / window.location for internal navigation
 ```
+
+### 5.4 Data Loading Strategy
+
+| Route                      | Loader                   | Pattern                                                                                     |
+| -------------------------- | ------------------------ | ------------------------------------------------------------------------------------------- |
+| Shell (`/`)                | `rootLoader`             | Blocking — home data (menus, hero stats, latest rescues, adoptable pets)                    |
+| `/rescue-cases`            | `rescueCasesLoader`      | Blocking — data ready before render                                                         |
+| `/rescue/detail/:animalID` | `rescueCaseDetailLoader` | **Deferred** — returns `{ animal: promise }`; page uses `<Suspense>` + `<Await>` + skeleton |
+| Authenticated parent       | `requireUser`            | Auth guard — primes current-user query, else `redirect('/auth/login?redirect=…')`           |
+
+> Deferred data paints the page shell immediately. Trade-off: the page reads a loader snapshot, so it does **not** re-render on React Query cache invalidation — use `router.invalidate()` or a subscription-only `useQuery` if live updates are needed.
+
+### 5.5 Loading & Error Boundaries
+
+| Phase                   | Mechanism                                                                  |
+| ----------------------- | -------------------------------------------------------------------------- |
+| Cold load (first paint) | Root `HydrateFallback` (`<Loading />`)                                     |
+| Lazy chunk loading      | `<Suspense fallback={<Loading />}>` in `RootLayout`                        |
+| In-app navigation       | `useNavigation()` in `RootLayout` → `aria-busy` on `<main>`                |
+| Deferred route data     | `<Suspense>` + `<Await>` with a feature-owned skeleton                     |
+| Route errors            | Route `ErrorBoundary` → `RouterErrorFallback` → `NotFound` / `SystemError` |
+
+### 5.6 Auth & Permissions
+
+- Auth gating is the **authenticated parent route**; children inherit it (no per-page guards, no repeated `/current-user` calls).
+- The security boundary is the **backend** (JWT + role/permission checks per API). Frontend gating is UX only.
+- Backend remains the owner of **menus** and **route permissions**; route `handle.permission` metadata for UX gating is still pending.
 
 ---
 

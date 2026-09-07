@@ -1,13 +1,10 @@
-import { Landing } from './features/Landing';
 import { AppProvider } from './providers/AppProvider';
-import { AppRouterProvider } from './router/AppRouterProvider';
+import { AppRouterProvider } from './providers/AppRouterProvider';
 
 export const App = () => {
   return (
     <AppProvider>
-      <Landing>
-        <AppRouterProvider />
-      </Landing>
+      <AppRouterProvider />
     </AppProvider>
   );
 };

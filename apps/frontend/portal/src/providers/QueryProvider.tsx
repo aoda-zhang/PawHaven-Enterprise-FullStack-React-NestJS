@@ -5,33 +5,42 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 import { useState, type ReactNode } from 'react';
 
-import { loadConfig } from '../config';
-
+import { loadConfig } from '@/config';
 import { useIsStableEnv } from '@/hooks/useIsStableEnv';
+import { routePaths } from '@/router/routePaths';
 
 const FIVE_MINUTES_MS = 300_000;
 const THIRTY_MINUTES_MS = 1_800_000;
 const TWENTY_FOUR_HOURS_MS = 86_400_000;
 
+let client: QueryClient | null = null;
+
+export const getQueryClient = (): QueryClient => {
+  if (client) {
+    return client;
+  }
+
+  const queryConfig = loadConfig().query;
+
+  client = new QueryClient(
+    getRequestQueryOptions({
+      refetchOnReconnect: queryConfig?.refetchOnReconnect ?? true,
+      refetchOnWindowFocus: queryConfig?.refetchOnWindowFocus ?? false,
+      staleTime: queryConfig?.staleTime ?? FIVE_MINUTES_MS,
+      gcTime: queryConfig?.gcTime ?? THIRTY_MINUTES_MS,
+      onAuthError: () => {
+        window.location.href = routePaths.login;
+      },
+      onPermissionError: () => {},
+    }),
+  );
+
+  return client;
+};
+
 export const QueryProvider = ({ children }: { children: ReactNode }) => {
   const IsStableEnv = useIsStableEnv();
-  const [queryClient] = useState(() => {
-    const queryConfig = loadConfig().query;
-
-    return new QueryClient(
-      getRequestQueryOptions({
-        refetchOnReconnect: queryConfig?.refetchOnReconnect ?? true,
-        refetchOnWindowFocus: queryConfig?.refetchOnWindowFocus ?? false,
-        staleTime: queryConfig?.staleTime ?? FIVE_MINUTES_MS,
-        gcTime: queryConfig?.gcTime ?? THIRTY_MINUTES_MS,
-        onAuthError: () => {
-          window.location.href = '/auth/login';
-        },
-        onPermissionError: () => {},
-      }),
-    );
-  });
-
+  const queryClient = getQueryClient();
   const [asyncStoragePersister] = useState(() =>
     createAsyncStoragePersister({
       storage: window.localStorage,

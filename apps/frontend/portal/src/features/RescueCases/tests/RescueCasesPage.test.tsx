@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom/vitest';
 
 import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { describe, it, expect, vi } from 'vitest';
 
 import { RescueCasesPage } from '../index';
@@ -20,19 +20,6 @@ const mockCases = [
     distance: '1.2 km',
   },
 ];
-
-vi.mock('../api/rescueCases.queries', () => ({
-  useFetchRescueCases: () => ({
-    data: mockCases,
-    isLoading: false,
-    isError: false,
-  }),
-  useFetchRescueCase: () => ({
-    data: undefined,
-    isLoading: false,
-    isError: false,
-  }),
-}));
 
 vi.mock('react-i18next', async () => {
   const actual = await vi.importActual('react-i18next');
@@ -58,15 +45,23 @@ vi.mock('lucide-react', async (importOriginal) => {
   };
 });
 
-describe('RescueCasesPage', () => {
-  it('renders the case list', () => {
-    render(
-      <MemoryRouter>
-        <RescueCasesPage />
-      </MemoryRouter>,
-    );
+const renderPage = () => {
+  const router = createMemoryRouter([
+    {
+      path: '/',
+      Component: RescueCasesPage,
+      loader: () => mockCases,
+    },
+  ]);
 
-    expect(screen.getByText('rescue_cases.section_title')).toBeDefined();
-    expect(screen.getByText('Test Cat')).toBeDefined();
+  return render(<RouterProvider router={router} />);
+};
+
+describe('RescueCasesPage', () => {
+  it('renders the case list', async () => {
+    renderPage();
+
+    expect(await screen.findByText('rescue_cases.section_title')).toBeDefined();
+    expect(await screen.findByText('Test Cat')).toBeDefined();
   });
 });

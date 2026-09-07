@@ -10,7 +10,7 @@ interface MenuVisibility {
   isAuthPage: boolean;
 }
 
-const AUTH_PAGE_PATHS = [routePaths.login, routePaths.register];
+const AUTH_PAGE_PATHS: string[] = [routePaths.login, routePaths.register];
 
 /**
  * Determines the visibility state of layout elements based on the current route.
