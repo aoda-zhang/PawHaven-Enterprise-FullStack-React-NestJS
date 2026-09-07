@@ -1,4 +1,5 @@
 import { ContentFallback } from '@pawhaven/frontend-core';
+import type { BootstrapData } from '@pawhaven/shared/types';
 import { Loading, NotificationBanner, Toast } from '@pawhaven/ui';
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
@@ -8,23 +9,26 @@ import {
   ScrollRestoration,
   useLocation,
   useNavigate,
+  useNavigation,
+  useLoaderData,
 } from 'react-router-dom';
 
 import { useMenuVisibility } from './hooks/useMenuVisibility';
 import { RootLayoutFooter } from './RootLayoutFooter';
 import { RootLayoutMenu } from './RootLayoutMenu';
 
-import { useLandingContext } from '@/features/Landing/landingContext';
 import { useGlobalState } from '@/store/globalReducer';
 
 export const RootLayout = () => {
   const { isSysMaintain } = useGlobalState();
-  const { menus } = useLandingContext();
+  const bootstrapData = useLoaderData() as BootstrapData;
+  const menus = bootstrapData?.menus ?? [];
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { isMenuAvailable, isFooterAvailable, isAuthPage } =
     useMenuVisibility();
   const { pathname } = useLocation();
+  const navigation = useNavigation();
 
   return (
     <div className="overflow-x-hidden">
@@ -53,7 +57,10 @@ export const RootLayout = () => {
         </header>
       )}
 
-      <main className="flex flex-1 flex-col">
+      <main
+        className="flex flex-1 flex-col"
+        aria-busy={navigation.state === 'loading'}
+      >
         <div className="flex-1 px-4 lg:px-28">
           <ErrorBoundary FallbackComponent={ContentFallback} key={pathname}>
             <Suspense fallback={<Loading />}>

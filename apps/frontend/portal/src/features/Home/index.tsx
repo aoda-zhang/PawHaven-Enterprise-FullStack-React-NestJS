@@ -1,4 +1,5 @@
-import { useNavigate } from 'react-router-dom';
+import type { HomeData } from '@pawhaven/shared/types';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 
 import { RescueCasesSection } from '../RescueCases/components/RescueCasesSection';
 
@@ -6,11 +7,9 @@ import { AdoptablePetsSection } from './components/AdoptablePetsSection';
 import { Hero } from './components/Hero';
 import { StrayCTA } from './components/StrayCTA';
 
-import { useLandingContext } from '@/features/Landing/landingContext';
-
 export const Home = () => {
   const navigate = useNavigate();
-  const { latestRescues, adoptablePets } = useLandingContext();
+  const { latestRescues, adoptablePets } = useLoaderData() as HomeData;
 
   const handleCaseClick = (id: string) => {
     navigate(`/rescue/detail/${id}`);

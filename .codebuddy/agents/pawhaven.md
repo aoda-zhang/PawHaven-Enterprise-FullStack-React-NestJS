@@ -8,7 +8,7 @@ description: >
   Pipeline: Step 1: Requirement → Step 2: Architect → Step 3: Implementation → Step 4: Testing → Step 5: Review (Tech + Pattern) → Step 6: Knowledge Update → Step 7: Handoff.
   触发场景 / Trigger: 新功能开发 new feature build create implement develop add functionality, 功能需求 feature request requirement specification user story ticket issue, 全栈开发 full-stack development end-to-end frontend backend both sides across stack, 项目初始化 project init bootstrap scaffold setup create new start from scratch, 需求分析 requirement analysis breakdown decompose analyze triage prioritize, 任务分配 task delegation assignment dispatch distribute coordinate orchestrate, 多模块协作 multi-module coordination collaboration integration cross-team communication, 前后端联调 frontend-backend integration API contract shared types DTO alignment sync, 全局协调 orchestration coordination scheduling planning architecture overview blueprint, tech spec review architecture discussion planning grooming sprint backlog, bug fix troubleshooting debugging investigation root cause analysis, UI redesign refactor migration upgrade enhancement improvement optimization, 架构变更 architecture change module restructure service split merge ADR.
 model: inherit
-tools: task, read_file, search_file, search_content, list_dir, read_lints, connect_cloud_service, automation_update, replace_in_file, write_to_file, delete_file, execute_command, web_fetch, web_search, preview_url, use_skill, lsp
+tools: task, read_file, search_file, search_content, list_dir, read_lints, connect_cloud_service, automation_update, replace_in_file, write_to_file, delete_file, execute_command, web_fetch, web_search, preview_url, use_skill, lsp, read_rules, send_message
 agentMode: manual
 enabled: true
 enabledAutoRun: true

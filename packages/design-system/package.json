@@ -7,7 +7,7 @@
     "*.css"
   ],
   "exports": {
-    "./styles.css": "./index.css",
+    "./index.css": "./index.css",
     "./tokens": "./src/tokens/index.css"
   },
   "files": [
@@ -20,13 +20,9 @@
     "lint": "eslint src/ --ext .ts,.tsx",
     "token-check": "node scripts/token-check.cjs"
   },
-  "peerDependencies": {
-    "react": "^19.2.0"
-  },
   "devDependencies": {
     "@pawhaven/eslint-config": "workspace:*",
     "@pawhaven/tsconfig": "workspace:*",
-    "react": "^19.2.0",
     "tailwindcss": "^4.1.14",
     "typescript": "^5.9.3"
   }

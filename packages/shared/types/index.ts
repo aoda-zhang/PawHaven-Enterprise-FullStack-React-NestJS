@@ -1,5 +1,6 @@
 export type { MenuItem, Menu } from './menu.schema';
-export type { Router, RouterItem, RouterHandle } from './router.schema';
+export type { BootstrapData } from './bootstrap.schema';
+export type { RouterItem, RouterHandle } from './router.schema';
 export type {
   CredentialsDto,
   AuthResponseDto,
@@ -26,7 +27,7 @@ export type { HomeData } from './home.schema';
 // schemas
 
 export { MenuItemSchema, MenuSchema } from './menu.schema';
-export { RouterSchema, RouterItemSchema } from './router.schema';
+export { BootstrapDataSchema } from './bootstrap.schema';
 export {
   CredentialsSchema,
   TokenTypeSchema,

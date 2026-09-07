@@ -1,6 +1,7 @@
 import { join } from 'path';
 
 import { AdoptionModule } from '@modules/adoption/adoption.module';
+import { BootstrapModule } from '@modules/bootstrap/bootstrap.module';
 import { HomeModule } from '@modules/home/home.module';
 import { RescueModule } from '@modules/rescue/rescue.module';
 import { ReportAnimalModule } from '@modules/report-animal/report-animal.module';
@@ -31,6 +32,7 @@ import { PrismaClient } from '@prismaClient';
       ],
     }),
     HomeModule,
+    BootstrapModule,
     RescueModule,
     ReportAnimalModule,
     AdoptionModule,

@@ -6,9 +6,12 @@
   "module": "./build/index.js",
   "types": "./build/index.d.ts",
   "files": [
-    "build"
+    "build",
+    "index.css"
   ],
-  "sideEffects": false,
+  "sideEffects": [
+    "*.css"
+  ],
   "exports": {
     ".": {
       "types": "./build/index.d.ts",
@@ -19,13 +22,15 @@
       "types": "./build/utils/index.d.ts",
       "import": "./build/utils/index.js",
       "default": "./build/utils/index.js"
-    }
+    },
+    "./index.css": "./index.css"
   },
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch"
   },
   "dependencies": {
+    "@pawhaven/design-system": "workspace:*",
     "@pawhaven/i18n": "workspace:*",
     "@pawhaven/shared": "workspace:*",
     "@pawhaven/ui": "workspace:*",

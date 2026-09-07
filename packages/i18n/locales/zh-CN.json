@@ -336,9 +336,7 @@
     "carousel_previous": "上一张",
     "carousel_next": "下一张",
     "basic_info": "基础信息",
-    "urgent": "紧急",
-    "safety_first_title": "安全第一",
-    "safety_first_body": "精确 GPS 位置不会公开显示。认领该案例后，请仅通过应用内消息联系报告人。"
+    "urgent": "紧急"
   },
   "footer": {
     "columns": {
