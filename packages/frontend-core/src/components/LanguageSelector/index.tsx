@@ -114,7 +114,7 @@ export const LanguageSelector = () => {
         />
       </button>
       {open && (
-        <div className="bg-surface border-border -dialog shadow-dropdown-dropdown righmt-1.5 t-0 mt- absolute top-full z-50 shadow">
+        <div className="bg-surface border-border shadow-dropdown -1.5 -1.5 top absolute mt-2">
           <LanguageMenu current={current} onSelect={handleSelect} />
         </div>
       )}

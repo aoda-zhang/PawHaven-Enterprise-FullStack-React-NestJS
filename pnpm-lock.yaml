@@ -1057,9 +1057,6 @@ importers:
       '@pawhaven/tsconfig':
         specifier: workspace:*
         version: link:../../libs/tsconfig
-      react:
-        specifier: ^19.2.0
-        version: 19.2.8
       tailwindcss:
         specifier: ^4.1.14
         version: 4.3.3
@@ -1244,6 +1241,9 @@ importers:
 
   packages/frontend-core:
     dependencies:
+      '@pawhaven/design-system':
+        specifier: workspace:*
+        version: link:../design-system
       '@pawhaven/i18n':
         specifier: workspace:*
         version: link:../i18n

@@ -15,7 +15,8 @@
       "types": "./build/components/Form/index.d.ts",
       "import": "./build/components/Form/index.js",
       "default": "./build/components/Form/index.js"
-    }
+    },
+    "./index.css": "./index.css"
   },
   "scripts": {
     "build": "tsc",

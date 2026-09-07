@@ -1,4 +1,7 @@
-import '@pawhaven/design-system/styles.css';
+import '@pawhaven/ui/index.css';
+import '@pawhaven/frontend-core/index.css';
+import './index.css';
+
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 

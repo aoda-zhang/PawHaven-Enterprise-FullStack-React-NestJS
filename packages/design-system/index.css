@@ -18,12 +18,10 @@
 /* 3. Utilities — Custom utilities + component styles */
 @import './src/utilities.css';
 
-/* Additional content sources — scan workspace packages that export compiled JS.
-   Source globs (with **) stay current without a rebuild; the running app
-   still resolves the packages' build/ output via their package.json exports. */
-@source '../frontend-core/src/**/*.{tsx,jsx}';
-@source '../../apps/frontend/**/*.{tsx,jsx}';
-@source '../ui/src/**/*.{tsx,jsx}';
+/* Content scanning is the CONSUMER's responsibility: each app that imports
+   this stylesheet declares its own @source for any component packages outside
+   its own tree (e.g. @pawhaven/ui, @pawhaven/frontend-core). This package
+   stays standalone and does not reference sibling packages. */
 
 /* ── Base styles ─────────────────────────────────────────── */
 
@@ -46,10 +44,10 @@ body {
     *,
     *::before,
     *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-      scroll-behavior: auto !important;
+      animation-duration: 0.01ms;
+      animation-iteration-count: 1;
+      transition-duration: 0.01ms;
+      scroll-behavior: auto;
     }
   }
 }
