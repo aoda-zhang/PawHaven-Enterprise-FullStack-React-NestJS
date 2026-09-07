@@ -5,11 +5,8 @@ Shared design tokens, theme, and utilities for the PawHaven monorepo. Provides t
 ## Quick Start
 
 ```ts
-// CSS entry — imports tokens, theme, utilities, and base styles
+// CSS entry — imports tailwindcss, tokens, theme, utilities, and base styles
 import '@pawhaven/design-system/index.css';
-
-// TypeScript token access
-import { color, spacing, radius, tokenVar } from '@pawhaven/design-system';
 ```
 
 ## Package Structure
@@ -17,13 +14,11 @@ import { color, spacing, radius, tokenVar } from '@pawhaven/design-system';
 ```
 packages/design-system/
 ├── index.css           # CSS entry point (tailwindcss + tokens + theme + utilities + base styles)
-├── src/                # TypeScript + CSS source
-│   ├── index.ts        # JS/TS entry point
-│   ├── tokens.ts       # Typed token access (CSS var references + raw values)
+├── src/                # CSS source
 │   ├── theme.css       # Semantic mappings (bg-primary, text-text-secondary, etc.) + --text-* font-size aliases
 │   ├── utilities.css   # Custom Tailwind @utility classes (btn-primary, card, text-hero, text-stat, etc.)
 │   └── tokens/         # Primitive design tokens (CSS @theme blocks)
-│       ├── index.css   # Barrel import
+│       ├── index.css   # Barrel import — imported by root index.css (also exported as ./tokens)
 │       ├── color.css   # Color scales (gray, orange, green, red, yellow, blue, brown)
 │       ├── typography.css # Font families, sizes, line-heights, tracking, weights
 │       ├── spacing.css     # Spacing scale + container widths
@@ -80,31 +75,6 @@ Use semantic tokens directly in Tailwind classes:
 | `button-reset`    | Full button reset                                                     |
 | `button-rounded`  | Rounded button with token-based padding                               |
 | `focus-ring`      | Accessible focus-visible outline                                      |
-
-### TypeScript Token Access
-
-```ts
-import {
-  color,
-  spacing,
-  radius,
-  shadow,
-  duration,
-  easing,
-  typography,
-  tokenVar,
-} from '@pawhaven/design-system';
-
-// CSS variable references — use in inline styles, chart libraries, etc.
-const style = { color: color.primary, padding: spacing.card };
-
-// Type-safe tokenVar helper
-const primaryVar = tokenVar('color.primary'); // → 'var(--color-primary)'
-
-// Raw color primitives (for canvas, charts, etc.)
-import { colorPrimitives } from '@pawhaven/design-system';
-const orange500 = colorPrimitives.orange[5]; // → '#fb923c'
-```
 
 ### Token Reference
 
@@ -249,9 +219,9 @@ because they bundle size + family + weight + line-height into one class.
 `--font-serif` / `--font-heading` / `--font-sans` provide the `font-serif` /
 `font-heading` / `font-sans` utilities.
 
-## Scripts
+## Package Type
 
-```bash
-# Type-check the TypeScript source
-pnpm --filter @pawhaven/design-system typecheck
-```
+`@pawhaven/design-system` is a CSS-only package. It ships one entry,
+`@pawhaven/design-system/index.css`, and defines no JS/TS source, so it has no
+`typecheck`, `lint`, or `build` task. Root `pnpm typecheck` / `pnpm lint` /
+`pnpm build` skip it automatically.

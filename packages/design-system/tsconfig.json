@@ -1,8 +1,0 @@
-{
-  "extends": "@pawhaven/tsconfig/web",
-  "compilerOptions": {
-    "outDir": "./dist",
-    "rootDir": "./src"
-  },
-  "include": ["src"]
-}
