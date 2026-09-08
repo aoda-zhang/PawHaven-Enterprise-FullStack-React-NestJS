@@ -74,7 +74,7 @@ export const RootLayoutMenu = ({
             </div>
           )}
           <div className="hidden md:flex">
-            <LanguageSelector />
+            <LanguageSelector align="end" />
           </div>
 
           <button

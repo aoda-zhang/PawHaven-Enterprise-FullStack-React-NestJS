@@ -29,7 +29,12 @@ export const getQueryClient = (): QueryClient => {
       staleTime: queryConfig?.staleTime ?? FIVE_MINUTES_MS,
       gcTime: queryConfig?.gcTime ?? THIRTY_MINUTES_MS,
       onAuthError: () => {
-        window.location.href = routePaths.login;
+        const isAuthPage =
+          window.location.pathname === routePaths.login ||
+          window.location.pathname === routePaths.register;
+        if (!isAuthPage) {
+          window.location.href = routePaths.login;
+        }
       },
       onPermissionError: () => {},
     }),

@@ -55,6 +55,16 @@ export class PublicProxyController {
   }
 
   @OptionalAuth()
+  @Get('/core/bootstrap')
+  proxyCoreBootstrap(
+    @Req() req: Request,
+    @Res() res: Response,
+    @Next() next: NextFunction,
+  ): void {
+    this.proxyService.proxyRequest(req, res, next);
+  }
+
+  @OptionalAuth()
   @Get('/core/rescues')
   proxyGetRescues(
     @Req() req: Request,
