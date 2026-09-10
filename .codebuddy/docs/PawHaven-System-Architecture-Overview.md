@@ -358,8 +358,7 @@ listRescues() {}
 // Default (no decorator) — authenticated identity required, e.g. auth GET /me
 @Get('profile')
 getProfile(@InternalJwt() claims: AuthenticatedInternalJwt) {}
-// @InternalJwt({ allowAnonymous: true }) also returns claims on @OptionalAuth() routes;
-// @SkipGatewayAuth() bypasses the guard entirely (reserved)
+// @InternalJwt({ allowAnonymous: true }) also returns claims on @OptionalAuth() routes.
 ```
 
 See [authentication-architecture.md](./authentication-architecture.md) for the full
