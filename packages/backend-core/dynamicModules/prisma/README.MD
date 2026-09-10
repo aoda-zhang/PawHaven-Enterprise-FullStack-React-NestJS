@@ -51,8 +51,7 @@ Custom Prisma extensions for:
 Configure Prisma module in SharedModule:
 
 ```typescript
-import { SharedModule } from '@pawhaven/backend-core/dynamicModules/shared.module';
-import { SharedModuleFeatures } from '@pawhaven/backend-core/dynamicModules/sharedModule.type';
+import { SharedModule, SharedModuleFeatures } from '@pawhaven/backend-core';
 import { PrismaClient } from '@prisma/client';
 import { DatabaseEngine } from '@pawhaven/backend-core/constants';
 
@@ -81,7 +80,7 @@ Use the `@InjectPrisma()` decorator:
 
 ```typescript
 import { Injectable } from '@nestjs/common';
-import { InjectPrisma } from '@pawhaven/backend-core/dynamicModules/prisma/prisma.decorators';
+import { InjectPrisma } from '@pawhaven/backend-core';
 import { DatabaseEngine } from '@pawhaven/backend-core/constants';
 
 @Injectable()
@@ -127,7 +126,7 @@ export class UserService {
 Add custom Prisma extensions:
 
 ```typescript
-import { SharedModuleFeatures } from '@pawhaven/backend-core/dynamicModules/sharedModule.type';
+import { SharedModuleFeatures } from '@pawhaven/backend-core';
 import { DatabaseEngine } from '@pawhaven/backend-core/constants';
 
 @Module({

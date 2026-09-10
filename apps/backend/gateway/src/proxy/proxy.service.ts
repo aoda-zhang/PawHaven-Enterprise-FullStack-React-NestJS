@@ -1,29 +1,79 @@
 /* eslint-disable no-param-reassign */
 import crypto from 'node:crypto';
-import type { IncomingMessage } from 'node:http';
+import type { ClientRequest, IncomingMessage } from 'node:http';
 
-import { BadGatewayException, Injectable } from '@nestjs/common';
-import type { Request, Response, NextFunction } from 'express';
+import {
+  BadGatewayException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import type { NextFunction, Request, Response } from 'express';
+import { ConfigService } from '@nestjs/config';
 import {
   createProxyMiddleware,
   fixRequestBody,
-  RequestHandler,
+  type RequestHandler,
   responseInterceptor,
 } from 'http-proxy-middleware';
-import { ConfigService } from '@nestjs/config';
 import { httpHeaders } from '@pawhaven/backend-core/constants';
 import { readHeader } from '@pawhaven/backend-core/utils';
-import { User } from '@pawhaven/shared/types';
+
+import { IdentityResolver } from '../identity/identity.resolver';
+import { InternalJwtService } from '../internal-jwt/internal-jwt.service';
+import { InternalJwtTargetResolver } from '../internal-jwt/internal-jwt-target.resolver';
+import type { MicroServiceConfig } from '../routing/micro-service.config';
+import { MicroServiceRegistry } from '../routing/micro-service.registry';
+
+type PendingInternalJwtHeaders = {
+  [httpHeaders.gatewayJwt]: string;
+  [httpHeaders.traceId]: string;
+};
+
+const HTTP_STATUS_MIN_OK = 200;
+const HTTP_STATUS_MIN_REDIRECT = 300;
+const SERVICE_PREFIX_SEGMENTS = 2;
 
 @Injectable()
 export class ProxyService {
   private readonly proxyClient: RequestHandler<Request, Response, NextFunction>;
 
-  constructor(private readonly configService: ConfigService) {
+  private readonly timeoutMs?: number;
+
+  private readonly pendingInternalJwtHeaders = new WeakMap<
+    Request,
+    PendingInternalJwtHeaders
+  >();
+
+  constructor(
+    private readonly configService: ConfigService,
+    private readonly identityResolver: IdentityResolver,
+    private readonly internalJwtService: InternalJwtService,
+    private readonly internalJwtTargetResolver: InternalJwtTargetResolver,
+    private readonly microServiceRegistry: MicroServiceRegistry,
+  ) {
+    this.timeoutMs = this.configService.get<number>('http.timeout');
     this.proxyClient = this.createProxyClient();
   }
 
-  proxyRequest(req: Request, res: Response, next: NextFunction): void {
+  async proxyRequest(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> {
+    const microService = this.resolveMicroService(req);
+    this.assertSafePath(req, microService);
+    this.stripInboundGatewayHeaders(req);
+    const traceId = this.ensureTraceId(req);
+    const identity = await this.identityResolver.resolve(req, res, req.path);
+    const internalJwtHeaders = this.internalJwtService.sign(
+      identity,
+      this.internalJwtTargetResolver.resolve(microService.name ?? ''),
+      traceId,
+    );
+    this.pendingInternalJwtHeaders.set(req, {
+      [httpHeaders.gatewayJwt]: internalJwtHeaders[httpHeaders.gatewayJwt],
+      [httpHeaders.traceId]: traceId,
+    });
     this.proxyClient(req, res, next);
   }
 
@@ -35,6 +85,8 @@ export class ProxyService {
         ignorePath: false,
         changeOrigin: true,
         selfHandleResponse: true,
+        timeout: this.timeoutMs,
+        proxyTimeout: this.timeoutMs,
         logger: console,
         on: {
           proxyReq: this.handleProxyReq.bind(this),
@@ -46,20 +98,13 @@ export class ProxyService {
     }
   }
 
-  /**
-   * Wrap every successful JSON response into the global envelope
-   * { status, isSuccess, message, code, data } (ADR-002). Binary responses
-   * (pdf/image/octet-stream) and non-2xx errors pass through untouched so the
-   * frontend error handler can read code/message from the raw body.
-   */
   private async wrapEnvelope(
     buffer: Buffer,
     proxyRes: IncomingMessage,
     req: Request,
     res: Response,
   ): Promise<Buffer | string> {
-    const traceId =
-      readHeader(req.headers, httpHeaders.traceId) ?? crypto.randomUUID();
+    const traceId = this.ensureTraceId(req);
     res.setHeader(httpHeaders.traceId, traceId);
     res.setHeader('Referrer-Policy', 'no-referrer');
 
@@ -68,13 +113,15 @@ export class ProxyService {
     const isJson = contentType.includes('application/json');
     const { statusCode } = res;
 
-    if (!isJson || statusCode < 200 || statusCode >= 300) {
+    if (
+      !isJson ||
+      statusCode < HTTP_STATUS_MIN_OK ||
+      statusCode >= HTTP_STATUS_MIN_REDIRECT
+    ) {
       return buffer;
     }
 
     const body = JSON.parse(buffer.toString('utf8') || 'null');
-
-    // Avoid double-wrapping if an upstream service already enveloped.
     if (body && typeof body === 'object' && 'isSuccess' in body) {
       return buffer;
     }
@@ -89,55 +136,94 @@ export class ProxyService {
   }
 
   private resolveTarget(req: Request): string {
-    return this.getCurrentMSOption(req)?.host ?? '';
+    return (
+      this.microServiceRegistry.findByGatewayPrefix(
+        this.extractServicePrefix(req),
+      )?.options?.host ?? ''
+    );
   }
 
-  private getCurrentMSOption(req: Request) {
-    const servicePrefix = this.extractServicePrefix(req);
-    const allMicroServices = this.configService.get('microServices') ?? [];
-    const currentMicroServices = allMicroServices?.find(
-      (mic: any) =>
-        mic?.options?.gatewayPrefix === servicePrefix && mic?.enable,
+  private resolveMicroService(req: Request): MicroServiceConfig {
+    const microService = this.microServiceRegistry.findByGatewayPrefix(
+      this.extractServicePrefix(req),
     );
-    if (currentMicroServices?.options) {
-      return currentMicroServices?.options;
+    if (!microService) {
+      throw new NotFoundException('Service not found');
     }
-    throw new Error(`Service not found`);
+    return microService;
   }
 
   private extractServicePrefix(req: Request): string {
-    const segments = req.path.split('/').filter(Boolean).slice(0, 2);
+    const segments = req.path
+      .split('/')
+      .filter(Boolean)
+      .slice(0, SERVICE_PREFIX_SEGMENTS);
     return `/${segments.join('/')}`;
   }
 
-  private handleProxyReq(proxyReq: any, req: Request & { user?: User }): void {
-    delete req.headers[httpHeaders.authUserId];
-    delete req.headers[httpHeaders.authUserEmail];
-    delete req.headers[httpHeaders.authVerified];
-    delete req.headers[httpHeaders.authUserRoles];
+  private assertSafePath(req: Request, microService: MicroServiceConfig): void {
+    const rawPath = req.path;
+    let decodedPath: string;
+    try {
+      decodedPath = decodeURIComponent(rawPath);
+    } catch {
+      throw new NotFoundException('Invalid request path');
+    }
+    if (decodedPath.split('/').includes('..')) {
+      throw new NotFoundException('Invalid request path');
+    }
 
-    const { user } = req;
+    const rewrittenPath = rawPath.replace(
+      microService.options?.gatewayPrefix ?? '',
+      microService.options?.pathRewrite ?? '',
+    );
+    if (rewrittenPath.startsWith('/internal')) {
+      throw new NotFoundException('Invalid request path');
+    }
+  }
 
-    if (user?.userId) {
-      proxyReq.setHeader(httpHeaders.authUserId, user.userId);
-      proxyReq.setHeader(httpHeaders.authVerified, '1');
-      if (user.email) {
-        proxyReq.setHeader(httpHeaders.authUserEmail, user.email);
+  private stripInboundGatewayHeaders(req: Request): void {
+    Object.keys(req.headers).forEach((headerName) => {
+      if (
+        headerName.startsWith('x-auth-') ||
+        headerName.startsWith('x-gateway-')
+      ) {
+        delete req.headers[headerName];
       }
-      if (Array.isArray(user.roles) && user.roles.length > 0) {
-        proxyReq.setHeader(httpHeaders.authUserRoles, user.roles.join(','));
-      }
-    } else {
-      proxyReq.setHeader(httpHeaders.authVerified, '0');
+    });
+  }
+
+  private ensureTraceId(req: Request): string {
+    const existing = readHeader(req.headers, httpHeaders.traceId);
+    if (existing) {
+      return existing;
+    }
+    const generated = crypto.randomUUID();
+    req.headers[httpHeaders.traceId] = generated;
+    return generated;
+  }
+
+  private handleProxyReq(proxyReq: ClientRequest, req: Request): void {
+    const pending = this.pendingInternalJwtHeaders.get(req);
+    if (pending) {
+      proxyReq.setHeader(
+        httpHeaders.gatewayJwt,
+        pending[httpHeaders.gatewayJwt],
+      );
+      proxyReq.setHeader(httpHeaders.traceId, pending[httpHeaders.traceId]);
     }
 
     fixRequestBody(proxyReq, req);
   }
 
   private rewritePath(path: string, req: Request): string {
-    const MSOptions = this.getCurrentMSOption(req);
-    if (MSOptions?.gatewayPrefix && MSOptions?.pathRewrite) {
-      return path.replace(MSOptions?.gatewayPrefix, MSOptions.pathRewrite);
+    const microService = this.microServiceRegistry.findByGatewayPrefix(
+      this.extractServicePrefix(req),
+    );
+    const gatewayPrefix = microService?.options?.gatewayPrefix;
+    const pathRewrite = microService?.options?.pathRewrite;
+    if (gatewayPrefix && pathRewrite) {
+      return path.replace(gatewayPrefix, pathRewrite);
     }
     return path;
   }

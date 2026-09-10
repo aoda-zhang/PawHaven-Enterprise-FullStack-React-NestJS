@@ -92,3 +92,13 @@ export type {
   CreateStoryDto,
   UpdateStoryDto,
 } from './story.schema';
+export { InternalJwtSchema } from './internal-jwt.schema';
+export {
+  InternalJwtKindValues,
+  InternalJwtKindSchema,
+  InternalJwtKind,
+} from './internal-jwt.schema';
+export type {
+  InternalJwt,
+  AuthenticatedInternalJwt,
+} from './internal-jwt.schema';

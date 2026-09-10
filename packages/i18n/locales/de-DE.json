@@ -395,7 +395,6 @@
     "INVALID_TOKEN": "Ungültiges Zugriffstoken. Bitte melden Sie sich erneut an.",
     "USER_NOT_FOUND": "Benutzer nicht gefunden. Bitte überprüfen Sie den Benutzernamen.",
     "INVALID_PASSWORD": "Falsches Passwort. Bitte versuchen Sie es erneut.",
-    "ACCOUNT_LOCKED": "Ihr Konto wurde gesperrt. Bitte wenden Sie sich an den Support.",
     "PERMISSION_DENIED": "Sie haben keine Berechtigung, diese Aktion auszuführen.",
     "EMAIL_ALREADY_EXISTS": "Die E-Mail ist bereits registriert. Bitte verwenden Sie eine andere E-Mail.",
     "USERNAME_ALREADY_EXISTS": "Der Benutzername existiert bereits. Bitte wählen Sie einen anderen Namen.",
@@ -405,7 +404,6 @@
     "SERVICE_UNAVAILABLE": "Der Dienst ist vorübergehend nicht verfügbar. Bitte versuchen Sie es später erneut.",
     "EXCEEDED_RATE_LIMIT": "Zu viele Anfragen. Bitte versuchen Sie es später erneut.",
     "DUPLICATE_SUBMISSION": "Doppelte Übermittlung. Bitte führen Sie die Aktion nicht erneut aus.",
-    "INVALID_VERIFICATION_CODE": "Der Bestätigungscode ist falsch oder abgelaufen. Bitte fordern Sie einen neuen Code an.",
     "SESSION_EXPIRED": "Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an.",
     "ERR_NETWORK": "Netzwerkfehler, bitte überprüfen Sie Ihre Verbindung und versuchen Sie es erneut.",
     "UNKNOWN_ERROR": "Ein unbekannter Fehler ist aufgetreten. Bitte versuchen Sie es später erneut oder kontaktieren Sie den Support."

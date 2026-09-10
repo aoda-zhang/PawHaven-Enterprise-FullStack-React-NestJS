@@ -4,6 +4,7 @@ import { ZodValidationPipe } from 'nestjs-zod';
 
 import { MiddlewareModule } from '../middlewares/index.module';
 
+import { InternalJwtModule } from './internalJwt/internal-jwt.module';
 import { HttpSuccessInterceptor } from './httpClient/httpInterceptor';
 import { HttpExceptionFilter } from './httpClient/httpExceptionFilter';
 import { SwaggerModule } from './swagger/swagger.module';
@@ -57,7 +58,11 @@ export class SharedModule {
     serviceRoot: string,
     serviceName: string,
   ): Array<Type<any> | DynamicModule> {
-    return [ConfigsModule.forRoot(serviceRoot, serviceName), HttpClientModule];
+    return [
+      ConfigsModule.forRoot(serviceRoot, serviceName),
+      HttpClientModule,
+      InternalJwtModule.forRoot(serviceName),
+    ];
   }
 
   /**

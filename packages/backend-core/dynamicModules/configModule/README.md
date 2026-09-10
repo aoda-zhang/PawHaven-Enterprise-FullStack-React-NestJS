@@ -27,7 +27,7 @@ A dynamic module that:
 The Config module is included by default in SharedModule:
 
 ```typescript
-import { SharedModule } from '@pawhaven/backend-core/dynamicModules/shared.module';
+import { SharedModule } from '@pawhaven/backend-core';
 
 @Module({
   imports: [
@@ -225,7 +225,7 @@ logging:
 # config/production.yaml
 auth:
   # Secret should come from env var in production
-  jwtExpiresIn: 900 # 1 hour for security
+  jwtExpiresIn: 300 # 5 minutes for security
 
 logging:
   level: 'info'

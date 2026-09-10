@@ -1,14 +1,6 @@
-/**
- * Canonical HTTP header names shared by every backend service.
- * Header names are case-insensitive on the wire; the lowercase form is
- * canonical because Node normalizes incoming headers to lowercase.
- */
 export const httpHeaders = {
   traceId: 'x-trace-id',
-  authUserId: 'x-auth-user-id',
-  authUserEmail: 'x-auth-user-email',
-  authVerified: 'x-auth-verified',
-  authUserRoles: 'x-auth-user-roles',
+  gatewayJwt: 'x-gateway-jwt',
   timestamp: 'x-timestamp',
   sign: 'x-sign',
   appSource: 'x-app-source',

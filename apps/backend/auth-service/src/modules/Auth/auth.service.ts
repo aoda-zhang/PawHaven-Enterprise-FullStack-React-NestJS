@@ -9,6 +9,7 @@ import { JwtService } from '@nestjs/jwt';
 import {
   JwtVerifyInfo,
   AuthResponseDto,
+  AuthUser,
   TokenType,
 } from '@pawhaven/shared/types';
 import { isProd } from '@pawhaven/shared/utils';
@@ -398,6 +399,10 @@ export class AuthService {
     );
 
     if (!isRefreshTokenValid) {
+      await this.prisma.user.update({
+        where: { id: user.id },
+        data: { refreshToken: null },
+      });
       throw new UnauthorizedException(
         httpBusinessMappingCodes.invalidRefreshToken,
       );
@@ -445,6 +450,19 @@ export class AuthService {
         email: user.email,
       },
     };
+  }
+
+  async getCurrentUser(userId: string): Promise<AuthUser> {
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      select: { id: true, email: true, deletedAt: true },
+    });
+
+    if (!user || user.deletedAt) {
+      throw new UnauthorizedException(httpBusinessMappingCodes.unauthorized);
+    }
+
+    return { userId: user.id, email: user.email };
   }
 
   /**

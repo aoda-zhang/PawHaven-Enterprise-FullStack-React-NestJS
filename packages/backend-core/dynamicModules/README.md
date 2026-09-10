@@ -57,7 +57,7 @@ SharedModule.forRoot({
 ### 1. Import SharedModule in your service
 
 ```typescript
-import { SharedModule } from '@pawhaven/backend-core/dynamicModules/shared.module';
+import { SharedModule } from '@pawhaven/backend-core';
 
 @Module({
   imports: [

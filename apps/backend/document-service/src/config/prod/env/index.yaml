@@ -36,6 +36,13 @@ cors:
     - GET
     - POST
     - PUT
-    - DELETE
-    - PATCH
     - OPTIONS
+
+internalJwt:
+  enabled: true
+  audience: document-service
+  trustedKeyIds:
+    - document-v1
+  secret: ${INTERNAL_JWT_SECRET_DOCUMENT}
+  ttlSeconds: 45
+  clockSkewSeconds: 30

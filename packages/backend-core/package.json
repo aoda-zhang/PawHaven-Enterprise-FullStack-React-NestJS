@@ -4,44 +4,62 @@
   "version": "1.0.0",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "type": "commonjs",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "default": "./dist/index.js"
+    },
+    "./internal-jwt": {
+      "types": "./dist/internal-jwt/index.d.ts",
+      "require": "./dist/internal-jwt/index.js",
+      "default": "./dist/internal-jwt/index.js"
     },
     "./constants": {
+      "types": "./dist/constants/index.d.ts",
       "require": "./dist/constants/index.js",
-      "types": "./dist/constants/index.d.ts"
+      "default": "./dist/constants/index.js"
     },
     "./decorators": {
+      "types": "./dist/decorators/index.d.ts",
       "require": "./dist/decorators/index.js",
-      "types": "./dist/decorators/index.d.ts"
+      "default": "./dist/decorators/index.js"
     },
     "./middlewares": {
+      "types": "./dist/middlewares/index.d.ts",
       "require": "./dist/middlewares/index.js",
-      "types": "./dist/middlewares/index.d.ts"
+      "default": "./dist/middlewares/index.js"
     },
     "./types": {
+      "types": "./dist/types/index.d.ts",
       "require": "./dist/types/index.js",
-      "types": "./dist/types/index.d.ts"
+      "default": "./dist/types/index.js"
     },
     "./setup": {
+      "types": "./dist/setup/app-setup.d.ts",
       "require": "./dist/setup/app-setup.js",
-      "types": "./dist/setup/app-setup.d.ts"
+      "default": "./dist/setup/app-setup.js"
     },
     "./guards": {
+      "types": "./dist/guards/index.d.ts",
       "require": "./dist/guards/index.js",
-      "types": "./dist/guards/index.d.ts"
+      "default": "./dist/guards/index.js"
     },
     "./utils": {
+      "types": "./dist/utils/index.d.ts",
       "require": "./dist/utils/index.js",
-      "types": "./dist/utils/index.d.ts"
-    }
+      "default": "./dist/utils/index.js"
+    },
+    "./package.json": "./package.json"
   },
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.test.json",
+    "lint": "eslint . --ext .ts --ignore-pattern \"dist/**\"",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@pawhaven/shared": "workspace:*",
@@ -55,6 +73,7 @@
     "dayjs": "^1.11.18",
     "express": "5.2.1",
     "js-yaml": "^4.1.0",
+    "jsonwebtoken": "^9.0.3",
     "uuid": "^8.3.2",
     "zod": "^4.3.6"
   },
@@ -120,6 +139,7 @@
     "@types/express": "^5.0.3",
     "@types/jest": "^30.0.0",
     "@types/js-yaml": "^4.0.9",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^24.7.1",
     "@types/passport-jwt": "^4.0.1",
     "@types/passport-local": "^1.0.38",
@@ -131,6 +151,7 @@
     "ts-loader": "^9.5.4",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.10"
   }
 }

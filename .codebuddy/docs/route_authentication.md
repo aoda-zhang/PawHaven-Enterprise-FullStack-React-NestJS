@@ -19,17 +19,19 @@ flowchart LR
 
     subgraph Backend
         Gateway[API Gateway]
-        RefreshGuard[JWT Refresh Guard]
-        VerifyGuard[JWT Verification Guard]
+        InternalJwtService[InternalJwtService<br/>resolve identity]
         AuthService[Auth Service]
+        GatewayGuard[InternalJwtGuard<br/>verify internal JWT]
     end
 
     Browser --> Router: User visits protected route
     Router --> Guard: Run requireUser loader
     Guard --> Gateway: GET /auth/me (auto Cookie)
-    Gateway --> RefreshGuard: Check access token
-    RefreshGuard --> VerifyGuard: Validate token
-    VerifyGuard --> AuthService: Proxy request
+    Gateway --> InternalJwtService: resolve identity (F1-F4)
+    InternalJwtService --> Gateway: sign internal JWT
+    Gateway --> AuthService: proxy + x-gateway-jwt
+    AuthService --> GatewayGuard: verify internal JWT (default-auth)
+    GatewayGuard --> AuthService: attach req.internalJwt
     AuthService --> Gateway: { userId, email }
     Gateway --> Guard: 200 OK
     Guard --> Router: Authenticated → render children
@@ -91,18 +93,23 @@ const from = searchParams.get(routeSearchParams.redirect) ?? routePaths.home;
 
 Using a search param (instead of location `state`) keeps the target visible in the URL, so it survives refreshes and can be shared.
 
-### Step 4: Backend JWT Verification (Gateway)
+### Step 4: Backend Identity Resolution (Gateway) + Internal-JWT Verification
 
-1. The `/auth/me` request automatically includes the `access_token` httpOnly cookie.
-2. Gateway intercepts the request:
-   - `JwtRefreshGuard` runs first: checks if the access token is missing, invalid, expiring soon, or past the absolute session deadline (30 days from `sessionStartedAt`). If a refresh is needed, it calls `/auth/refresh` (single-flight for concurrent requests); if the refresh is rejected, auth cookies are cleared and the request fails with 401.
-   - `JwtVerificationGuard` runs second: validates the JWT signature and `type: 'access'` claim, checks the session deadline and the jti denylist (revoked on logout), extracts the user payload, and attaches `req.user`.
-3. On success, gateway proxies the request to `AuthService` with `X-Auth-User-Id` and `X-Auth-User-Email` headers.
-4. **After 30 days**, `/auth/me` returns 401 `sessionExpired` regardless of refresh-token validity — `requireUser` redirects to `/auth/login` and the user must authenticate again.
+- **Routing**: the gateway resolves the target downstream service from the request path prefix via `MicroServiceRegistry` (`apps/backend/gateway/src/routing/micro-service.registry.ts`), which reads `microServices[]` from the gateway YAML. For `/auth/me` the prefix `/api/auth` maps to `auth-service`.
 
-### Step 5: Auth Service Verification
+1. The `/auth/me` request automatically includes the `access_token` (and `refresh_token`) httpOnly cookies.
+2. Gateway `InternalJwtService` resolves the caller identity:
+   - No cookies → anonymous identity (F1).
+   - Valid access token (signature, `type: 'access'`, not denylisted, within the 30-day session cap) → authenticated identity; if the token is inside the proactive-refresh window it attempts a rotation (single-flight) without downgrading a still-valid token (F2 / F3-window).
+   - Expired/missing access + valid refresh → calls auth-service `/auth/refresh` (single-flight) and applies the returned Set-Cookie to the response (F3).
+   - Unresolvable cookies (stale/broken) → clears auth cookies and the request fails with 401 — it does NOT silently continue as anonymous (F4).
+3. On success the gateway signs the resolved identity as a compact HS256 internal JWT (`x-gateway-jwt`, `kid` in the JOSE header) with the auth-service key and forwards it.
+4. Auth-service's global `InternalJwtGuard` verifies the JWT (fail closed: decode `kid` allowlist → alg-pinned HS256 + audience + skew → zod parse → lifetime cap → future-`iat`). `/auth/me` is a default-authenticated route, so an anonymous identity is rejected with 401 here.
+5. **After 30 days**, `/auth/me` returns 401 `sessionExpired` regardless of refresh-token validity — `requireUser` redirects to `/auth/login` and the user must authenticate again.
 
-`AuthService.getMe()` reads the `access_token` cookie directly from the request, verifies it, and returns `{ userId, email }`. The gateway already validated the token signature, so this endpoint just retrieves the user payload.
+### Step 5: Auth Service `/me` Handler
+
+`AuthController.me()` injects the verified identity with `@InternalJwt() claims: AuthenticatedInternalJwt` and returns `this.authService.getCurrentUser(claims.sub)` — a DB read that resolves `{ userId, email }` from the user row and 401s when the user is missing or soft-deleted. The auth-service no longer reads or verifies the access cookie itself for `/me` — the gateway's `InternalJwtService` already resolved the browser session and the global guard verified the signature. A user deleted after their token was issued therefore gets a 401 here instead of a stale profile.
 
 ### Step 6: Dispatch & Render
 

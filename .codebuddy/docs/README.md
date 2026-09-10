@@ -16,11 +16,11 @@
 
 ## 2. System Architecture
 
-| File                                                                                   | Description                                                                                               |
-| -------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| [PawHaven-System-Architecture.md](./PawHaven-System-Architecture.md)                   | System architecture design v2.0 — service decomposition, modular monolith, deployment topology, data flow |
-| [PawHaven-System-Architecture-Overview.md](./PawHaven-System-Architecture-Overview.md) | System architecture v3.0 — 5 services, API gateway routing, event catalog, data architecture              |
-| [ADR/](./ADR/)                                                                         | Architecture Decision Records — why decisions were made, not just what was decided                        |
+| File                                                                                   | Description                                                                                                      |
+| -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| [PawHaven-System-Architecture.md](./PawHaven-System-Architecture.md)                   | System architecture design v3.3 — service decomposition, modular monolith, deployment topology, data flow        |
+| [PawHaven-System-Architecture-Overview.md](./PawHaven-System-Architecture-Overview.md) | System architecture v3.3 — 5 services, API gateway routing (internal-JWT auth), event catalog, data architecture |
+| [ADR/](./ADR/)                                                                         | Architecture Decision Records — why decisions were made, not just what was decided                               |
 
 **Key contents**: Monorepo structure (`apps/backend/*` + `apps/frontend/*` + `packages/*` + `libs/*`), pragmatic service decomposition philosophy, modular monolith design inside core-service, API Gateway routing rules, inter-service communication patterns.
 
@@ -52,12 +52,12 @@
 
 ## 5. Authentication
 
-| File                                                               | Description                                                                                                              |
-| ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
-| [authentication-architecture.md](./authentication-architecture.md) | Auth architecture overview — Cookie-based JWT flow, Gateway JWT Guard, Token Refresh mechanism, microservice trust chain |
-| [route_authentication.md](./route_authentication.md)               | Frontend route-level auth — RequireAuth component, `/auth/me` verification flow, public route declaration                |
+| File                                                               | Description                                                                                                                  |
+| ------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------- |
+| [authentication-architecture.md](./authentication-architecture.md) | Auth architecture — gateway-owned cookie JWT, HS256 internal-JWT (InternalJwt) trust chain, token refresh, downstream policy |
+| [route_authentication.md](./route_authentication.md)               | Frontend route-level auth — authenticated parent route (`requireUser` loader), `/auth/me` verification flow                  |
 
-**Key contents**: `gateway` unified JWT verification + proactive refresh, `auth-service` handles issuing/rotation, `httpOnly` cookie security strategy, frontend obtains user identity via gateway-injected headers.
+**Key contents**: `gateway` is the sole JWT owner (InternalJwtService identity resolution + proactive refresh), `auth-service` issues/rotates tokens, downstream services verify the HS256 internal-JWT claims (`x-gateway-jwt`) via the global InternalJwtGuard, frontend reads its profile from `/auth/me`.
 
 ---
 
@@ -94,7 +94,7 @@
 
 | File                                          | Description                                                                                                        |
 | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| [pawhaven.md](./agents/pawhaven.md)           | AI Agent orchestration rules — complexity classification, workflow selection, agent dispatch, operating principles |
+| [pawhaven.md](../agents/pawhaven.md)          | AI Agent orchestration rules — complexity classification, workflow selection, agent dispatch, operating principles |
 | [README.MD](../README.MD)                     | Project README (English) — see also `.codebuddy/README.md` for .codebuddy-specific docs                            |
 | [READMECN.MD](../READMECN.MD)                 | Project README (中文)                                                                                              |
 | [package.json](../package.json)               | Monorepo root config (pnpm workspace)                                                                              |

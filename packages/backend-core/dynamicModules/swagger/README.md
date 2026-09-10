@@ -34,8 +34,7 @@ Service that:
 Enable Swagger in your service:
 
 ```typescript
-import { SharedModule } from '@pawhaven/backend-core/dynamicModules/shared.module';
-import { SharedModuleFeatures } from '@pawhaven/backend-core/dynamicModules/sharedModule.type';
+import { SharedModule, SharedModuleFeatures } from '@pawhaven/backend-core';
 
 @Module({
   imports: [

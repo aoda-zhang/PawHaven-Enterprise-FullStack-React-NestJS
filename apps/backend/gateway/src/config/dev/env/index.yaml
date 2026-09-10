@@ -16,8 +16,13 @@ swagger:
 auth:
   jwtSecret: ${JWT_SECRET}
   jwtClockTolerance: 30
-  jwtRefreshFallbackSeconds: 300
+  jwtRefreshFallbackSeconds: 60
   jwtRefreshWindowPercentage: 0.2
+
+internalJwt:
+  enabled: false
+  ttlSeconds: 45
+  clockSkewSeconds: 30
 
 DBConnections:
   - enable: true
@@ -33,6 +38,9 @@ microServices:
       port: 8081
       gatewayPrefix: /api/core
       pathRewrite: /core-service
+      internalJwt:
+        keyId: core-v1
+        secret: ${INTERNAL_JWT_SECRET_CORE}
   - name: auth-service
     enable: true
     options:
@@ -40,6 +48,9 @@ microServices:
       port: 8082
       gatewayPrefix: /api/auth
       pathRewrite: /auth-service
+      internalJwt:
+        keyId: auth-v1
+        secret: ${INTERNAL_JWT_SECRET_AUTH}
   - name: document-service
     enable: true
     options:
@@ -47,6 +58,9 @@ microServices:
       port: 8083
       gatewayPrefix: /api/document
       pathRewrite: /document-service
+      internalJwt:
+        keyId: document-v1
+        secret: ${INTERNAL_JWT_SECRET_DOCUMENT}
 
 cors:
   allowedHeaders:
@@ -65,6 +79,4 @@ cors:
     - GET
     - POST
     - PUT
-    - DELETE
-    - PATCH
     - OPTIONS

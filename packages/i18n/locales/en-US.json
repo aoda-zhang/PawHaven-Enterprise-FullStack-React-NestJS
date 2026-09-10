@@ -395,7 +395,6 @@
     "INVALID_TOKEN": "Invalid access token. Please log in again.",
     "USER_NOT_FOUND": "User not found. Please check the username.",
     "INVALID_PASSWORD": "Incorrect password. Please try again.",
-    "ACCOUNT_LOCKED": "Your account has been locked. Please contact support.",
     "PERMISSION_DENIED": "You do not have permission to perform this action.",
     "EMAIL_ALREADY_EXISTS": "The email is already registered. Please use another email.",
     "USERNAME_ALREADY_EXISTS": "The username already exists. Please choose another username.",
@@ -405,7 +404,6 @@
     "SERVICE_UNAVAILABLE": "The service is temporarily unavailable. Please try again later.",
     "EXCEEDED_RATE_LIMIT": "Too many requests. Please try again later.",
     "DUPLICATE_SUBMISSION": "Duplicate submission. Please do not repeat the operation.",
-    "INVALID_VERIFICATION_CODE": "The verification code is incorrect or has expired. Please request a new one.",
     "SESSION_EXPIRED": "Your session has expired. Please log in again.",
     "ERR_NETWORK": "Network error, please check your connection and try again.",
     "UNKNOWN_ERROR": "An unknown error occurred. Please try again later or contact support."

@@ -85,7 +85,7 @@ PawHaven 是一个开放且持续发展的项目，欢迎对动物救援、开�
 | 文档                                                                   | 说明                     |
 | ---------------------------------------------------------------------- | ------------------------ |
 | [Monorepo 与项目规范](./.codebuddy/docs/project_standards.md)          | 编码规范、工具链、工作流 |
-| [身份认证与授权架构](./.codebuddy/docs/authentication-architecture.md) | JWT 认证流程与 RBAC 设计 |
+| [身份认证与授权架构](./.codebuddy/docs/authentication-architecture.md) | 网关持有的 Cookie JWT + 内部 HS256 JWT（InternalJwt）服务认证，RBAC 设计 |
 | [路由级认证](./.codebuddy/docs/route_authentication.md)                | 前端路由守卫实现         |
 
 ---

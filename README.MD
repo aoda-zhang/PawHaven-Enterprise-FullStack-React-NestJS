@@ -88,7 +88,7 @@ Detailed documentation can be found in the [`.codebuddy/docs`](./.codebuddy/docs
 | Document                                                                                        | Description                            |
 | ----------------------------------------------------------------------------------------------- | -------------------------------------- |
 | [Monorepo & Project Standards](./.codebuddy/docs/project_standards.md)                          | Coding conventions, tooling, workflows |
-| [Authentication & Authorization Architecture](./.codebuddy/docs/authentication-architecture.md) | JWT-based auth flow and RBAC design    |
+| [Authentication & Authorization Architecture](./.codebuddy/docs/authentication-architecture.md) | Gateway-owned cookie JWT + internal HS256-JWT (InternalJwt) service auth, RBAC design |
 | [Route-Level Authentication](./.codebuddy/docs/route_authentication.md)                         | Frontend route guard implementation    |
 
 ---

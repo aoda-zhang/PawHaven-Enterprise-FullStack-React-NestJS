@@ -36,6 +36,13 @@ cors:
     - GET
     - POST
     - PUT
-    - DELETE
-    - PATCH
     - OPTIONS
+
+internalJwt:
+  enabled: true
+  audience: core-service
+  trustedKeyIds:
+    - core-v1
+  secret: ${INTERNAL_JWT_SECRET_CORE}
+  ttlSeconds: 45
+  clockSkewSeconds: 30
