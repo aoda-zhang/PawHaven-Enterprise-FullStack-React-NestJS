@@ -14,7 +14,8 @@ import type {
   SessionDto,
 } from '@pawhaven/shared/types';
 import { httpBusinessMappingCodes } from '@pawhaven/backend-core/constants';
-import { InternalJwt, Public } from '@pawhaven/backend-core/decorators';
+import { Public } from '@pawhaven/backend-core/decorators';
+import { InternalJwt } from '@pawhaven/backend-core/internal-jwt';
 
 import { LoginDTO } from './dtos/login.dto';
 import { RegisterDTO } from './dtos/register.dto';

@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
-import { InternalJwt } from '@pawhaven/backend-core/decorators';
+import { InternalJwt } from '@pawhaven/backend-core/internal-jwt';
 import type {
   AnimalReportDto,
   AuthenticatedInternalJwt,

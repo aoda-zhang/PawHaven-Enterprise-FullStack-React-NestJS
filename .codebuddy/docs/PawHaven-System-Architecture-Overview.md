@@ -1,6 +1,6 @@
 # PawHaven — System Architecture Overview
 
-> **Version**: v3.3 | **Date**: 2026-09-08
+> **Version**: v3.4 | **Date**: 2026-09-10
 > **Design Philosophy**: Pragmatic service decomposition. Modular monolith inside core-service. Extract only when necessary.
 >
 > **Related Docs**: [Frontend Architecture](./PawHaven-Frontend-Architecture.md) | [Backend Architecture](./PawHaven-Backend-Architecture.md) | [Authentication Architecture](./authentication-architecture.md)
@@ -473,14 +473,14 @@ export const RescueStatusChangedEventSchema = z.object({
 
 ### 7.2 What Goes Where
 
-| Package                   | Contains                                                                                                                                           | Must NOT Contain                                   |
-| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
-| `@pawhaven/shared`        | Zod schemas, TypeScript types, constants, event definitions, pure utility functions                                                                | React code, backend framework code, database logic |
-| `@pawhaven/backend-core`  | SharedModule, PrismaModule, HttpClientModule, shared app bootstrap (`setupApp` via `./setup`), decorators, guards, interceptors, Prisma extensions | Business logic, domain entities                    |
-| `@pawhaven/frontend-core` | React hooks, API client, storage utilities, lazy loading helpers                                                                                   | Business-specific components                       |
-| `@pawhaven/design-system` | CSS tokens, Tailwind theme, theme configuration, CSS utilities                                                                                     | React components                                   |
-| `@pawhaven/ui`            | Reusable React components (Form\*, Loading, Toast, etc.)                                                                                           | Business logic, API calls                          |
-| `@pawhaven/i18n`          | Translation provider, locale files, language detection                                                                                             | Business content                                   |
+| Package                   | Contains                                                                                                                                                                                            | Must NOT Contain                                   |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
+| `@pawhaven/shared`        | Zod schemas, TypeScript types, constants, event definitions, pure utility functions                                                                                                                 | React code, backend framework code, database logic |
+| `@pawhaven/backend-core`  | SharedModule, PrismaModule, HttpClientModule, shared app bootstrap (`setupApp` via `./setup`), decorators, interceptors, Prisma extensions, the internal-JWT module (`dynamicModules/internalJwt/`) | Business logic, domain entities                    |
+| `@pawhaven/frontend-core` | React hooks, API client, storage utilities, lazy loading helpers                                                                                                                                    | Business-specific components                       |
+| `@pawhaven/design-system` | CSS tokens, Tailwind theme, theme configuration, CSS utilities                                                                                                                                      | React components                                   |
+| `@pawhaven/ui`            | Reusable React components (Form\*, Loading, Toast, etc.)                                                                                                                                            | Business logic, API calls                          |
+| `@pawhaven/i18n`          | Translation provider, locale files, language detection                                                                                                                                              | Business content                                   |
 
 ---
 

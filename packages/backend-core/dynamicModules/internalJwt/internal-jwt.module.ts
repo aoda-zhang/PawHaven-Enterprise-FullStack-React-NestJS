@@ -7,7 +7,7 @@ import * as yaml from 'js-yaml';
 import { getRuntimeEnv, resolveAppConfig } from '@pawhaven/shared/utils';
 import type { RuntimeEnvType } from '@pawhaven/shared';
 
-import { InternalJwtGuard } from '../../guards/internal-jwt.guard';
+import { InternalJwtGuard } from './internal-jwt.guard';
 
 type InternalJwtConfigFile = {
   internalJwt?: { enabled?: boolean };

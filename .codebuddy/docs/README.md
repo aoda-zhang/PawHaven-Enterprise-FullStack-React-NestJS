@@ -18,8 +18,8 @@
 
 | File                                                                                   | Description                                                                                                      |
 | -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| [PawHaven-System-Architecture.md](./PawHaven-System-Architecture.md)                   | System architecture design v3.3 — service decomposition, modular monolith, deployment topology, data flow        |
-| [PawHaven-System-Architecture-Overview.md](./PawHaven-System-Architecture-Overview.md) | System architecture v3.3 — 5 services, API gateway routing (internal-JWT auth), event catalog, data architecture |
+| [PawHaven-System-Architecture.md](./PawHaven-System-Architecture.md)                   | System architecture design v3.4 — service decomposition, modular monolith, deployment topology, data flow        |
+| [PawHaven-System-Architecture-Overview.md](./PawHaven-System-Architecture-Overview.md) | System architecture v3.4 — 5 services, API gateway routing (internal-JWT auth), event catalog, data architecture |
 | [ADR/](./ADR/)                                                                         | Architecture Decision Records — why decisions were made, not just what was decided                               |
 
 **Key contents**: Monorepo structure (`apps/backend/*` + `apps/frontend/*` + `packages/*` + `libs/*`), pragmatic service decomposition philosophy, modular monolith design inside core-service, API Gateway routing rules, inter-service communication patterns.

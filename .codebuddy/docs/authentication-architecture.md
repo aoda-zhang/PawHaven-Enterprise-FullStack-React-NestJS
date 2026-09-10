@@ -1,7 +1,7 @@
 # Authentication and Authorization Architecture
 
-> **Version**: v1.2 | **Date**: 2026-09-08
-> **Related Docs**: [Route Authentication](./route_authentication.md) | [ADR-006: Internal JWT (HS256)](./ADR/ADR-006-internal-jwt-hs256.md) | [ADR-005: Gateway→Downstream Signed-Actor Auth (superseded)](./ADR/ADR-005-gateway-downstream-signed-actor-auth.md)
+> **Version**: v1.3 | **Date**: 2026-09-10
+> **Related Docs**: [Route Authentication](./route_authentication.md) | [ADR-007: backend-core internal-JWT module boundary](./ADR/ADR-007-backend-core-internal-jwt-module-boundary.md) | [ADR-006: Internal JWT (HS256)](./ADR/ADR-006-internal-jwt-hs256.md) | [ADR-005: Gateway→Downstream Signed-Actor Auth (superseded)](./ADR/ADR-005-gateway-downstream-signed-actor-auth.md)
 
 ## Overview
 
@@ -18,7 +18,7 @@ PawHaven uses a cookie-based JWT authentication system. The trust model is split
 - API Gateway: sole owner of browser JWT/cookies; resolves identity, refreshes tokens, signs and forwards the internal JWT; allowlisted reverse proxy.
 - Auth Service: validates credentials, issues tokens, rotates refresh tokens; consumes the signed internal JWT.
 - Domain Services (core/document): consume the signed internal JWT via the global guard + the `@InternalJwt()` param decorator.
-- `@pawhaven/backend-core`: shared `InternalJwtGuard`, decorators, `internal-jwt/` JWT sign/verify (`jsonwebtoken@^9`), and `InternalJwtModule` (folded into `SharedModule` defaults, config-driven).
+- `@pawhaven/backend-core`: the internal-JWT concern is a single flat folder `dynamicModules/internalJwt/` — `InternalJwtGuard`, the `@InternalJwt()` decorator, JWT sign/verify (`jsonwebtoken@^9`), and `InternalJwtModule` (folded into `SharedModule` defaults, config-driven); the auth-mode annotations (`@Public`/`@OptionalAuth`/`@SkipGatewayAuth`, `auth-mode.decorator.ts`) stay in `decorators/`.
 
 ## Trust Model: Internal JWT
 
@@ -239,7 +239,7 @@ Refresh single-flight and logout jti denylist live in the gateway only (in-memor
 
 ## Downstream Enforcement (InternalJwtGuard)
 
-The global guard (`packages/backend-core/guards/internal-jwt.guard.ts`) is registered through `InternalJwtModule`, which is part of the `SharedModule.forRoot` default modules and is config-driven:
+The global guard (`packages/backend-core/dynamicModules/internalJwt/internal-jwt.guard.ts`) is registered through `InternalJwtModule`, which is part of the `SharedModule.forRoot` default modules and is config-driven:
 
 - Service YAML `internalJwt.enabled: true` → `APP_GUARD InternalJwtGuard` is registered and construction validates the config fail-closed.
 - `internalJwt.enabled` absent/`false` → no guard (the gateway itself runs this way).
@@ -319,12 +319,14 @@ Env placeholders (gateway + one per downstream service): `INTERNAL_JWT_SECRET_CO
 - GET read endpoints use `@OptionalAuth()` (guest browsing); write endpoints are default-authenticated.
 - **Do not verify browser JWTs** — they verify the gateway-signed internal JWT and trust the gateway for browser sessions.
 
-### Decorators (`packages/backend-core/decorators`)
+### Decorators (`packages/backend-core/decorators` + `dynamicModules/internalJwt/`)
 
-- `@InternalJwt()` — parameter; injects the verified claims. Default mode requires `kind === 'authenticated'`; a missing identity → 401 `E4005`. `@InternalJwt({ allowAnonymous: true })` returns claims for `@OptionalAuth()` routes too, anonymous kind included. The return is non-optional, so handlers write no null check. `InternalJwt` is both the decorator and the type (declaration merging), so one import covers `@InternalJwt() claims: InternalJwt`; handlers that need `sub` narrow to `AuthenticatedInternalJwt`.
-- `@Public()` — method/class; any signed identity kind allowed.
-- `@OptionalAuth()` — method/class; any signed identity kind allowed (handler can branch on `claims.kind`).
-- `@SkipGatewayAuth()` — bypasses verification entirely; reserved (e.g. health), no consumer yet.
+- `@InternalJwt()` — parameter; injects the verified claims. It belongs to the internal-JWT concern and lives at `dynamicModules/internalJwt/internal-jwt.decorator.ts`, exported from `@pawhaven/backend-core/internal-jwt`. Default mode requires `kind === 'authenticated'`; a missing identity → 401 `E4005`. `@InternalJwt({ allowAnonymous: true })` returns claims for `@OptionalAuth()` routes too, anonymous kind included. The return is non-optional, so handlers write no null check. `InternalJwt` is both the decorator and the type (declaration merging), so one import covers `@InternalJwt() claims: InternalJwt`; handlers that need `sub` narrow to `AuthenticatedInternalJwt`.
+- `@Public()` — method/class; any signed identity kind allowed. Exported from `@pawhaven/backend-core/decorators`.
+- `@OptionalAuth()` — method/class; any signed identity kind allowed (handler can branch on `claims.kind`). Exported from `@pawhaven/backend-core/decorators`.
+- `@SkipGatewayAuth()` — bypasses verification entirely; reserved (e.g. health), no consumer yet. Exported from `@pawhaven/backend-core/decorators`.
+
+Endpoint-policy annotations stay in `decorators/` (`auth-mode.decorator.ts`) because `Public`/`OptionalAuth`/`AuthMetadataKey` are a distinct annotation concern; claims injection is imported from the internal-JWT subpath. See [ADR-007](./ADR/ADR-007-backend-core-internal-jwt-module-boundary.md).
 
 ### InternalJwtGuard
 

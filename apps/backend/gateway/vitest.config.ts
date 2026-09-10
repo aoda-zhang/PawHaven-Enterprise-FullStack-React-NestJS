@@ -18,7 +18,10 @@ export default defineConfig({
       },
       {
         find: /^@pawhaven\/backend-core\/internal-jwt$/,
-        replacement: resolve(backendCoreRoot, 'internal-jwt/index.ts'),
+        replacement: resolve(
+          backendCoreRoot,
+          'dynamicModules/internalJwt/index.ts',
+        ),
       },
       {
         find: /^@pawhaven\/backend-core\/constants$/,
@@ -27,10 +30,6 @@ export default defineConfig({
       {
         find: /^@pawhaven\/backend-core\/decorators$/,
         replacement: resolve(backendCoreRoot, 'decorators/index.ts'),
-      },
-      {
-        find: /^@pawhaven\/backend-core\/guards$/,
-        replacement: resolve(backendCoreRoot, 'guards/index.ts'),
       },
       {
         find: /^@pawhaven\/backend-core\/middlewares$/,

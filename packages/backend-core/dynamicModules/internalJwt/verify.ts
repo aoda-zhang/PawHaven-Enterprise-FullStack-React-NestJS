@@ -9,8 +9,8 @@ import {
 } from 'jsonwebtoken';
 import { InternalJwtSchema, type InternalJwt } from '@pawhaven/shared/types';
 
-import { httpHeaders } from '../constants/httpHeaders';
-import { readHeader } from '../utils/readHeader';
+import { httpHeaders } from '../../constants/httpHeaders';
+import { readHeader } from '../../utils/readHeader';
 
 import {
   InternalJwtVerificationError,

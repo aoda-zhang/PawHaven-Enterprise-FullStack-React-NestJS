@@ -1,7 +1,7 @@
 import { sign } from 'jsonwebtoken';
 import type { InternalJwt } from '@pawhaven/shared/types';
 
-import { httpHeaders } from '../constants/httpHeaders';
+import { httpHeaders } from '../../constants/httpHeaders';
 
 export type InternalJwtHeaders = {
   [httpHeaders.gatewayJwt]: string;

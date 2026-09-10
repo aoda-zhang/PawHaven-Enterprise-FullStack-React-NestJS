@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Param, Query, Body, Res } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
-import { InternalJwt, OptionalAuth } from '@pawhaven/backend-core/decorators';
+import { OptionalAuth } from '@pawhaven/backend-core/decorators';
+import { InternalJwt } from '@pawhaven/backend-core/internal-jwt';
 import type { AuthenticatedInternalJwt } from '@pawhaven/shared/types';
 import type { Response } from 'express';
 

@@ -47,6 +47,7 @@ SharedModule.forRoot({
 
 - `configModule/` — Dynamic configuration module for loading and providing config values from environment or files.
 - `httpClient/` — HTTP client module, interceptors, and exception filters. Provides outbound HTTP utilities and global error formatting.
+- `internalJwt/` — The internal-JWT concern, kept as one flat folder: `sign.ts`/`verify.ts` (HS256, `jsonwebtoken`), `errors.ts`, `internal-jwt.types.ts`, `InternalJwtGuard`, the `@InternalJwt()` decorator, and `InternalJwtModule` (registered through `SharedModule.forRoot` defaults, `internalJwt.enabled`-driven). Public surface: `index.ts` (the `@pawhaven/backend-core/internal-jwt` subpath). Endpoint-policy annotations (`@Public` / `@OptionalAuth` / `@SkipGatewayAuth`) stay in `../decorators/`.
 - `prisma/` — Dynamic Prisma module for database access, supporting per-service configuration.
 - `swagger/` — Swagger module for API documentation, auto-generates OpenAPI docs for your service.
 - `shared.module.ts` — The main entry point for importing predefined shared modules. Handles dynamic assembly of infrastructure modules.
@@ -75,11 +76,11 @@ import { SharedModule } from '@pawhaven/backend-core';
 export class AppModule {}
 ```
 
-### 2. JWT Authentication
+### 2. Internal JWT Authentication
 
-- The JWT guard and strategy are registered globally. Use `@UseGuards(AuthGuard('jwt'))` for per-route protection, or rely on the global guard for all routes.
-- Configure your JWT secret and expiration in your config files (e.g., `.env`, config service). The strategy will throw an error if the secret is missing.
-- The guard will automatically extract the user from the token and attach it to the request object.
+- `InternalJwtModule.forRoot(serviceName)` is a `SharedModule.forRoot` default: with `internalJwt.enabled: true` in the service YAML it registers the global `InternalJwtGuard` (fail closed at boot if the config is missing); with the flag absent or `false` no guard is registered.
+- Handlers read the verified claims through the `@InternalJwt()` param decorator, imported from `@pawhaven/backend-core/internal-jwt` — never from request headers.
+- Endpoint policy uses the annotations from `@pawhaven/backend-core/decorators`: `@Public()` / `@OptionalAuth()` allow an anonymous identity, the default (no decorator) requires an authenticated one, and `@SkipGatewayAuth()` bypasses the guard entirely (reserved).
 
 ### 3. Add New Dynamic Modules or Providers
 

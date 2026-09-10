@@ -5,8 +5,9 @@ import {
 } from '@nestjs/common';
 import { InternalJwtKind } from '@pawhaven/shared/types';
 
-import { httpBusinessMappingCodes } from '../constants';
-import type { InternalJwtRequest } from '../types/internal-jwt.types';
+import { httpBusinessMappingCodes } from '../../constants';
+
+import type { InternalJwtRequest } from './internal-jwt.types';
 
 type InternalJwtDecoratorOptions = {
   allowAnonymous?: boolean;

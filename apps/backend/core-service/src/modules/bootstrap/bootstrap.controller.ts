@@ -1,9 +1,7 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import {
-  InternalJwt as InternalJwtParam,
-  OptionalAuth,
-} from '@pawhaven/backend-core/decorators';
+import { OptionalAuth } from '@pawhaven/backend-core/decorators';
+import { InternalJwt as InternalJwtParam } from '@pawhaven/backend-core/internal-jwt';
 import {
   InternalJwtKind,
   type BootstrapData,

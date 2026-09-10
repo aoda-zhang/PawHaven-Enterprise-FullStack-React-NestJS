@@ -1,6 +1,6 @@
 # PawHaven — Backend Architecture
 
-> **Version**: v3.3 | **Date**: 2026-09-08
+> **Version**: v3.4 | **Date**: 2026-09-10
 > **Related Docs**: [System Architecture Overview](./PawHaven-System-Architecture-Overview.md) | [Frontend Architecture](./PawHaven-Frontend-Architecture.md)
 
 ---
@@ -454,11 +454,11 @@ echo "✅ Module boundaries clean"
 
 ### 5.4 Validation & Shared
 
-| Category          | Technology             | Notes                                                                 |
-| ----------------- | ---------------------- | --------------------------------------------------------------------- |
-| **Validation**    | Zod + nestjs-zod       | Schemas in @pawhaven/shared                                           |
-| **Shared Kernel** | @pawhaven/shared       | Types, constants, event schemas                                       |
-| **Backend Core**  | @pawhaven/backend-core | SharedModule, PrismaModule, guards, shared app bootstrap (`setupApp`) |
+| Category          | Technology             | Notes                                                                                                                                    |
+| ----------------- | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| **Validation**    | Zod + nestjs-zod       | Schemas in @pawhaven/shared                                                                                                              |
+| **Shared Kernel** | @pawhaven/shared       | Types, constants, event schemas                                                                                                          |
+| **Backend Core**  | @pawhaven/backend-core | SharedModule, PrismaModule, `dynamicModules/` (incl. `internalJwt/` — guard, decorators, sign/verify), shared app bootstrap (`setupApp`) |
 
 All services share one bootstrap: `NestFactory.create(AppModule, { bodyParser: false })` then
 `setupApp(app)` from `@pawhaven/backend-core/setup`, which applies the body-size limit
