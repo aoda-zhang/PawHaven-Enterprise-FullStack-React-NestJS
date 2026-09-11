@@ -18,7 +18,7 @@
 8. **Do NOT write test files unless explicitly requested by the user.**
 9. **Figma mock data belongs in each feature's own `mockData.ts` file.** NEVER put mock data in the design-system package; each feature owns its demo data under `src/features/<FeatureName>/mockData.ts`. This will be removed when real API integration happens.
 10. **ALWAYS trigger code-review after testing passes.**
-11. **ALWAYS check if knowledge docs need updating** when architecture changes or new ADRs are created.
+11. **ALWAYS check if knowledge docs need updating** when architecture changes — update the living docs in `.codebuddy/docs/`; no ADR records.
 12. **NEVER modify `.codebuddy/agents/` or `.codebuddy/docs/` directly.** Use `knowledge-update` agent.
 13. **NEVER parallelize features with cross-dependencies.** Default to sequential.
 14. **NEVER read domain-specific docs** (Frontend-Architecture, Backend-Architecture, figma-design-spec). Subagents own those.

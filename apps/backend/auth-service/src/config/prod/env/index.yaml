@@ -36,13 +36,20 @@ cors:
     - GET
     - POST
     - PUT
-    - DELETE
-    - PATCH
     - OPTIONS
 
 auth:
   jwtSecret: ${JWT_SECRET}
-  jwtExpiresIn: 900
+  jwtExpiresIn: 180
   refreshTokenExpiresIn: 604800
   sessionExpiresIn: 2592000
   refreshTokenRotationWindowSeconds: 86400
+
+internalJwt:
+  enabled: true
+  audience: auth-service
+  trustedKeyIds:
+    - auth-v1
+  secret: ${INTERNAL_JWT_SECRET_AUTH}
+  ttlSeconds: 45
+  clockSkewSeconds: 30

@@ -16,6 +16,7 @@ export class HttpSuccessInterceptor<T> implements NestInterceptor<T, any> {
           status: 200,
           isSuccess: true,
           message: 'Request successful',
+          code: 'OK',
           data,
         };
       }),

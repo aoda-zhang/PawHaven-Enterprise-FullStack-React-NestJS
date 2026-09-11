@@ -1,5 +1,6 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { OptionalAuth } from '@pawhaven/backend-core/decorators';
 
 import { AdoptionService } from './adoption.service';
 
@@ -8,6 +9,7 @@ import { AdoptionService } from './adoption.service';
 export class AdoptionController {
   constructor(private readonly adoptionService: AdoptionService) {}
 
+  @OptionalAuth()
   @Get()
   @ApiOperation({
     summary:
@@ -20,6 +22,7 @@ export class AdoptionController {
     );
   }
 
+  @OptionalAuth()
   @Get(':id')
   @ApiOperation({ summary: 'Get adoptable pet by ID' })
   findOne(@Param('id') id: string) {

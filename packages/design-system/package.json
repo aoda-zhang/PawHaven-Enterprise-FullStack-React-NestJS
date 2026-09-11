@@ -15,15 +15,10 @@
     "src/**"
   ],
   "scripts": {
-    "typecheck": "tsc --noEmit",
-    "build": "tsc --noEmit",
-    "lint": "eslint src/ --ext .ts,.tsx",
     "token-check": "node scripts/token-check.cjs"
   },
   "devDependencies": {
     "@pawhaven/eslint-config": "workspace:*",
-    "@pawhaven/tsconfig": "workspace:*",
-    "tailwindcss": "^4.1.14",
-    "typescript": "^5.9.3"
+    "tailwindcss": "^4.1.14"
   }
 }

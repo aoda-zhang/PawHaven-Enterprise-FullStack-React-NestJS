@@ -1,48 +1,15 @@
 import { Module } from '@nestjs/common';
-import { APP_GUARD } from '@nestjs/core';
-import { JwtModule } from '@nestjs/jwt';
-import { HttpModule } from '@nestjs/axios';
-import { ConfigService } from '@nestjs/config';
 
-import { JwtRefreshGuard } from '../guards/jwt-refresh.guard';
-import { JwtVerificationGuard } from '../guards/jwt-verification.guard';
+import { IdentityModule } from '../identity/identity.module';
+import { GatewayInternalJwtModule } from '../internal-jwt/internal-jwt.module';
+import { RoutingModule } from '../routing/routing.module';
 
-import { ProtectedProxyController } from './protected-proxy.controller';
-import { PublicProxyController } from './public-proxy.controller';
 import { ProxyService } from './proxy.service';
+import { ProxyController } from './proxy.controller';
 
 @Module({
-  imports: [
-    HttpModule,
-    JwtModule.registerAsync({
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => {
-        const secret = configService.get<string>('auth.jwtSecret');
-        if (!secret) {
-          throw new Error('Gateway JWT secret is not configured');
-        }
-        return {
-          secret,
-          verifyOptions: {
-            clockTolerance: configService.getOrThrow<number>(
-              'auth.jwtClockTolerance',
-            ),
-          },
-        };
-      },
-    }),
-  ],
-  controllers: [PublicProxyController, ProtectedProxyController],
-  providers: [
-    ProxyService,
-    {
-      provide: APP_GUARD,
-      useClass: JwtRefreshGuard,
-    },
-    {
-      provide: APP_GUARD,
-      useClass: JwtVerificationGuard,
-    },
-  ],
+  imports: [RoutingModule, IdentityModule, GatewayInternalJwtModule],
+  controllers: [ProxyController],
+  providers: [ProxyService],
 })
 export class ProxyModule {}

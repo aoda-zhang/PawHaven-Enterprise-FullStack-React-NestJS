@@ -66,11 +66,9 @@ export type TokenType = z.infer<typeof TokenTypeSchema>;
  * JWT Verify Info Schema
  * Claims carried by both access and refresh tokens:
  * - type: token kind ('access' | 'refresh') — enforced at every verification point
- * - jti: unique token id, used for revocation (logout denylist)
  */
 export const JwtVerifyInfoSchema = UserSchema.extend({
   type: TokenTypeSchema.optional(),
-  jti: z.string().optional(),
   iat: z.number().optional(),
   exp: z.number().optional(),
   sessionStartedAt: z.number().optional(),

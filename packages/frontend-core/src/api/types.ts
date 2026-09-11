@@ -50,8 +50,3 @@ export enum extraRequestHeader {
   'access-token' = 'access-token',
   refreshToken = 'refreshToken',
 }
-export enum HttpBusinessMappingCode {
-  jwtExpired = 'E401',
-  unauthorized = 'Unauthorized',
-  maintenance = 'Maintenance',
-}

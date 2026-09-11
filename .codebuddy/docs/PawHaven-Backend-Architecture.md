@@ -1,6 +1,6 @@
 # PawHaven — Backend Architecture
 
-> **Version**: v3.0 | **Date**: 2026-07-10
+> **Version**: v3.5 | **Date**: 2026-09-10
 > **Related Docs**: [System Architecture Overview](./PawHaven-System-Architecture-Overview.md) | [Frontend Architecture](./PawHaven-Frontend-Architecture.md)
 
 ---
@@ -454,11 +454,11 @@ echo "✅ Module boundaries clean"
 
 ### 5.4 Validation & Shared
 
-| Category          | Technology             | Notes                                                                 |
-| ----------------- | ---------------------- | --------------------------------------------------------------------- |
-| **Validation**    | Zod + nestjs-zod       | Schemas in @pawhaven/shared                                           |
-| **Shared Kernel** | @pawhaven/shared       | Types, constants, event schemas                                       |
-| **Backend Core**  | @pawhaven/backend-core | SharedModule, PrismaModule, guards, shared app bootstrap (`setupApp`) |
+| Category          | Technology             | Notes                                                                                                                                    |
+| ----------------- | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| **Validation**    | Zod + nestjs-zod       | Schemas in @pawhaven/shared                                                                                                              |
+| **Shared Kernel** | @pawhaven/shared       | Types, constants, event schemas                                                                                                          |
+| **Backend Core**  | @pawhaven/backend-core | SharedModule, PrismaModule, `dynamicModules/` (incl. `internalJwt/` — guard, decorators, sign/verify), shared app bootstrap (`setupApp`) |
 
 All services share one bootstrap: `NestFactory.create(AppModule, { bodyParser: false })` then
 `setupApp(app)` from `@pawhaven/backend-core/setup`, which applies the body-size limit
@@ -469,12 +469,13 @@ opt-in per service.
 
 ### 5.5 Security
 
-| Category           | Technology      | Notes                        |
-| ------------------ | --------------- | ---------------------------- |
-| **Authentication** | JWT (RS256)     | Access 15min, Refresh 7d     |
-| **Authorization**  | RBAC            | Role + permission checks     |
-| **Rate Limiting**  | Token bucket    | Per IP + per user at gateway |
-| **Transport**      | HTTPS (TLS 1.3) |                              |
+| Category               | Technology                                                    | Notes                                                                 |
+| ---------------------- | ------------------------------------------------------------- | --------------------------------------------------------------------- |
+| **Browser sessions**   | Cookie-based JWT — owned by gateway `InternalJwtService` only | Access 3min prod / 5min dev, Refresh 7d                               |
+| **Service-to-service** | HS256 internal JWT `InternalJwt` in `x-gateway-jwt` (45s TTL) | Verified by downstream `InternalJwtGuard`; no `x-auth-*` header trust |
+| **Authorization**      | RBAC                                                          | Role + permission checks                                              |
+| **Rate Limiting**      | Token bucket                                                  | Per IP + per user at gateway                                          |
+| **Transport**          | HTTPS (TLS 1.3)                                               |                                                                       |
 
 ### 5.6 Deployment & Infrastructure
 

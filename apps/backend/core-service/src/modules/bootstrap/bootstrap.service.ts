@@ -27,13 +27,8 @@ export class BootstrapService {
       : [this.defaultRole];
   }
 
-  resolveRequestRoles(userRolesHeader?: string): string[] {
-    const rolesFromHeader = (userRolesHeader ?? '')
-      .split(',')
-      .map((role) => role.trim().toLowerCase())
-      .filter(Boolean);
-
-    return this.normalizeRoles(rolesFromHeader);
+  resolveRoles(roles?: string[]): string[] {
+    return this.normalizeRoles(roles ?? []);
   }
 
   private async getActivePermissions(

@@ -185,18 +185,18 @@ Q: Does this need its own deployable (separate scaling, separate DB)?
 
 ## 4. Tech Stack
 
-| Layer                 | Technology                             |
-| --------------------- | -------------------------------------- |
-| **Framework**         | NestJS                                 |
-| **Language**          | TypeScript (strict)                    |
-| **ORM**               | Prisma                                 |
-| **Database**          | MongoDB                                |
-| **Validation**        | Zod + nestjs-zod                       |
-| **In-Process Events** | @nestjs/event-emitter (EventEmitter2)  |
-| **Inter-Service**     | HTTP (NestJS HttpService)              |
-| **Auth**              | JWT (RS256) — Access 15min, Refresh 7d |
-| **Authorization**     | RBAC                                   |
-| **Shared Types**      | @pawhaven/shared                       |
+| Layer                 | Technology                                                |
+| --------------------- | --------------------------------------------------------- |
+| **Framework**         | NestJS                                                    |
+| **Language**          | TypeScript (strict)                                       |
+| **ORM**               | Prisma                                                    |
+| **Database**          | MongoDB                                                   |
+| **Validation**        | Zod + nestjs-zod                                          |
+| **In-Process Events** | @nestjs/event-emitter (EventEmitter2)                     |
+| **Inter-Service**     | HTTP (NestJS HttpService)                                 |
+| **Auth**              | JWT (HS256) — Access 3min (prod) / 5min (dev), Refresh 7d |
+| **Authorization**     | RBAC                                                      |
+| **Shared Types**      | @pawhaven/shared                                          |
 
 ---
 

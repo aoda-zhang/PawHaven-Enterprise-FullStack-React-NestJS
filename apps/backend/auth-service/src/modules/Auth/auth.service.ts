@@ -1,23 +1,19 @@
-import { randomUUID } from 'node:crypto';
-
 import {
   Injectable,
   UnauthorizedException,
   ConflictException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { httpBusinessMappingCodes } from '@pawhaven/shared';
 import {
   JwtVerifyInfo,
   AuthResponseDto,
+  AuthUser,
   TokenType,
 } from '@pawhaven/shared/types';
 import { isProd } from '@pawhaven/shared/utils';
 import * as bcrypt from 'bcrypt';
-import {
-  databaseEngines,
-  cookieKeys,
-  httpBusinessMappingCodes,
-} from '@pawhaven/backend-core/constants';
+import { databaseEngines, cookieKeys } from '@pawhaven/backend-core/constants';
 import { InjectPrisma } from '@pawhaven/backend-core';
 import { ConfigService } from '@nestjs/config';
 import type { Request, Response } from 'express';
@@ -115,7 +111,6 @@ export class AuthService {
       {
         ...payload,
         type: 'access',
-        jti: randomUUID(),
         ...session,
       },
       { expiresIn: this.tokenConfig.expiresIn.access },
@@ -130,7 +125,6 @@ export class AuthService {
       {
         ...payload,
         type: 'refresh',
-        jti: randomUUID(),
         ...session,
       },
       { expiresIn: this.tokenConfig.expiresIn.refresh },
@@ -398,6 +392,10 @@ export class AuthService {
     );
 
     if (!isRefreshTokenValid) {
+      await this.prisma.user.update({
+        where: { id: user.id },
+        data: { refreshToken: null },
+      });
       throw new UnauthorizedException(
         httpBusinessMappingCodes.invalidRefreshToken,
       );
@@ -445,6 +443,19 @@ export class AuthService {
         email: user.email,
       },
     };
+  }
+
+  async getCurrentUser(userId: string): Promise<AuthUser> {
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      select: { id: true, email: true, deletedAt: true },
+    });
+
+    if (!user || user.deletedAt) {
+      throw new UnauthorizedException(httpBusinessMappingCodes.unauthorized);
+    }
+
+    return { userId: user.id, email: user.email };
   }
 
   /**

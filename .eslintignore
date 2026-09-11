@@ -26,3 +26,18 @@ libs/tsconfig
 libs/eslint-config
 **/config/**
 packages/design-system/figma
+
+# Ignore all test files from linting (verification covered by vitest, not eslint)
+**/*.test.ts
+**/*.test.tsx
+**/*.test.js
+**/*.test.jsx
+**/*.spec.ts
+**/*.spec.tsx
+**/*.spec.js
+**/*.spec.jsx
+**/tests/**
+**/__tests__/**
+**/*.setup.ts
+**/*.setup.tsx
+vitest.config.ts

@@ -27,8 +27,8 @@ users can perform privileged actions.
 ```mermaid
 flowchart TD
     A[User opens app] --> B{Session cookie?}
-    B -- no --> C[Gateway serves public routes<br/>no session required]
-    B -- yes --> D[Gateway Auth Guard<br/>verifies JWT cookie]
+    B -- no --> C[Gateway signs anonymous identity<br/>as internal JWT; @OptionalAuth reads allowed]
+    B -- yes --> D[Gateway InternalJwtService<br/>resolves identity from JWT cookie]
     C --> E[User clicks Sign Up<br/>email + password + display name]
     E --> F[POST /api/auth/register]
     F --> G[auth-service creates user<br/>password hashed]
@@ -39,8 +39,8 @@ flowchart TD
     K -- no --> I
     K -- yes --> L[Issue signed JWT cookie]
     L --> D
-    D --> M[Inject X-Auth-User-Id / -Email / -Roles<br/>headers into core-service requests]
-    M --> N[core-service trusts headers<br/>no auth code there]
+    D --> M[Gateway signs typed InternalJwt as HS256 JWT<br/>x-gateway-jwt]
+    M --> N[downstream InternalJwtGuard<br/>verifies internal JWT; handlers inject @InternalJwt() claims]
     D --> O{Token near expiry?}
     O -- yes --> P[POST /api/auth/refresh<br/>silent rotation]
     P --> D
@@ -51,15 +51,15 @@ flowchart TD
 
 ## 4. Frontend
 
-- Feature module: `Auth` (register page, login page, profile menu, `RequireAuth` route guard).
+- Feature module: `Auth` (register page, login page, profile menu). Protected routes live under the authenticated parent route (`requireUser` loader — see [route_authentication.md](../route_authentication.md)).
 - Boot-time verification: `GET /auth/me` to restore session on page reload.
 - Public vs. protected route split is driven by the bootstrap `routes` config (see [11-bootstrap](./11-bootstrap.md)).
 
 ## 5. Backend
 
 - **Service**: `auth-service` (register, login, logout, refresh, `/me`).
-- **Gateway**: verifies JWT; public route whitelist (`/api/auth/login|register|refresh`, bootstrap).
-- No auth code lives in core-service — it trusts the injected headers.
+- **Gateway**: `InternalJwtService` resolves the browser session (F1-F4) and signs typed `InternalJwt` as a compact HS256 internal JWT (`x-gateway-jwt`, 45s TTL); the allowlisted proxy forwards it to the target service.
+- **Downstream**: the global `InternalJwtGuard` verifies the signed internal JWT; endpoint policy lives with each handler — auth `@Public` on login/register/refresh, core GET reads `@OptionalAuth`, writes default-authenticated. Handlers inject the identity with the `@InternalJwt()` param decorator, never from request headers. `@OptionalAuth()` reads use `@InternalJwt({ allowAnonymous: true })` and branch on `claims.kind`; authenticated handlers annotate `AuthenticatedInternalJwt` to reach `claims.sub`.
 
 ## 6. Data Model
 
@@ -77,7 +77,7 @@ flowchart TD
 
 - [ ] Register, login, logout, refresh all work end-to-end through the gateway.
 - [ ] Protected API calls fail with 401 when no/invalid cookie; succeed when valid.
-- [ ] `X-Auth-User-*` headers are present in core-service for every authed request.
+- [ ] Every proxied request carries a signed `x-gateway-jwt` header (HS256); downstream rejects tampered/expired/wrong-audience claims with 401.
 - [ ] Guests can browse all public pages without any session.
 - [ ] Role-based guards reject volunteer-only actions for registered users.
 

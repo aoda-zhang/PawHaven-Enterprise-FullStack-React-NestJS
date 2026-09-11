@@ -15,7 +15,10 @@ import { rescueDetailRoute } from '@/features/RescueDetail/route';
 import { rescueGuideRoute } from '@/features/RescueGuide/route';
 import { useIsStableEnv } from '@/hooks/useIsStableEnv';
 import { RootLayout } from '@/layout';
-import { rootLoader } from '@/layout/api/rootLayout.loader';
+import {
+  rootLoader,
+  rootShouldRevalidate,
+} from '@/layout/api/rootLayout.loader';
 import { RootLayoutFooter } from '@/layout/RootLayoutFooter';
 import { routePaths } from '@/router/routePaths';
 
@@ -33,23 +36,13 @@ const RouteErrorBoundary = () => {
   );
 };
 
-const NotFoundRoute = () => {
-  const isStableEnv = useIsStableEnv();
-
-  return (
-    <>
-      <ScrollRestoration />
-      <NotFound isStableEnv={isStableEnv} footer={<RootLayoutFooter />} />
-    </>
-  );
-};
-
 const RouteHydrateFallback = () => <Loading />;
 
 export const rootRoute = {
   path: routePaths.home,
   Component: RootLayout,
   loader: rootLoader,
+  shouldRevalidate: rootShouldRevalidate,
   ErrorBoundary: RouteErrorBoundary,
   HydrateFallback: RouteHydrateFallback,
   children: [
@@ -67,7 +60,7 @@ export const rootRoute = {
     },
     {
       path: '*',
-      Component: NotFoundRoute,
+      Component: NotFound,
     },
   ],
 };

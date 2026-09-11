@@ -1,14 +1,11 @@
-import type { IncomingHttpHeaders } from 'http';
-
 import {
   BadRequestException,
   Injectable,
   Logger,
-  UnauthorizedException,
+  NotFoundException,
 } from '@nestjs/common';
 import { InjectPrisma } from '@pawhaven/backend-core';
-import { databaseEngines, httpHeaders } from '@pawhaven/backend-core/constants';
-import { readHeader } from '@pawhaven/backend-core/utils';
+import { databaseEngines } from '@pawhaven/backend-core/constants';
 import { PrismaClient, type animalReports } from '@prismaClient';
 import {
   RescueListItemSchema,
@@ -19,9 +16,24 @@ import {
   RescueAgeSchema,
   AnimalStatus,
 } from '@pawhaven/shared/types';
-import type { RescueListItem, RescueDetail } from '@pawhaven/shared/types';
+import type {
+  AuthenticatedInternalJwt,
+  RescueListItem,
+  RescueDetail,
+} from '@pawhaven/shared/types';
 
 import { CreateRescueDto } from './DTO/rescue.DTO';
+
+const PUBLIC_RESCUE_ROUTE = '/api/core/rescues';
+
+const DATA_URL_PREFIX = 'data:';
+
+const BASE64_MARKER = ';base64,';
+
+export type RescuePhoto = {
+  mimeType: string;
+  buffer: Buffer;
+};
 
 @Injectable()
 export class RescueService {
@@ -32,16 +44,10 @@ export class RescueService {
     private readonly prisma: PrismaClient,
   ) {}
 
-  async create(dto: CreateRescueDto, headers: IncomingHttpHeaders = {}) {
-    const reporterId = readHeader(headers, httpHeaders.authUserId);
-
-    if (!reporterId) {
-      throw new UnauthorizedException('Reporter identity is required');
-    }
-
+  async create(dto: CreateRescueDto, claims: AuthenticatedInternalJwt) {
     try {
       return await this.prisma.animalReports.create({
-        data: { ...dto, reporterId },
+        data: { ...dto, reporterId: claims.sub },
       });
     } catch (error) {
       this.logger.error(`Failed to create rescue: ${dto.animalType}`, error);
@@ -88,6 +94,42 @@ export class RescueService {
     }
   }
 
+  async findPhoto(id: string, index: number): Promise<RescuePhoto> {
+    const rescue = await this.prisma.animalReports.findUnique({
+      where: { id },
+      select: { id: true, deletedAt: true, reporterPhotos: true },
+    });
+    if (!rescue || rescue.deletedAt) {
+      throw new NotFoundException(`Rescue not found: ${id}`);
+    }
+
+    const photo = this.decodePhoto(rescue.reporterPhotos?.[index]);
+    if (!photo) {
+      throw new NotFoundException(`Photo not found: ${id}/${index}`);
+    }
+    return photo;
+  }
+
+  private decodePhoto(stored: string | undefined): RescuePhoto | undefined {
+    if (!stored || !stored.startsWith(DATA_URL_PREFIX)) {
+      return undefined;
+    }
+    const markerAt = stored.indexOf(BASE64_MARKER);
+    if (markerAt === -1) {
+      return undefined;
+    }
+    const mimeType = stored.slice(DATA_URL_PREFIX.length, markerAt);
+    const payload = stored.slice(markerAt + BASE64_MARKER.length);
+    if (!mimeType) {
+      return undefined;
+    }
+    return { mimeType, buffer: Buffer.from(payload, 'base64') };
+  }
+
+  private buildPhotoUrl(rescueId: string, index: number): string {
+    return `${PUBLIC_RESCUE_ROUTE}/${rescueId}/photo/${index}`;
+  }
+
   private toListItem(record: animalReports): RescueListItem {
     const location = RescueDetailLocationSchema.parse(record.locationObj ?? {});
 
@@ -96,7 +138,9 @@ export class RescueService {
     return RescueListItemSchema.parse({
       id: record.id,
       title: record.animalType ?? 'unknown',
-      image: record.reporterPhotos?.[0],
+      image: record.reporterPhotos?.length
+        ? this.buildPhotoUrl(record.id, 0)
+        : undefined,
       status: status.success ? status.data : AnimalStatus.PENDING,
       animalType: record.animalType ?? 'unknown',
       location: location.address,
@@ -122,7 +166,9 @@ export class RescueService {
       animalCount: record.animalCount,
       appearance: RescueDetailAppearanceSchema.parse(record.appearance ?? {}),
       location: RescueDetailLocationSchema.parse(record.locationObj ?? {}),
-      photos: record.reporterPhotos,
+      photos: record.reporterPhotos.map((_photo, index) =>
+        this.buildPhotoUrl(record.id, index),
+      ),
       reporter: { reporterId: record.reporterId },
       reportedAt: record.createdAt.toISOString(),
       distance: 0,

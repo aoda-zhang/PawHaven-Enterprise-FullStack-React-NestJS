@@ -9,7 +9,9 @@
     "turbo:build": "turbo run build --filter=@pawhaven/gateway --env-mode=loose",
     "install:gateway": "pnpm --filter=@pawhaven/gateway... install",
     "start": "node dist/main.js",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --ext .ts --ignore-pattern \"dist/**\"",
+    "test": "vitest run"
   },
   "dependencies": {
     "@nestjs/axios": "^4.0.1",
@@ -62,6 +64,7 @@
     "ts-loader": "^9.5.4",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.10"
   }
 }

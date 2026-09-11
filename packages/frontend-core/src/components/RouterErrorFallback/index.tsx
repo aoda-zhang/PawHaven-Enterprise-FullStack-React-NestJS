@@ -1,3 +1,4 @@
+import { HTTP_STATUS } from '@pawhaven/shared';
 import type { ReactNode } from 'react';
 import { useRouteError } from 'react-router-dom';
 
@@ -15,15 +16,13 @@ interface RouterErrorFallbackProps {
   footer?: ReactNode;
 }
 
-const HTTP_NOT_FOUND = 404;
-
 export const RouterErrorFallback = ({
   isStableEnv,
   footer,
 }: RouterErrorFallbackProps) => {
   const errorInfo = useRouteError() as Partial<ErrorInfo>;
 
-  if (errorInfo?.status === HTTP_NOT_FOUND) {
+  if (errorInfo?.status === HTTP_STATUS.NOT_FOUND) {
     return (
       <NotFound error={errorInfo} isStableEnv={isStableEnv} footer={footer} />
     );

@@ -10,13 +10,17 @@ const goToHome = () => {
   window.location.href = '/';
 };
 
-interface NotFoundProps {
+export interface NotFoundProps {
   error?: Partial<ErrorInfo>;
-  isStableEnv: boolean;
+  isStableEnv?: boolean;
   footer?: ReactNode;
 }
 
-export const NotFound = ({ error, isStableEnv, footer }: NotFoundProps) => {
+export const NotFound = ({
+  error,
+  isStableEnv = true,
+  footer,
+}: NotFoundProps) => {
   const { t } = useTranslation();
 
   return (

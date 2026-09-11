@@ -1,16 +1,12 @@
-import type { IncomingHttpHeaders } from 'http';
-
-import {
-  BadRequestException,
-  Injectable,
-  Logger,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { InjectPrisma } from '@pawhaven/backend-core';
-import { databaseEngines, httpHeaders } from '@pawhaven/backend-core/constants';
-import { readHeader } from '@pawhaven/backend-core/utils';
+import { databaseEngines } from '@pawhaven/backend-core/constants';
 import { PrismaClient, type animalReports } from '@prismaClient';
-import { AnimalStatus, type AnimalReportDto } from '@pawhaven/shared/types';
+import {
+  AnimalStatus,
+  type AnimalReportDto,
+  type AuthenticatedInternalJwt,
+} from '@pawhaven/shared/types';
 
 @Injectable()
 export class ReportAnimalService {
@@ -23,14 +19,8 @@ export class ReportAnimalService {
 
   async create(
     dto: AnimalReportDto,
-    headers: IncomingHttpHeaders = {},
+    claims: AuthenticatedInternalJwt,
   ): Promise<animalReports> {
-    const reporterId = readHeader(headers, httpHeaders.authUserId);
-
-    if (!reporterId) {
-      throw new UnauthorizedException('Reporter identity is required');
-    }
-
     try {
       return await this.prisma.animalReports.create({
         data: {
@@ -43,7 +33,7 @@ export class ReportAnimalService {
           description: dto.description,
           size: dto.size,
           animalCount: dto.animalCount,
-          reporterId,
+          reporterId: claims.sub,
           reporterPhotos: dto.reporterPhotos,
         },
       });

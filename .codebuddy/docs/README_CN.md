@@ -16,11 +16,10 @@
 
 ## 2. 系统架构
 
-| 文档                                                                                   | 说明                                                       |
-| -------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
-| [PawHaven-System-Architecture.md](./PawHaven-System-Architecture.md)                   | 系统架构设计 v2.0 — 服务拆分、模块化单体、部署拓扑、数据流 |
-| [PawHaven-System-Architecture-Overview.md](./PawHaven-System-Architecture-Overview.md) | 系统架构 v3.0 — 5 个服务、API 网关路由、事件目录、数据架构 |
-| [ADR/](./ADR/)                                                                         | 架构决策记录 — 记录决策的**原因**，而不仅仅是**结果**      |
+| 文档                                                                                   | 说明                                                                        |
+| -------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| [PawHaven-System-Architecture.md](./PawHaven-System-Architecture.md)                   | 系统架构设计 v3.5 — 服务拆分、模块化单体、部署拓扑、数据流                  |
+| [PawHaven-System-Architecture-Overview.md](./PawHaven-System-Architecture-Overview.md) | 系统架构 v3.5 — 5 个服务、API 网关路由（内部 JWT 认证）、事件目录、数据架构 |
 
 **核心内容**：Monorepo 结构（`apps/backend/*` + `apps/frontend/*` + `packages/*` + `libs/*`），务实的服务拆分理念，core-service 内的模块化单体设计，API 网关路由规则，服务间通信模式。
 
@@ -38,13 +37,12 @@
 
 ## 4. 设计系统
 
-| 文档                                                               | 类型                   | 说明                                                          |
-| ------------------------------------------------------------------ | ---------------------- | ------------------------------------------------------------- |
-| [design-system.html](../packages/design-system/design-system.html) | HTML（在浏览器中打开） | 视觉设计系统 — 颜色、排版、布局、图标和图片，使用实际样式渲染 |
-| [tokens/](../packages/design-system/src/tokens/)                   | CSS                    | 12 个设计 token CSS 变量文件                                  |
-| [theme.css](../packages/design-system/src/theme.css)               | CSS                    | 全局主题定义                                                  |
-| [utilities.css](../packages/design-system/src/utilities.css)       | CSS                    | 工具类                                                        |
-| [src/](../packages/design-system/src/)                             | TypeScript             | 设计系统源代码                                                |
+| 文档                                                            | 类型       | 说明                         |
+| --------------------------------------------------------------- | ---------- | ---------------------------- |
+| [tokens/](../../packages/design-system/src/tokens/)             | CSS        | 12 个设计 token CSS 变量文件 |
+| [theme.css](../../packages/design-system/src/theme.css)         | CSS        | 全局主题定义                 |
+| [utilities.css](../../packages/design-system/src/utilities.css) | CSS        | 工具类                       |
+| [src/](../../packages/design-system/src/)                       | TypeScript | 设计系统源代码               |
 
 **核心内容**：`#f7823a` 暖橙色主色，Fraunces + Plus Jakarta Sans 字体系统，Badge / Button / Card 组件规范，Lucide 图标映射，Unsplash 图片尺寸标准。
 
@@ -52,12 +50,12 @@
 
 ## 5. 认证
 
-| 文档                                                               | 说明                                                                                        |
-| ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------- |
-| [authentication-architecture.md](./authentication-architecture.md) | 认证架构概述 — 基于 Cookie 的 JWT 流程、Gateway JWT Guard、Token Refresh 机制、微服务信任链 |
-| [route_authentication.md](./route_authentication.md)               | 前端路由级认证 — RequireAuth 组件、`/auth/me` 验证流程、公开路由声明                        |
+| 文档                                                               | 说明                                                                                             |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| [authentication-architecture.md](./authentication-architecture.md) | 认证架构 — 网关持有的 Cookie JWT、HS256 内部 JWT 签名的 InternalJwt 信任链、Token 刷新、下游策略 |
+| [route_authentication.md](./route_authentication.md)               | 前端路由级认证 — 需认证的父路由（`requireUser` loader）、`/auth/me` 验证流程                     |
 
-**核心内容**：`gateway` 统一 JWT 验证 + 主动刷新，`auth-service` 处理签发/轮换，`httpOnly` Cookie 安全策略，前端通过网关注入的头部获取用户身份。
+**核心内容**：`gateway` 是唯一 JWT 持有者（InternalJwtService 身份解析 + 主动刷新），`auth-service` 负责签发/轮换，下游服务通过全局 InternalJwtGuard 校验 HS256 内部 JWT 签名的 InternalJwt（`x-gateway-jwt`），前端通过 `/auth/me` 获取用户信息。
 
 ---
 
@@ -92,14 +90,14 @@
 
 ## 8. 关键项目文件
 
-| 文件                                          | 说明                                                           |
-| --------------------------------------------- | -------------------------------------------------------------- |
-| [pawhaven.md](./agents/pawhaven.md)           | AI Agent 编排规则 — 复杂度分类、工作流选择、代理调度、操作原则 |
-| [README.MD](../README.MD)                     | 项目 README（英文）                                            |
-| [READMECN.MD](../READMECN.MD)                 | 项目 README（中文）                                            |
-| [package.json](../package.json)               | Monorepo 根配置（pnpm workspace）                              |
-| [turbo.json](../turbo.json)                   | Turborepo 构建编排配置                                         |
-| [pnpm-workspace.yaml](../pnpm-workspace.yaml) | pnpm workspace 声明                                            |
+| 文件                                             | 说明                                                           |
+| ------------------------------------------------ | -------------------------------------------------------------- |
+| [pawhaven.md](../agents/pawhaven.md)             | AI Agent 编排规则 — 复杂度分类、工作流选择、代理调度、操作原则 |
+| [README.MD](../../README.MD)                     | 项目 README（英文）                                            |
+| [READMECN.MD](../../READMECN.MD)                 | 项目 README（中文）                                            |
+| [package.json](../../package.json)               | Monorepo 根配置（pnpm workspace）                              |
+| [turbo.json](../../turbo.json)                   | Turborepo 构建编排配置                                         |
+| [pnpm-workspace.yaml](../../pnpm-workspace.yaml) | pnpm workspace 声明                                            |
 
 ---
 
@@ -128,9 +126,6 @@ project_standards.md ───────────────────�
                                                         │
 pawhaven.md ───────────────────────────────────────────┘
   (AI Agent 编排)
-
-ADR/ ───────────────────────────────────────────────────┐
-  (架构决策记录)
 ```
 
-> **建议阅读顺序**：第 1 步 产品策略 → 第 2 步 系统架构 → 第 3 步 Figma 设计 → 第 4 步 设计系统 → 第 5 步 认证架构 → 第 6 步 工程标准 → 第 7 步 功能工作流（构建时加载相关功能文档）→ 第 8 步 ADR（了解架构背景）
+> **建议阅读顺序**：第 1 步 产品策略 → 第 2 步 系统架构 → 第 3 步 Figma 设计 → 第 4 步 设计系统 → 第 5 步 认证架构 → 第 6 步 工程标准 → 第 7 步 功能工作流（构建时加载相关功能文档）

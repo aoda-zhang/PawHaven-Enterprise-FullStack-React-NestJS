@@ -50,9 +50,6 @@ Currently agents communicate through the orchestrator as plain text messages. Th
 
 ### Decision
 ✅ {what was decided}
-
-### ADR
-Created/Not needed: {path}
 ```
 
 ### 2.2 Frontend → Orchestrator (Implementation Result)
@@ -206,7 +203,7 @@ Contract location: `packages/shared/src/schemas/{name}.schema.ts`
 | Dependency direction | ✅/❌ | ... |
 | Feature isolation | ✅/❌ | ... |
 | API consistency | ✅/⚠️ | ... |
-| ADR coverage | ✅/💡 | ... |
+| Decision coverage | ✅/💡 | ... |
 
 | Check | Status | Detail |
 |-------|--------|--------|

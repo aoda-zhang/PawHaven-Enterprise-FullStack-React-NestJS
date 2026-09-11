@@ -52,7 +52,13 @@ const LanguageMenu = ({ current, onSelect }: LanguageMenuProps) => {
   );
 };
 
-export const LanguageSelector = () => {
+interface LanguageSelectorProps {
+  align?: 'start' | 'end';
+}
+
+export const LanguageSelector = ({
+  align = 'start',
+}: LanguageSelectorProps) => {
   const { i18n, t } = useTranslation();
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -114,7 +120,12 @@ export const LanguageSelector = () => {
         />
       </button>
       {open && (
-        <div className="bg-surface border-border shadow-dropdown -1.5 -1.5 top absolute mt-2">
+        <div
+          className={clsx(
+            'bg-surface border-border shadow-dropdown absolute top-full z-50 mt-2',
+            align === 'end' ? 'right-0' : 'left-0',
+          )}
+        >
           <LanguageMenu current={current} onSelect={handleSelect} />
         </div>
       )}

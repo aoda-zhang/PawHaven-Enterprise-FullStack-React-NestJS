@@ -1,9 +1,9 @@
 # PawHaven — System Architecture Overview
 
-> **Version**: v3.0 | **Date**: 2026-07-10
+> **Version**: v3.5 | **Date**: 2026-09-10
 > **Design Philosophy**: Pragmatic service decomposition. Modular monolith inside core-service. Extract only when necessary.
 >
-> **Related Docs**: [Frontend Architecture](./PawHaven-Frontend-Architecture.md) | [Backend Architecture](./PawHaven-Backend-Architecture.md)
+> **Related Docs**: [Frontend Architecture](./PawHaven-Frontend-Architecture.md) | [Backend Architecture](./PawHaven-Backend-Architecture.md) | [Authentication Architecture](./authentication-architecture.md)
 
 ---
 
@@ -19,7 +19,7 @@
 8. [Security Architecture](#8-security-architecture)
 9. [Observability & Operations](#9-observability--operations)
 10. [Deployment Architecture](#10-deployment-architecture)
-11. [Architecture Decision Records](#11-architecture-decision-records)
+11. [Design Decisions](#11-design-decisions)
 12. [Module Boundary Enforcement](#12-module-boundary-enforcement)
 13. [Why This Design Works](#13-why-this-design-works)
 
@@ -60,8 +60,8 @@
 │                                                                  │
 │  ┌────────────────────────────────────────────────────────────┐  │
 │  │              Service 1: gateway                             │  │
-│  │  Stateless — Auth guard (JWT verify), Rate limiting,       │  │
-│  │  Request proxying, CORS, Trace ID injection, Logging       │  │
+│  │  Stateless — InternalJwtService (owner + refresh), HS256    │  │
+│  │  JWT signer, allowlisted proxying, CORS, Trace ID, Logging  │  │
 │  └──────────┬──────────┬──────────┬──────────┬────────────────┘  │
 │             │          │          │          │                   │
 │             ▼          ▼          ▼          ▼                   │
@@ -122,7 +122,10 @@ gateway ──HTTP proxy──► document-service   (file/PDF endpoints)
 gateway ──HTTP proxy──► config-service     (menu/route endpoints)
 
 core-service ──HTTP──► document-service    (generate PDF, send email)
-core-service ──HTTP──► auth-service        (verify token, fetch user)
+
+// Downstream services NEVER call auth-service to verify tokens:
+// identity is delivered by the gateway as an HS256 internal JWT
+// (x-gateway-jwt header) and verified by each service's InternalJwtGuard.
 
 // All inter-module communication within core-service:
 // In-process event bus (zero network overhead)
@@ -177,7 +180,7 @@ core-service ──HTTP──► auth-service        (verify token, fetch user)
 │                                ▼                                │
 │  ┌────────────────────────────────────────────────────────────┐  │
 │  │              gateway — Route 3000                              │  │
-│  │  Auth Guard · Rate Limit · Proxy · CORS · Trace ID              │  │
+│  │  InternalJwtService · JWT signer · Proxy · CORS · Trace ID     │  │
 │  └───┬──────────┬────────────┬────────────┬───────────────────┘  │
 │      │          │            │            │                     │
 │      ▼          ▼            ▼            ▼                     │
@@ -277,62 +280,89 @@ core-service ──HTTP──► auth-service        (verify token, fetch user)
 ### 5.1 Architecture
 
 ```
-Client Request
+Client Request (httpOnly cookies)
       │
       ▼
 ┌─────────────────────────────────────────────────────────┐
-│                    gateway                                │
-│                                                          │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────┐  │
-│  │ Public Routes│  │ Auth Guard  │  │ Rate Limiter    │  │
-│  │ @Public()   │  │ (verify)    │  │ (per IP/user)   │  │
-│  └──────┬──────┘  └──────┬──────┘  └────────┬────────┘  │
-│         │                │                  │           │
-│         └────────────────┼──────────────────┘           │
-│                          │                              │
-│                          ▼                              │
-│  ┌──────────────────────────────────────────────────┐  │
-│  │              Proxy Router                         │  │
-│  │  /api/auth/*       → auth-service                 │  │
-│  │  /api/rescues/*    → core-service                 │  │
-│  │  /api/reports/*    → core-service                 │  │
-│  │  /api/adoptions/*  → core-service                 │  │
-│  │  /api/stories/*    → core-service                 │  │
-│  │  /api/knowledge/*  → core-service                 │  │
-│  │  /api/volunteers/* → core-service                 │  │
-│  │  /api/notifications/* → core-service              │  │
-│  │  /api/profile/*    → core-service                 │  │
-│  │  /api/files/*      → document-service             │  │
-│  │  /api/config/*     → config-service               │  │
-│  └──────────────────────────────────────────────────┘  │
+│                    gateway (no auth guards)              │
 │                                                          │
 │  ┌──────────────────────────────────────────────────┐  │
-│  │              Cross-Cutting                         │  │
-│  │  · X-Trace-Id injection + propagation             │  │
-│  │  · User context headers (X-Auth-User-Id, Roles)   │  │
-│  │  · Structured request/response logging            │  │
-│  │  · Response header sanitization                   │  │
+│  │  InternalJwtService — resolve identity (F1-F4)    │  │
+│  │  · access-token verify / type / session cap /     │  │
+│  │    logout revokes the DB refresh token            │  │
+│  │  · proactive refresh window + single-flight       │  │
+│  │  · unresolvable cookies → 401 + clear cookies     │  │
+│  └───────────────────────┬──────────────────────────┘  │
+│                          │ signs InternalJwt as        │
+│                          │ HS256 JWT (TTL 45s, aud=svc)│
+│  ┌───────────────────────▼──────────────────────────┐  │
+│  │  ProxyController (@All('*path'))           │  │
+│  │  Allowlisted prefix → microService (config map)   │  │
+│  │  /api/core     → core-service     (core-v1)       │  │
+│  │  /api/auth     → auth-service     (auth-v1)       │  │
+│  │  /api/document → document-service (document-v1)   │  │
+│  │  unknown prefix → 404 · /internal → 404 · .. →404 │  │
+│  └───────────────────────┬──────────────────────────┘  │
+│                          │ forwards x-gateway-jwt      │
+│  ┌───────────────────────▼──────────────────────────┐  │
+│  │              Cross-Cutting (proxy edge)           │  │
+│  │  · strips inbound x-auth-* / x-gateway-* headers  │  │
+│  │  · X-Trace-Id injection + propagation (=claims rid│  │
+│  │  · 2xx JSON envelope wrapping                     │  │
 │  └──────────────────────────────────────────────────┘  │
 └─────────────────────────────────────────────────────────┘
+      │
+      ▼
+downstream service → InternalJwtGuard verifies the internal JWT
+   (fail closed: decode kid allowlist → alg-pinned HS256
+    → zod parse → lifetime cap → iat/skew → audience) → req.internalJwt
 ```
 
-### 5.2 Auth Guard Decorators
+The gateway is the **only** place browser JWTs and cookies are handled. It does not enforce
+route-level auth with decorators; instead it derives a typed identity per request, signs it as a
+compact HS256 JWT (`x-gateway-jwt`) with the target service's secret, and lets each downstream
+service enforce its own endpoint policy.
+
+The gateway has **no business logic** — its behavior is entirely config-driven, so its "routing
+brain" lives in a dedicated `routing/` module rather than a generic `config/` folder:
+
+- `src/config/` holds **only** the per-environment YAML files (`dev|test|uat|prod/env/index.yaml`).
+  The yaml path is hard-pinned by `ConfigsModule`, so it cannot move.
+- `src/routing/` holds the gateway-specific routing layer:
+  - `micro-service.registry.ts` (`MicroServiceRegistry`) — the runtime prefix→service map.
+    `ProxyService` and `InternalJwtTargetResolver` inject it to resolve a request's target host
+    (`findByGatewayPrefix`) and the internal-JWT audience/secret (`findByName`).
+  - `gateway-config.validator.ts` (`GatewayConfigValidator`) — a bootstrap **fail-fast** guard
+    (constructor side-effect). It throws if `internalJwt.ttlSeconds` is outside 30–60s or any
+    enabled microservice lacks `internalJwt.keyId`/`secret`, so the gateway refuses to boot with
+    bad routing config.
+  - `routing.module.ts` (`RoutingModule`) — provides `MicroServiceRegistry` + `GatewayConfigValidator`
+    and exports `MicroServiceRegistry`; both `proxy/` and `internal-jwt/` import it (neither feature
+    imports the other, avoiding an `internal-jwt → proxy` coupling).
+
+### 5.2 Endpoint Policy Decorators (Downstream)
+
+Endpoint policy lives **with the downstream handlers**, not in the gateway:
 
 ```typescript
-// Public — no auth required
-@Public()
-@Get('health')
-healthCheck() {}
+// Downstream (auth/core/document services) — any signed internal-JWT kind allowed
+@Public()           // e.g. auth POST /login, /register, /refresh
+@Get('login')
+login() {}
 
-// Optional auth — works with or without JWT
-@OptionalAuth()
+// Optional auth — works with or without an identity (claims.kind = anonymous | authenticated)
+@OptionalAuth()     // e.g. core GET /bootstrap, /home, rescue/adoption list reads
 @Get('rescues')
 listRescues() {}
 
-// Protected — JWT required
+// Default (no decorator) — authenticated identity required, e.g. auth GET /me
 @Get('profile')
-getProfile(@AuthUser() user: User) {}
+getProfile(@InternalJwt() claims: AuthenticatedInternalJwt) {}
+// @InternalJwt({ allowAnonymous: true }) also returns claims on @OptionalAuth() routes.
 ```
+
+See [authentication-architecture.md](./authentication-architecture.md) for the full
+internal-JWT wire format, guard behavior, config reference, and per-service endpoint policy.
 
 ---
 
@@ -442,14 +472,14 @@ export const RescueStatusChangedEventSchema = z.object({
 
 ### 7.2 What Goes Where
 
-| Package                   | Contains                                                                                                                                           | Must NOT Contain                                   |
-| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
-| `@pawhaven/shared`        | Zod schemas, TypeScript types, constants, event definitions, pure utility functions                                                                | React code, backend framework code, database logic |
-| `@pawhaven/backend-core`  | SharedModule, PrismaModule, HttpClientModule, shared app bootstrap (`setupApp` via `./setup`), decorators, guards, interceptors, Prisma extensions | Business logic, domain entities                    |
-| `@pawhaven/frontend-core` | React hooks, API client, storage utilities, lazy loading helpers                                                                                   | Business-specific components                       |
-| `@pawhaven/design-system` | CSS tokens, Tailwind theme, theme configuration, CSS utilities                                                                                     | React components                                   |
-| `@pawhaven/ui`            | Reusable React components (Form\*, Loading, Toast, etc.)                                                                                           | Business logic, API calls                          |
-| `@pawhaven/i18n`          | Translation provider, locale files, language detection                                                                                             | Business content                                   |
+| Package                   | Contains                                                                                                                                                                                            | Must NOT Contain                                   |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
+| `@pawhaven/shared`        | Zod schemas, TypeScript types, constants, event definitions, pure utility functions                                                                                                                 | React code, backend framework code, database logic |
+| `@pawhaven/backend-core`  | SharedModule, PrismaModule, HttpClientModule, shared app bootstrap (`setupApp` via `./setup`), decorators, interceptors, Prisma extensions, the internal-JWT module (`dynamicModules/internalJwt/`) | Business logic, domain entities                    |
+| `@pawhaven/frontend-core` | React hooks, API client, storage utilities, lazy loading helpers                                                                                                                                    | Business-specific components                       |
+| `@pawhaven/design-system` | CSS tokens, Tailwind theme, theme configuration, CSS utilities                                                                                                                                      | React components                                   |
+| `@pawhaven/ui`            | Reusable React components (Form\*, Loading, Toast, etc.)                                                                                                                                            | Business logic, API calls                          |
+| `@pawhaven/i18n`          | Translation provider, locale files, language detection                                                                                                                                              | Business content                                   |
 
 ---
 
@@ -458,32 +488,39 @@ export const RescueStatusChangedEventSchema = z.object({
 ### 8.1 Authentication Flow
 
 ```
-Client → gateway → auth-service
-                     │
-                     │ POST /auth/login (email + password)
-                     │ ← Token pair (access 15min, refresh 7d)
-                     │
-Client → gateway (Authorization: Bearer <access_token>)
-           │
-           │ Auth Guard verifies token
-           │ Injects headers: X-Auth-User-Id, X-Auth-User-Roles
-           │
-           ▼
-         core-service (trusts headers — internal network only)
+Client (httpOnly cookies) → gateway
+   │
+   │ POST /api/auth/login (email + password)
+   │ ← auth-service issues Token pair (access 3min prod / 5min dev, refresh 7d) as cookies
+   │
+   │ (subsequent requests carry cookies)
+   ▼
+gateway InternalJwtService — the ONLY JWT owner
+   · verifies access token (signature, type:'access', session cap)
+   · proactive refresh window; refresh single-flight via auth-service
+   · unresolvable cookies → 401 + clear cookies (no silent anonymous)
+   ▼
+signs typed InternalJwt as compact HS256 JWT (aud = target service, TTL 45s)
+   x-gateway-jwt  (kid in JOSE header, e.g. core-v1)
+   ▼
+downstream service (auth/core/document)
+   InternalJwtGuard verifies internal JWT (fail closed)
+   default = authenticated required; @Public / @OptionalAuth allow anonymous
+   handlers inject claims via @InternalJwt() — never request headers
 ```
 
 ### 8.2 Security Layers
 
-| Layer            | Mechanism                                                |
-| ---------------- | -------------------------------------------------------- |
-| Transport        | HTTPS (TLS 1.3)                                          |
-| Authentication   | Token-based, verified at gateway                         |
-| Authorization    | RBAC — roles + permissions, checked at gateway + service |
-| Input Validation | Zod schemas via global validation pipe                   |
-| Rate Limiting    | Token bucket per IP + per user at gateway                |
-| Data Privacy     | GPS fuzzing (displayArea, not exact coords post-rescue)  |
-| CSRF             | SameSite cookies + token header                          |
-| CORS             | Whitelist origins per environment                        |
+| Layer            | Mechanism                                                                                                       |
+| ---------------- | --------------------------------------------------------------------------------------------------------------- |
+| Transport        | HTTPS (TLS 1.3)                                                                                                 |
+| Authentication   | Browser JWT verified at gateway; HS256 internal-JWT InternalJwt (45s TTL) verified downstream                   |
+| Authorization    | RBAC — roles travel in the claims; endpoint policy (`@Public`/`@OptionalAuth`/default-auth) enforced downstream |
+| Input Validation | Zod schemas via global validation pipe                                                                          |
+| Rate Limiting    | Token bucket per IP + per user at gateway                                                                       |
+| Data Privacy     | GPS fuzzing (displayArea, not exact coords post-rescue)                                                         |
+| CSRF             | SameSite cookies + token header                                                                                 |
+| CORS             | Whitelist origins per environment; methods GET/POST/PUT/OPTIONS                                                 |
 
 ---
 
@@ -561,9 +598,11 @@ this.logger.log({
 
 ---
 
-## 11. Architecture Decision Records
+## 11. Design Decisions
 
-### ADR-001: Modular Monolith Inside core-service
+> These design decisions are recorded inline in this overview, labelled `DD-n` (Design Decision). These inline entries ARE the record — there is no separate ADR filing series.
+
+### DD-1: Modular Monolith Inside core-service
 
 | Field            | Detail                                                                                                                                                                                                                                                            |
 | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -572,7 +611,7 @@ this.logger.log({
 | **Decision**     | All 7 business modules live inside core-service as strict NestJS modules. Module boundaries enforced by ESLint rules. Communication via in-process EventEmitter2.                                                                                                 |
 | **Consequences** | **Easier**: Fast iteration, simple deployment, zero network overhead for inter-module calls, easier debugging. **Harder**: Must maintain module boundary discipline; risk of accidental coupling. Mitigated by lint rules + architecture fitness functions in CI. |
 
-### ADR-002: 5-Service Split Rationale
+### DD-2: 5-Service Split Rationale
 
 | Field            | Detail                                                                                                                                                                                                                                          |
 | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -581,7 +620,7 @@ this.logger.log({
 | **Decision**     | 5 services: gateway (stateless, scaling), auth (security isolation), core (modular monolith), document (heavy deps, different resource profile), config (separate deploy for config changes).                                                   |
 | **Consequences** | **Easier**: Each service scales independently, auth can be security-audited in isolation, PDF generation doesn't affect API latency. **Harder**: 5 deployables to manage. Acceptable — each has a clear operational reason to exist separately. |
 
-### ADR-003: MongoDB with Collection-per-Module
+### DD-3: MongoDB with Collection-per-Module
 
 | Field            | Detail                                                                                                                                                                                                                                                     |
 | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -590,7 +629,7 @@ this.logger.log({
 | **Decision**     | Single database `pawhaven-core` with collection naming convention `{module}_{entity}`. Each module's Prisma service only accesses its own collections. Cross-module data access through public service classes only.                                       |
 | **Consequences** | **Easier**: Single DB to operate, backup, and monitor. **Harder**: No DB-level access control between modules (mitigated by code-level enforcement). Future: if a module needs data isolation, split its collections into a separate DB — no code changes. |
 
-### ADR-004: Zod for Shared Schema Validation
+### DD-4: Zod for Shared Schema Validation
 
 | Field            | Detail                                                                                                                                                                      |
 | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -599,7 +638,7 @@ this.logger.log({
 | **Decision**     | All DTOs, event schemas, and domain types defined as Zod schemas in `@pawhaven/shared`. Frontend uses `@hookform/resolvers/zod`. Backend uses `nestjs-zod` validation pipe. |
 | **Consequences** | Single source of truth for validation. Automatic TypeScript type inference. ~12KB gzipped Zod in frontend — acceptable.                                                     |
 
-### ADR-005: In-Process Events → Future Message Broker
+### DD-5: In-Process Events → Future Message Broker
 
 | Field            | Detail                                                                                                                                                                                       |
 | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -608,7 +647,7 @@ this.logger.log({
 | **Decision**     | Phase 1: NestJS EventEmitter2 (in-process). Phase 3+: migrate to message broker only if/when modules are extracted from core-service.                                                        |
 | **Consequences** | **Easier**: Zero infrastructure, zero latency, simple debugging. **Harder**: Events are lost on process restart (acceptable for Phase 1 — events are not the system of record; database is). |
 
-### ADR-006: Feature-Based Frontend Modules
+### DD-6: Feature-Based Frontend Modules
 
 | Field            | Detail                                                                                                                                                                                            |
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -697,4 +736,4 @@ echo "✅ Module boundaries clean"
 
 ---
 
-> **Related Docs**: [Frontend Architecture](./PawHaven-Frontend-Architecture.md) | [Backend Architecture](./PawHaven-Backend-Architecture.md)
+> **Related Docs**: [Frontend Architecture](./PawHaven-Frontend-Architecture.md) | [Backend Architecture](./PawHaven-Backend-Architecture.md) | [Authentication Architecture](./authentication-architecture.md)

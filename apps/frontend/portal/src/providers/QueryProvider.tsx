@@ -7,7 +7,7 @@ import { useState, type ReactNode } from 'react';
 
 import { loadConfig } from '@/config';
 import { useIsStableEnv } from '@/hooks/useIsStableEnv';
-import { routePaths } from '@/router/routePaths';
+import { routePaths, routeSearchParams } from '@/router/routePaths';
 
 const FIVE_MINUTES_MS = 300_000;
 const THIRTY_MINUTES_MS = 1_800_000;
@@ -29,7 +29,14 @@ export const getQueryClient = (): QueryClient => {
       staleTime: queryConfig?.staleTime ?? FIVE_MINUTES_MS,
       gcTime: queryConfig?.gcTime ?? THIRTY_MINUTES_MS,
       onAuthError: () => {
-        window.location.href = routePaths.login;
+        const { pathname, search } = window.location;
+        const isAuthPage =
+          pathname === routePaths.login || pathname === routePaths.register;
+        if (!isAuthPage) {
+          window.location.replace(
+            `${routePaths.login}?${routeSearchParams.redirect}=${encodeURIComponent(`${pathname}${search}`)}`,
+          );
+        }
       },
       onPermissionError: () => {},
     }),

@@ -8,12 +8,14 @@ import {
   Req,
 } from '@nestjs/common';
 import type { Request, Response } from 'express';
-import type { SessionDto } from '@pawhaven/shared/types';
-import {
-  httpBusinessMappingCodes,
-  httpHeaders,
-} from '@pawhaven/backend-core/constants';
-import { readHeader } from '@pawhaven/backend-core/utils';
+import type {
+  AuthUser,
+  AuthenticatedInternalJwt,
+  SessionDto,
+} from '@pawhaven/shared/types';
+import { httpBusinessMappingCodes } from '@pawhaven/shared';
+import { Public } from '@pawhaven/backend-core/decorators';
+import { InternalJwt } from '@pawhaven/backend-core/internal-jwt';
 
 import { LoginDTO } from './dtos/login.dto';
 import { RegisterDTO } from './dtos/register.dto';
@@ -23,6 +25,7 @@ import { AuthService } from './auth.service';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @Public()
   @Post('/login')
   async login(
     @Body() loginDto: LoginDTO,
@@ -35,7 +38,6 @@ export class AuthController {
 
     this.authService.setAuthCookies(res, result);
 
-    // Return user info only (not tokens)
     return {
       user: result.user,
       expires_in: result.expires_in,
@@ -43,6 +45,7 @@ export class AuthController {
     };
   }
 
+  @Public()
   @Post('/register')
   async register(
     @Body() registerDto: RegisterDTO,
@@ -55,7 +58,6 @@ export class AuthController {
 
     this.authService.setAuthCookies(res, result);
 
-    // Return user info only (not tokens)
     return {
       user: result.user,
       expires_in: result.expires_in,
@@ -63,6 +65,7 @@ export class AuthController {
     };
   }
 
+  @Public()
   @Post('/refresh')
   async refresh(
     @Req() req: Request,
@@ -78,7 +81,6 @@ export class AuthController {
 
     this.authService.setAuthCookies(res, result);
 
-    // Return user info only
     return {
       user: result.user,
       expires_in: result.expires_in,
@@ -88,17 +90,10 @@ export class AuthController {
 
   @Post('/logout')
   async logout(
-    @Req() req: Request,
+    @InternalJwt() claims: AuthenticatedInternalJwt,
     @Res({ passthrough: true }) res: Response,
   ): Promise<{ message: string }> {
-    const userId = readHeader(req.headers, httpHeaders.authUserId);
-    const verified = readHeader(req.headers, httpHeaders.authVerified);
-
-    if (verified !== '1' || typeof userId !== 'string') {
-      throw new UnauthorizedException(httpBusinessMappingCodes.unauthorized);
-    }
-
-    await this.authService.logout(userId);
+    await this.authService.logout(claims.sub);
 
     this.authService.clearAuthCookies(res);
 
@@ -106,12 +101,7 @@ export class AuthController {
   }
 
   @Get('/me')
-  async me(@Req() req: Request): Promise<{ userId: string; email: string }> {
-    const accessToken = this.authService.getTokenFromRequest(req, 'access');
-    if (!accessToken) {
-      throw new UnauthorizedException(httpBusinessMappingCodes.unauthorized);
-    }
-    const payload = await this.authService.verifyToken(accessToken, 'access');
-    return { userId: payload.userId, email: payload.email };
+  async me(@InternalJwt() claims: AuthenticatedInternalJwt): Promise<AuthUser> {
+    return this.authService.getCurrentUser(claims.sub);
   }
 }

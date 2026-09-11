@@ -1,9 +1,12 @@
-import { Body, Controller, Get, Post, Req } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import type { Request } from 'express';
-import { httpHeaders } from '@pawhaven/backend-core/constants';
-import { readHeader } from '@pawhaven/backend-core/utils';
-import type { BootstrapData } from '@pawhaven/shared/types';
+import { OptionalAuth } from '@pawhaven/backend-core/decorators';
+import { InternalJwt as InternalJwtParam } from '@pawhaven/backend-core/internal-jwt';
+import {
+  InternalJwtKind,
+  type BootstrapData,
+  type InternalJwt,
+} from '@pawhaven/shared/types';
 
 import { MenuItemDto } from './DTO/menu.DTO';
 import { BootstrapService } from './bootstrap.service';
@@ -13,16 +16,18 @@ import { BootstrapService } from './bootstrap.service';
 export class BootstrapController {
   constructor(private readonly bootstrapService: BootstrapService) {}
 
+  @OptionalAuth()
   @Get()
   @ApiOperation({
     summary: 'Get application bootstrap data: menus and user permissions',
   })
-  getBootstrapData(@Req() req: Request): Promise<BootstrapData> {
-    const verifiedHeader = readHeader(req.headers, httpHeaders.authVerified);
-    const userRolesHeader = readHeader(req.headers, httpHeaders.authUserRoles);
-    const userRoles =
-      this.bootstrapService.resolveRequestRoles(userRolesHeader);
-    const isAuthenticated = verifiedHeader === '1';
+  getBootstrapData(
+    @InternalJwtParam({ allowAnonymous: true }) claims: InternalJwt,
+  ): Promise<BootstrapData> {
+    const isAuthenticated = claims.kind === InternalJwtKind.AUTHENTICATED;
+    const userRoles = this.bootstrapService.resolveRoles(
+      isAuthenticated ? claims.roles : undefined,
+    );
 
     return this.bootstrapService.getBootstrapData(userRoles, isAuthenticated);
   }

@@ -1,3 +1,3 @@
 @import '@pawhaven/design-system/index.css';
 
-@source './src/**/*.{ts,tsx}';
+@source './src/components/**/*.{ts,tsx}';

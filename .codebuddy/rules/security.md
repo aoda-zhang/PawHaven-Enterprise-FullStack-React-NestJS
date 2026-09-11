@@ -6,9 +6,9 @@
 ## 1. Authentication & Authorization
 
 - All protected endpoints MUST pass through the API Gateway's auth guard.
-- JWT is stateless (RS256). Access token = 15 minutes. Refresh token = 7 days.
+- JWT is stateless (HS256). Access token = 3 minutes (prod) / 5 minutes (dev, test, uat). Refresh token = 7 days. See `.codebuddy/docs/authentication-architecture.md`.
 - RBAC: roles defined in auth-service. Never hardcode role checks without using the RBAC service.
-- Frontend routes: `RequireAuth` wrapper for authenticated pages. Route auth flow defined in `knowledge/route_authentication.md`.
+- Frontend routes: `RequireAuth` wrapper for authenticated pages. Route auth flow defined in `.codebuddy/docs/route_authentication.md`.
 
 ## 2. Input Validation
 

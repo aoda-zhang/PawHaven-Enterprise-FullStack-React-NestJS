@@ -23,15 +23,11 @@ Location: `.codebuddy/docs/`
 
 These docs are the **single source of truth** for the project architecture. All agents reference them.
 
-## 3. ADR (Architecture Decision Records)
+## 3. Architecture Decisions
 
-Location: `.codebuddy/docs/ADR/`
+No ADR records. Do NOT create or maintain `ADR/` files, and do not spend workflow steps on ADRs.
 
-- ADRs document WHY a decision was made, not just WHAT was decided.
-- Template: `ADR/ADR-001-template.md`.
-- Every ADR includes: Context, Decision, Consequences, Alternatives Considered.
-- Mark superseded ADRs — never delete old ADRs.
-- **If `.codebuddy/docs/ADR/` does not exist, create it when the first ADR is needed.** The directory is part of the permanent documentation structure.
+When a decision changes the architecture, reflect it directly in the living architecture docs under `.codebuddy/docs/` (the single source of truth) so they stay current. Any pre-existing `ADR/` files are legacy and unmaintained.
 
 ## 4. Workflow Documentation
 
@@ -56,10 +52,10 @@ Location: Project root `README.MD` and `READMECN.MD`
 
 ## 7. Permanent vs Temporary Documentation
 
-| Type          | Location                          | Persistence                 | Trigger                                              | Examples                                                       |
-| ------------- | --------------------------------- | --------------------------- | ---------------------------------------------------- | -------------------------------------------------------------- |
-| **Permanent** | `.codebuddy/docs/`                | Git-tracked, long-lived     | Architecture changes, new ADRs, API contract changes | System architecture, ADRs, feature workflows, design specs     |
-| **Temporary** | `.codebuddy/memory/YYYY-MM-DD.md` | Git-ignored, session-scoped | Every task execution                                 | Runtime notes, task execution traces                           |
-| **Handoff**   | Workflows handoff summary         | Ephemeral, per-task         | End of every task                                    | What changed, verification evidence, Doc Impact classification |
+| Type          | Location                          | Persistence                 | Trigger                                    | Examples                                                       |
+| ------------- | --------------------------------- | --------------------------- | ------------------------------------------ | -------------------------------------------------------------- |
+| **Permanent** | `.codebuddy/docs/`                | Git-tracked, long-lived     | Architecture changes, API contract changes | System architecture, feature workflows, design specs           |
+| **Temporary** | `.codebuddy/memory/YYYY-MM-DD.md` | Git-ignored, session-scoped | Every task execution                       | Runtime notes, task execution traces                           |
+| **Handoff**   | Workflows handoff summary         | Ephemeral, per-task         | End of every task                          | What changed, verification evidence, Doc Impact classification |
 
 > **Rule**: Permanent docs live in `.codebuddy/docs/` and are maintained by the `knowledge-update` agent. Temporary runtime notes live in the daily memory file (`.codebuddy/memory/YYYY-MM-DD.md`). Never confuse the two — runtime notes are not documentation, and documentation is not runtime notes.
