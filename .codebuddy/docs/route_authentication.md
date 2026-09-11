@@ -100,7 +100,7 @@ Using a search param (instead of location `state`) keeps the target visible in t
 1. The `/auth/me` request automatically includes the `access_token` (and `refresh_token`) httpOnly cookies.
 2. Gateway `InternalJwtService` resolves the caller identity:
    - No cookies → anonymous identity (F1).
-   - Valid access token (signature, `type: 'access'`, not denylisted, within the 30-day session cap) → authenticated identity; if the token is inside the proactive-refresh window it attempts a rotation (single-flight) without downgrading a still-valid token (F2 / F3-window).
+   - Valid access token (signature, `type: 'access'`, within the 30-day session cap) → authenticated identity; if the token is inside the proactive-refresh window it attempts a rotation (single-flight) without downgrading a still-valid token (F2 / F3-window).
    - Expired/missing access + valid refresh → calls auth-service `/auth/refresh` (single-flight) and applies the returned Set-Cookie to the response (F3).
    - Unresolvable cookies (stale/broken) → clears auth cookies and the request fails with 401 — it does NOT silently continue as anonymous (F4).
 3. On success the gateway signs the resolved identity as a compact HS256 internal JWT (`x-gateway-jwt`, `kid` in the JOSE header) with the auth-service key and forwards it.
@@ -119,16 +119,17 @@ Using a search param (instead of location `state`) keeps the target visible in t
 
 ## Key Design Decisions
 
-| Decision                                              | Reason                                                                                               |
-| ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| Frontend doesn't read httpOnly cookie                 | httpOnly prevents JavaScript access; protects against XSS token theft                                |
-| Verify via `/auth/me` API instead of local state      | Backend is the only source of truth; detects expired, revoked, or tampered tokens                    |
-| Session hard-caps at 30 days via `/auth/me` 401       | Absolute session bound: refresh may slide for 7 days, but after `sessionExpiresAt` login is required |
-| Guard is a **router loader**, not a wrapper component | Runs before render; no loading flash, no partially mounted protected page                            |
-| Single guard on the authenticated **parent route**    | Children inherit protection; avoids repeated `/auth/me` calls per page                               |
-| Loader reuses `useCurrentUser`'s query key            | One cache entry shared by the guard and the UI — no duplicate requests                               |
-| Redirect target stored in `?redirect` search param    | Survives refresh/share; no reliance on router location state                                         |
-| `useCurrentUser` has no side effects in queryFn       | Avoids ESLint exhaustive-deps warnings; dispatch logic lives in `useEffect` in consuming components  |
+| Decision                                              | Reason                                                                                                                                                                                                                                                        |
+| ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Frontend doesn't read httpOnly cookie                 | httpOnly prevents JavaScript access; protects against XSS token theft                                                                                                                                                                                         |
+| Verify via `/auth/me` API instead of local state      | Backend is the only source of truth; detects expired or tampered tokens (only refresh tokens are revocable server-side)                                                                                                                                       |
+| Session hard-caps at 30 days via `/auth/me` 401       | Absolute session bound: refresh may slide for 7 days, but after `sessionExpiresAt` login is required                                                                                                                                                          |
+| Guard is a **router loader**, not a wrapper component | Runs before render; no loading flash, no partially mounted protected page                                                                                                                                                                                     |
+| Single guard on the authenticated **parent route**    | Children inherit protection; avoids repeated `/auth/me` calls per page                                                                                                                                                                                        |
+| Loader reuses `useCurrentUser`'s query key            | One cache entry shared by the guard and the UI — no duplicate requests                                                                                                                                                                                        |
+| Redirect target stored in `?redirect` search param    | Survives refresh/share; no reliance on router location state                                                                                                                                                                                                  |
+| `useCurrentUser` has no side effects in queryFn       | Avoids ESLint exhaustive-deps warnings; dispatch logic lives in `useEffect` in consuming components                                                                                                                                                           |
+| Any API 401 → `/auth/login?redirect=<current>`        | The cache-level `onAuthError` (query client) redirects on **any** 401 — navigation loader, in-page refetch, or mutation — preserving the current path as `?redirect=`; it is skipped when already on an auth page, so an expired session never fails silently |
 
 ## Follow-ups
 

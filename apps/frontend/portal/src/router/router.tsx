@@ -36,17 +36,6 @@ const RouteErrorBoundary = () => {
   );
 };
 
-const NotFoundRoute = () => {
-  const isStableEnv = useIsStableEnv();
-
-  return (
-    <>
-      <ScrollRestoration />
-      <NotFound isStableEnv={isStableEnv} footer={<RootLayoutFooter />} />
-    </>
-  );
-};
-
 const RouteHydrateFallback = () => <Loading />;
 
 export const rootRoute = {
@@ -71,7 +60,7 @@ export const rootRoute = {
     },
     {
       path: '*',
-      Component: NotFoundRoute,
+      Component: NotFound,
     },
   ],
 };

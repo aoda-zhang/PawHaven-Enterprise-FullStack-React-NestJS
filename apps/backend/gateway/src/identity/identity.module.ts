@@ -4,13 +4,7 @@ import { ConfigService } from '@nestjs/config';
 
 import { GatewayInternalJwtModule } from '../internal-jwt/internal-jwt.module';
 
-import { AccessTokenVerifier } from './access-token.verifier';
-import { AuthCookies } from './auth-cookies';
-import { ExpiryPolicy } from './expiry-policy';
 import { IdentityResolver } from './identity.resolver';
-import { InMemoryTokenDenylist } from './in-memory-token-denylist';
-import { TokenDenylist } from './token-denylist';
-import { TokenRefresher } from './token-refresher';
 
 @Module({
   imports: [
@@ -33,14 +27,7 @@ import { TokenRefresher } from './token-refresher';
       },
     }),
   ],
-  providers: [
-    IdentityResolver,
-    AccessTokenVerifier,
-    ExpiryPolicy,
-    AuthCookies,
-    TokenRefresher,
-    { provide: TokenDenylist, useClass: InMemoryTokenDenylist },
-  ],
+  providers: [IdentityResolver],
   exports: [IdentityResolver],
 })
 export class IdentityModule {}

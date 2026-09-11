@@ -1,7 +1,7 @@
 # Architecture Rules
 
 > **Applies to**: All agents. Defines architecture-level constraints for the PawHaven codebase.
-> **Complements**: Architecture docs in `knowledge/`, architecture-doctor in `skills/code-review/`.
+> **Complements**: Architecture docs in `.codebuddy/docs/`, architecture-doctor in `skills/code-review/`.
 
 ## 1. Module Responsibility
 
@@ -47,11 +47,9 @@ shared ← backend services
 - Controllers → Service (facade) → Use-Case. Other modules → Service (DI).
 - API contracts live in `packages/shared/` as Zod schemas + TypeScript types.
 
-## 7. ADR Requirements
+## 7. Architecture Decisions
 
-Create an ADR for: architecture paradigm change, cross-cutting concern (3+ modules), irreversible decision, non-obvious trade-off.
-
-ADR template: `knowledge/ADR/ADR-001-template.md`
+No ADR records — do NOT create `ADR/` files. When a decision changes the architecture (paradigm change, cross-cutting concern, irreversible or non-obvious trade-off), update the living architecture docs in `.codebuddy/docs/` directly so they stay current.
 
 ## 8. No Hardcoded Business Values
 

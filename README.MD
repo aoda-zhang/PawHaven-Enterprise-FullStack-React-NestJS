@@ -77,19 +77,25 @@ Detailed documentation can be found in the [`.codebuddy/docs`](./.codebuddy/docs
 
 ### Product & Architecture
 
-| Document                                                                 | Description                                                               |
-| ------------------------------------------------------------------------ | ------------------------------------------------------------------------- |
-| [Product Strategy](./.codebuddy/docs/PawHaven-Product-Strategy-EN.md)    | Complete product blueprint — 7 modules, personas, value flywheel, roadmap |
-| [System Architecture](./.codebuddy/docs/PawHaven-System-Architecture.md) | 5-service architecture, modular monolith, DDD, event-driven, ADRs         |
-| [Design System](./packages/design-system/README.MD)                      | Design tokens, Tailwind v4 theme, CSS utilities                           |
+| Document                                                                 | Description                                                                   |
+| ------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
+| [Product Strategy](./.codebuddy/docs/PawHaven-Product-Strategy-EN.md)    | Complete product blueprint — 7 modules, personas, value flywheel, roadmap     |
+| [System Architecture](./.codebuddy/docs/PawHaven-System-Architecture.md) | 5-service architecture, modular monolith, DDD, event-driven, design decisions |
+| [Design System](./packages/design-system/README.MD)                      | Design tokens, Tailwind v4 theme, CSS utilities                               |
+
+### Authentication at a Glance
+
+Browser JWT / cookies are owned by the **gateway** only. Per request it resolves the caller identity (F1–F4), refreshes when needed, and signs a short-lived **HS256 internal JWT** for the target service into the `x-gateway-jwt` header. Downstream services never see browser tokens — a global `InternalJwtGuard` verifies the internal JWT (fail closed) and handlers read the identity via `@InternalJwt()`, with endpoint policy expressed by `@Public()` / `@OptionalAuth()` / default-authenticated.
+
+→ Full detail: [Authentication & Authorization Architecture](./.codebuddy/docs/authentication-architecture.md).
 
 ### Engineering
 
-| Document                                                                                        | Description                            |
-| ----------------------------------------------------------------------------------------------- | -------------------------------------- |
-| [Monorepo & Project Standards](./.codebuddy/docs/project_standards.md)                          | Coding conventions, tooling, workflows |
+| Document                                                                                        | Description                                                                           |
+| ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| [Monorepo & Project Standards](./.codebuddy/docs/project_standards.md)                          | Coding conventions, tooling, workflows                                                |
 | [Authentication & Authorization Architecture](./.codebuddy/docs/authentication-architecture.md) | Gateway-owned cookie JWT + internal HS256-JWT (InternalJwt) service auth, RBAC design |
-| [Route-Level Authentication](./.codebuddy/docs/route_authentication.md)                         | Frontend route guard implementation    |
+| [Route-Level Authentication](./.codebuddy/docs/route_authentication.md)                         | Frontend route guard implementation                                                   |
 
 ---
 

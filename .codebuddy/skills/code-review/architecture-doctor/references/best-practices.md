@@ -26,7 +26,7 @@ shared ← backend services
 1. Run `git diff --name-only develop...HEAD` to scope the review.
 2. Blocking first: cross-module, cross-feature, inverted package deps.
 3. Warnings: missing graduation, feature structure gaps, duplicate types, API inconsistency.
-4. Suggestions: missing ADR for significant architecture change.
+4. Suggestions: significant architecture change not reflected in the living architecture docs.
 
 ## Common Mistakes
 

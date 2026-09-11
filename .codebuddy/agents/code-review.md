@@ -167,7 +167,7 @@ RECEIVE TASK from AGENT
 │ □ Design tokens: All from @pawhaven/design-system?                │
 │ □ Server-driven data: Navigation fetched from backend?            │
 │   (hardcoded menus/routes = Blocking)                             │
-│ □ ADR coverage: Significant decisions documented?                 │
+│ □ Decision coverage: decisions reflected in the living docs?            │
 └──────────────────────────────────────────────────────────────────┘
         │
         ▼

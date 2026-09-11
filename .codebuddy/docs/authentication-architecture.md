@@ -1,7 +1,7 @@
 # Authentication and Authorization Architecture
 
-> **Version**: v1.3 | **Date**: 2026-09-10
-> **Related Docs**: [Route Authentication](./route_authentication.md) | [ADR-007: backend-core internal-JWT module boundary](./ADR/ADR-007-backend-core-internal-jwt-module-boundary.md) | [ADR-006: Internal JWT (HS256)](./ADR/ADR-006-internal-jwt-hs256.md) | [ADR-005: Gateway→Downstream Signed-Actor Auth (superseded)](./ADR/ADR-005-gateway-downstream-signed-actor-auth.md)
+> **Version**: v1.5 | **Date**: 2026-09-10
+> **Related Docs**: [Route Authentication](./route_authentication.md)
 
 ## Overview
 
@@ -41,7 +41,7 @@ Claims payload (zod discriminated union in `packages/shared/types/internal-jwt.s
 - `aud` = the downstream audience = the service internal name (e.g. `auth-service`, `core-service`).
 - All times are unix **seconds**; `iat + ttlSeconds` = `exp`. No `jti`.
 - `sub`/`email`/`roles` exist only when `kind` is `authenticated` (`sub` = JWT `userId`).
-- `jsonwebtoken` signs `header.payload` with the per-service secret, so the JOSE `kid` is cryptographically bound (it cannot be smuggled after verification). Verification is alg-pinned to `HS256`; non-HS256 algorithms surface `'unsupported-algorithm'`.
+- `jsonwebtoken` signs `header.payload` with the per-service secret, so the JOSE `kid` is cryptographically bound (it cannot be smuggled after verification). Verification is alg-pinned to `HS256`; a non-`HS256` token (or `alg: none`) is rejected as `bad-signature` by `jsonwebtoken`'s `algorithms` allowlist.
 
 ## System Architecture
 
@@ -147,7 +147,7 @@ sequenceDiagram
 
     alt No cookies
         InternalJwtService-->>Gateway: anonymous identity
-    else Valid access token (not expired / not denylisted)
+    else Valid access token (not expired)
         InternalJwtService-->>Gateway: authenticated identity
         alt Token in proactive-refresh window
             InternalJwtService->>AuthService: POST /auth/refresh (single-flight, signed anonymous internal JWT)
@@ -227,15 +227,15 @@ sequenceDiagram
 
 The gateway `InternalJwtService` (`apps/backend/gateway/src/internal-jwt/internal-jwt.service.ts`) resolves the caller identity per proxied request:
 
-| Row       | Condition                                                                            | Result                                                                                                                                                                                                           |
-| --------- | ------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| F1        | No session cookies                                                                   | anonymous identity                                                                                                                                                                                               |
-| F2        | Valid access token (signature, `type: 'access'`, not denylisted, within session cap) | authenticated identity; on `/auth/logout` the access `jti` is denylisted (in-memory, until token `exp`) and the request is forwarded so the auth-service can revoke the DB refresh token                         |
-| F3        | Access missing/expired but a refresh token exists                                    | calls auth-service `/auth/refresh` (single-flight per refresh token, signed anonymous internal JWT with `aud=auth-service`); on success updates response + request cookies and returns an authenticated identity |
-| F3-window | Valid access token inside the proactive-refresh window                               | attempts a refresh without blocking the current access token; **a failed proactive refresh never downgrades a still-valid access token**                                                                         |
-| F4        | Cookies unresolvable (invalid/expired and refresh fails/missing)                     | clears auth cookies and returns 401 (never silent anonymous when the browser presents broken creds)                                                                                                              |
+| Row       | Condition                                                            | Result                                                                                                                                                                                                           |
+| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| F1        | No session cookies                                                   | anonymous identity                                                                                                                                                                                               |
+| F2        | Valid access token (signature, `type: 'access'`, within session cap) | authenticated identity; on `/auth/logout` the request is forwarded so the auth-service can revoke the DB refresh token (the access token is not revoked server-side and stays valid until it expires)            |
+| F3        | Access missing/expired but a refresh token exists                    | calls auth-service `/auth/refresh` (single-flight per refresh token, signed anonymous internal JWT with `aud=auth-service`); on success updates response + request cookies and returns an authenticated identity |
+| F3-window | Valid access token inside the proactive-refresh window               | attempts a refresh without blocking the current access token; **a failed proactive refresh never downgrades a still-valid access token**                                                                         |
+| F4        | Cookies unresolvable (invalid/expired and refresh fails/missing)     | clears auth cookies and returns 401 (never silent anonymous when the browser presents broken creds)                                                                                                              |
 
-Refresh single-flight and logout jti denylist live in the gateway only (in-memory per instance; logout also clears the DB refresh token).
+Refresh single-flight lives in the gateway only (in-memory per instance); on logout the gateway clears the auth cookies and forwards the request so the auth-service revokes the DB refresh token. Access tokens are not revoked server-side, so a logged-out access token stays valid until it expires (prod TTL 180s / 3 min; dev/test/uat 300s / 5 min).
 
 ## Downstream Enforcement (InternalJwtGuard)
 
@@ -324,7 +324,7 @@ Env placeholders (gateway + one per downstream service): `INTERNAL_JWT_SECRET_CO
 - `@Public()` — method/class; any signed identity kind allowed. Exported from `@pawhaven/backend-core/decorators`.
 - `@OptionalAuth()` — method/class; any signed identity kind allowed (handler can branch on `claims.kind`). Exported from `@pawhaven/backend-core/decorators`.
 
-Endpoint-policy annotations stay in `decorators/` (`auth-mode.decorator.ts`) because `Public`/`OptionalAuth`/`AuthMetadataKey` are a distinct annotation concern; claims injection is imported from the internal-JWT subpath. See [ADR-007](./ADR/ADR-007-backend-core-internal-jwt-module-boundary.md).
+Endpoint-policy annotations stay in `decorators/` (`auth-mode.decorator.ts`) because `Public`/`OptionalAuth`/`AuthMetadataKey` are a distinct annotation concern; claims injection is imported from the internal-JWT subpath.
 
 ### InternalJwtGuard
 
@@ -333,7 +333,7 @@ See [Downstream Enforcement](#downstream-enforcement-internaljwtguard). Config-d
 ## Logout
 
 - Logout (auth-service `POST /logout`, default-authenticated) revokes the DB refresh token by `claims.sub` and clears auth cookies.
-- The gateway also denylists the access-token `jti` on the logout path so in-flight/retried access tokens are rejected.
+- Access tokens are not revoked server-side: an already-issued access token stays valid until it expires. The revocation window therefore equals the access-token TTL — prod 180s (3 min), dev/test/uat 300s (5 min). Refresh revocation via the DB is unchanged.
 - Clients should clear local user state and redirect to login.
 
 ## Security Considerations
@@ -344,7 +344,7 @@ See [Downstream Enforcement](#downstream-enforcement-internaljwtguard). Config-d
 - Hash passwords using a strong one-way algorithm.
 - Separate token types (`access` vs `refresh` claims) so a stolen access token cannot be replayed as a refresh token.
 - Bound the refresh window with an **absolute session cap** (30 days by default): refresh tokens slide for at most 7 days, but the session ends unconditionally at `sessionExpiresAt`.
-- The gateway keeps an in-memory jti denylist (volatile across gateway restarts, bounded by the 15-minute token lifetime — use a shared cache such as Redis when scaling to multiple gateway instances).
+- Access-token revocation is bounded by the access-token TTL: prod 180s (3 min), dev/test/uat 300s (5 min). Logout revokes only the DB refresh token, so an already-issued access token stays valid until it expires (access tokens are never revoked server-side).
 - Internal-JWT verification pins `HS256`, applies a small clock tolerance (30s) and an exact audience check; unknown `kid`s (JOSE header) are rejected (allowlist).
 - Secrets must be kept in lockstep between the gateway and each downstream service (per-audience). Missing/invalid secrets fail closed at boot on both sides.
 - CORS allows only `GET, POST, PUT, OPTIONS`; the proxy strips any inbound `x-auth-*`/`x-gateway-*` spoofing headers.

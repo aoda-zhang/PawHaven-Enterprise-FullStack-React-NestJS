@@ -5,6 +5,8 @@ import '@pawhaven/i18n';
 
 import { type ApiErrorInfo, httpRequestErrors } from '../api/types';
 
+const DEFAULT_ERROR_TOAST_DURATION_MS = 5000;
+
 interface RequestMeta {
   isNetworkError?: boolean;
   isShowClientError?: boolean;
@@ -56,8 +58,8 @@ const showErrorToast = (
  */
 const handleError = ({ queryOptions, errorInfo, meta }: ErrorHandleType) => {
   let errorMessage = t('errorMessage.UNKNOWN_ERROR');
-  if (i18n.exists(`errorMessage.${errorInfo?.code}`)) {
-    errorMessage = t(`errorMessage.${errorInfo?.code}`);
+  if (errorInfo?.code && i18n.exists(`errorMessage.${errorInfo.code}`)) {
+    errorMessage = t(`errorMessage.${errorInfo.code}`);
   }
   const metaData: RequestMeta = {
     isShowClientError: false,
@@ -65,9 +67,14 @@ const handleError = ({ queryOptions, errorInfo, meta }: ErrorHandleType) => {
     ...meta,
   };
   switch (errorInfo.type) {
-    // Auth---------
     case httpRequestErrors.AUTH:
       queryOptions?.onAuthError?.();
+      showErrorToast(errorMessage, {
+        ...(metaData?.toastOptions ?? {}),
+        type: metaData?.toastOptions?.type ?? notificationType.info,
+        duration:
+          metaData?.toastOptions?.duration ?? DEFAULT_ERROR_TOAST_DURATION_MS,
+      });
       break;
     case httpRequestErrors.PERMISSION:
       queryOptions?.onPermissionError?.();
@@ -83,7 +90,8 @@ const handleError = ({ queryOptions, errorInfo, meta }: ErrorHandleType) => {
       showErrorToast(errorMessage, {
         ...(metaData?.toastOptions ?? {}),
         type: metaData?.toastOptions?.type ?? notificationType.info,
-        duration: metaData?.toastOptions?.duration ?? 500,
+        duration:
+          metaData?.toastOptions?.duration ?? DEFAULT_ERROR_TOAST_DURATION_MS,
       });
       break;
 
@@ -97,7 +105,8 @@ const handleError = ({ queryOptions, errorInfo, meta }: ErrorHandleType) => {
         showErrorToast(errorMessage, {
           ...(metaData?.toastOptions ?? {}),
           type: metaData?.toastOptions?.type ?? notificationType.info,
-          duration: metaData?.toastOptions?.duration ?? 100,
+          duration:
+            metaData?.toastOptions?.duration ?? DEFAULT_ERROR_TOAST_DURATION_MS,
         });
       }
       break;
@@ -115,7 +124,6 @@ const handleError = ({ queryOptions, errorInfo, meta }: ErrorHandleType) => {
  * @param queryOptions.staleTime - Time in ms before data is considered stale (default: 5 minutes)
  * @param queryOptions.gcTime - Time in ms before query cache is garbage collected (default: 30 minutes)
  * @param queryOptions.maxRetry - Maximum number of retry attempts (default: 2)
- * @param queryOptions.onAuthError - Callback for authentication errors
  * @param queryOptions.onPermissionError - Callback for permission errors
  * @param queryOptions.onSysError - Callback for critical system errors
  * @returns React Query configuration object with defaultOptions, queryCache, and mutationCache

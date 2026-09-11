@@ -92,7 +92,7 @@ Each color has a 1–10 scale (1 = lightest, 10 = darkest):
 #### Semantic Mappings
 
 Semantic token names and values are the single source of truth defined in
-[`design-system.html`](./design-system.html) (the Figma design system reference).
+[`src/tokens/`](./src/tokens/) (the Figma-derived token CSS).
 Primitive hue/scale tokens (`--color-gray-*`, `--color-brown-*`, etc.) MUST NOT be
 used directly in components — always reference a semantic token from the table below.
 

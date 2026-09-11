@@ -133,4 +133,3 @@ tsconfig.tsbuildinfo
 # codebuddy
 .codebuddy/memory/*.md
 .codebuddy/teams
-.codebuddy/docs/ADR

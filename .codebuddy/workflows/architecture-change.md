@@ -13,7 +13,7 @@ An architecture change crosses a component, package, or API boundary, or is a la
 5. **Decompose into verifiable units.** Each unit ends in a check: typecheck, tests, and for UI boundaries a render check. Per **principle-sequence-verifiable-units**, deliver in an order where each step proves the previous one.
 6. **Implement and review.** Delegate per-workstream to subagents with named data shapes and success criteria. **If the implementation wave is long** (multiple independent workstreams, likely > 300s per subagent), run the **parallel-execution** workflow (`workflows/parallel-execution.md`): split into small units, dispatch them in parallel, and join them through the memory-file barrier — each unit appends its status to today's `.codebuddy/memory/YYYY-MM-DD.md`, reads the entire memory file, waits for all sibling units, then reports back. Review every diff yourself; write your own summary. Guard at the boundary per **principle-boundary-discipline**.
 7. **Verify the boundary end to end.** All consumers migrated, legacy deleted, `pnpm typecheck` green, targeted tests green, and the real surface renders the intended behavior.
-8. **Record the decision.** Update `docs/` (architecture or ADR) so the boundary reasoning outlives the change, per the documentation rule. Small ordered commits, then the review handoff (`workflows/handoff.md`).
+8. **Record the decision.** Update the living architecture docs in `.codebuddy/docs/` so the boundary reasoning outlives the change, per the documentation rule. No ADR records. Small ordered commits, then the review handoff (`workflows/handoff.md`).
 
 ## Reply
 

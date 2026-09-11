@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // @ts-nocheck
-import { HTTP_STATUS } from '@pawhaven/shared';
+import { httpBusinessMappingCodes, HTTP_STATUS } from '@pawhaven/shared';
 
-import { HttpBusinessMappingCode, httpRequestErrors } from './types';
+import { httpRequestErrors } from './types';
 
 interface ErrorResponse {
   status?: number | null;
@@ -44,8 +44,8 @@ const isAuthError = (errorRes: ErrorResponse): boolean => {
   // 1. Status + code
   if (
     matchesStatusAndCode(errorRes, HTTP_STATUS.UNAUTHORIZED, [
-      HttpBusinessMappingCode.jwtExpired,
-      HttpBusinessMappingCode.unauthorized,
+      httpBusinessMappingCodes.jwtExpired,
+      httpBusinessMappingCodes.unauthorized,
     ])
   ) {
     return true;
@@ -74,7 +74,7 @@ const isPermissionError = (errorRes: ErrorResponse): boolean => {
   // 1. Status + code
   if (
     matchesStatusAndCode(errorRes, HTTP_STATUS.FORBIDDEN, [
-      HttpBusinessMappingCode.forbidden,
+      httpBusinessMappingCodes.forbidden,
     ])
   ) {
     return true;
@@ -96,14 +96,8 @@ const isPermissionError = (errorRes: ErrorResponse): boolean => {
  */
 const isRateLimit = (errorRes: ErrorResponse): boolean => {
   if (!errorRes) return false;
-  const { status, code } = errorRes;
-  return (
-    status === HTTP_STATUS.TOO_MANY_REQUESTS ||
-    [
-      HttpBusinessMappingCode.rateLimitExceeded,
-      HttpBusinessMappingCode.tooManyRequests,
-    ].includes(code ?? null)
-  );
+  const { status } = errorRes;
+  return status === HTTP_STATUS.TOO_MANY_REQUESTS;
 };
 
 /**
@@ -111,8 +105,7 @@ const isRateLimit = (errorRes: ErrorResponse): boolean => {
  */
 const isBadRequest = (errorRes: ErrorResponse): boolean =>
   matchesStatusAndCode(errorRes, HTTP_STATUS.BAD_REQUEST, [
-    HttpBusinessMappingCode.invalidParams,
-    HttpBusinessMappingCode.badRequest,
+    httpBusinessMappingCodes.validationError,
   ]);
 
 /**
@@ -133,12 +126,9 @@ const isServerError = (errorRes: ErrorResponse): boolean => {
  */
 const isMaintenance = (errorRes: ErrorResponse): boolean => {
   if (!errorRes) return false;
-  const { status, code, message } = errorRes;
+  const { message } = errorRes;
   return (
-    (status === HTTP_STATUS.SERVICE_UNAVAILABLE &&
-      [HttpBusinessMappingCode.maintenance].includes(code ?? null)) ||
-    (typeof message === 'string' &&
-      message.toLowerCase().includes('maintenance'))
+    typeof message === 'string' && message.toLowerCase().includes('maintenance')
   );
 };
 

@@ -7,8 +7,11 @@ import {
   Injectable,
   Logger,
 } from '@nestjs/common';
+import { httpBusinessMappingCodes } from '@pawhaven/shared';
 
 import { HttpResType } from '../../types/http.types';
+
+const BUSINESS_CODES = new Set<string>(Object.values(httpBusinessMappingCodes));
 
 @Injectable()
 @Catch()
@@ -40,10 +43,13 @@ export class HttpExceptionFilter implements ExceptionFilter {
       data = exception?.data ?? null;
     }
 
+    const code = BUSINESS_CODES.has(message) ? message : '';
+
     const errorResponse: HttpResType = {
       status,
       isSuccess: false,
       message,
+      code,
       data,
     };
 

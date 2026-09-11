@@ -1,7 +1,6 @@
 import type { CustomDecorator } from '@nestjs/common';
 import { SetMetadata } from '@nestjs/common';
 
-import { commonDecoratorsKeys } from './decorator.constant';
+export const NO_SIGN = 'NO_SIGN';
 
-export const NoSign = (): CustomDecorator =>
-  SetMetadata(commonDecoratorsKeys.noSign, true);
+export const NoSign = (): CustomDecorator => SetMetadata(NO_SIGN, true);

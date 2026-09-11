@@ -40,7 +40,7 @@ cors:
 
 auth:
   jwtSecret: ${JWT_SECRET}
-  jwtExpiresIn: 300
+  jwtExpiresIn: 180
   refreshTokenExpiresIn: 604800
   sessionExpiresIn: 2592000
   refreshTokenRotationWindowSeconds: 86400

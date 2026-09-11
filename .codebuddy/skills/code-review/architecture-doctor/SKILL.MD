@@ -4,7 +4,7 @@ description: >
   Architecture & design compliance detection. Covers cross-module imports (forbidden),
   package dependency direction (ui -> frontend-core inverted, forbidden),
   cross-feature imports (forbidden), component graduation (2+ features must promote),
-  feature folder structure, API design consistency, shared type ownership, ADR references.
+  feature folder structure, API design consistency, shared type ownership, decision references.
   Trigger: architecture boundaries dependency direction module isolation graduation package layering.
 version: 3.0
 ---
@@ -284,27 +284,26 @@ grep -rn "interface.*Dto\|type.*Dto\|interface.*Type" \
 
 ---
 
-## Rule 9: ADR Reference Check
+## Rule 9: Living Architecture Docs Coverage Check
 
 **Severity**: Suggestion
 
-Verify architecture decisions are documented:
+Verify significant architecture changes are reflected in the living architecture docs:
 
 ```bash
-# List existing ADRs
-ls .codebuddy/docs/ADR/
+# List the living architecture docs
+ls .codebuddy/docs/
 ```
 
 **What to look for:**
 
-- Significant architecture change without a corresponding ADR → Suggestion
-- ADR metadata out of date (status not updated when superseded) → Warning
+- Significant architecture change not reflected in the living architecture docs → Suggestion
 
 **Report format:**
 
 ```
-💡 [Suggestion] Missing ADR: The new notification module introduces a new event pattern.
-   Consider creating ADR-003-notification-events.md to document the decision.
+💡 [Suggestion] Undocumented decision: The new notification module introduces a new event pattern.
+   Update `.codebuddy/docs/PawHaven-System-Architecture-Overview.md` to record the decision.
 ```
 
 ---
@@ -330,7 +329,7 @@ ls .codebuddy/docs/ADR/
 ### 💡 Suggestions
 | # | Rule | File | Line | Issue |
 |---|------|------|------|-------|
-| 1 | Missing ADR | N/A | N/A | ... |
+| 1 | Undocumented decision | N/A | N/A | ... |
 
 ### Summary
 - X Blocking, Y Warnings, Z Suggestions

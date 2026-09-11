@@ -3,9 +3,8 @@ import {
   ExecutionContext,
   UnauthorizedException,
 } from '@nestjs/common';
+import { httpBusinessMappingCodes } from '@pawhaven/shared';
 import { InternalJwtKind } from '@pawhaven/shared/types';
-
-import { httpBusinessMappingCodes } from '../../constants';
 
 import type { InternalJwtRequest } from './internal-jwt.types';
 

@@ -1,6 +1,6 @@
 # PawHaven — System Architecture Overview
 
-> **Version**: v3.4 | **Date**: 2026-09-10
+> **Version**: v3.5 | **Date**: 2026-09-10
 > **Design Philosophy**: Pragmatic service decomposition. Modular monolith inside core-service. Extract only when necessary.
 >
 > **Related Docs**: [Frontend Architecture](./PawHaven-Frontend-Architecture.md) | [Backend Architecture](./PawHaven-Backend-Architecture.md) | [Authentication Architecture](./authentication-architecture.md)
@@ -19,7 +19,7 @@
 8. [Security Architecture](#8-security-architecture)
 9. [Observability & Operations](#9-observability--operations)
 10. [Deployment Architecture](#10-deployment-architecture)
-11. [Architecture Decision Records](#11-architecture-decision-records)
+11. [Design Decisions](#11-design-decisions)
 12. [Module Boundary Enforcement](#12-module-boundary-enforcement)
 13. [Why This Design Works](#13-why-this-design-works)
 
@@ -289,7 +289,7 @@ Client Request (httpOnly cookies)
 │  ┌──────────────────────────────────────────────────┐  │
 │  │  InternalJwtService — resolve identity (F1-F4)    │  │
 │  │  · access-token verify / type / session cap /     │  │
-│  │    logout jti denylist                            │  │
+│  │    logout revokes the DB refresh token            │  │
 │  │  · proactive refresh window + single-flight       │  │
 │  │  · unresolvable cookies → 401 + clear cookies     │  │
 │  └───────────────────────┬──────────────────────────┘  │
@@ -491,12 +491,12 @@ export const RescueStatusChangedEventSchema = z.object({
 Client (httpOnly cookies) → gateway
    │
    │ POST /api/auth/login (email + password)
-   │ ← auth-service issues Token pair (access 15min, refresh 7d) as cookies
+   │ ← auth-service issues Token pair (access 3min prod / 5min dev, refresh 7d) as cookies
    │
    │ (subsequent requests carry cookies)
    ▼
 gateway InternalJwtService — the ONLY JWT owner
-   · verifies access token (signature, type:'access', session cap, jti deny)
+   · verifies access token (signature, type:'access', session cap)
    · proactive refresh window; refresh single-flight via auth-service
    · unresolvable cookies → 401 + clear cookies (no silent anonymous)
    ▼
@@ -598,9 +598,11 @@ this.logger.log({
 
 ---
 
-## 11. Architecture Decision Records
+## 11. Design Decisions
 
-### ADR-001: Modular Monolith Inside core-service
+> These design decisions are recorded inline in this overview, labelled `DD-n` (Design Decision). These inline entries ARE the record — there is no separate ADR filing series.
+
+### DD-1: Modular Monolith Inside core-service
 
 | Field            | Detail                                                                                                                                                                                                                                                            |
 | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -609,7 +611,7 @@ this.logger.log({
 | **Decision**     | All 7 business modules live inside core-service as strict NestJS modules. Module boundaries enforced by ESLint rules. Communication via in-process EventEmitter2.                                                                                                 |
 | **Consequences** | **Easier**: Fast iteration, simple deployment, zero network overhead for inter-module calls, easier debugging. **Harder**: Must maintain module boundary discipline; risk of accidental coupling. Mitigated by lint rules + architecture fitness functions in CI. |
 
-### ADR-002: 5-Service Split Rationale
+### DD-2: 5-Service Split Rationale
 
 | Field            | Detail                                                                                                                                                                                                                                          |
 | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -618,7 +620,7 @@ this.logger.log({
 | **Decision**     | 5 services: gateway (stateless, scaling), auth (security isolation), core (modular monolith), document (heavy deps, different resource profile), config (separate deploy for config changes).                                                   |
 | **Consequences** | **Easier**: Each service scales independently, auth can be security-audited in isolation, PDF generation doesn't affect API latency. **Harder**: 5 deployables to manage. Acceptable — each has a clear operational reason to exist separately. |
 
-### ADR-003: MongoDB with Collection-per-Module
+### DD-3: MongoDB with Collection-per-Module
 
 | Field            | Detail                                                                                                                                                                                                                                                     |
 | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -627,7 +629,7 @@ this.logger.log({
 | **Decision**     | Single database `pawhaven-core` with collection naming convention `{module}_{entity}`. Each module's Prisma service only accesses its own collections. Cross-module data access through public service classes only.                                       |
 | **Consequences** | **Easier**: Single DB to operate, backup, and monitor. **Harder**: No DB-level access control between modules (mitigated by code-level enforcement). Future: if a module needs data isolation, split its collections into a separate DB — no code changes. |
 
-### ADR-004: Zod for Shared Schema Validation
+### DD-4: Zod for Shared Schema Validation
 
 | Field            | Detail                                                                                                                                                                      |
 | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -636,7 +638,7 @@ this.logger.log({
 | **Decision**     | All DTOs, event schemas, and domain types defined as Zod schemas in `@pawhaven/shared`. Frontend uses `@hookform/resolvers/zod`. Backend uses `nestjs-zod` validation pipe. |
 | **Consequences** | Single source of truth for validation. Automatic TypeScript type inference. ~12KB gzipped Zod in frontend — acceptable.                                                     |
 
-### ADR-005: In-Process Events → Future Message Broker
+### DD-5: In-Process Events → Future Message Broker
 
 | Field            | Detail                                                                                                                                                                                       |
 | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -645,7 +647,7 @@ this.logger.log({
 | **Decision**     | Phase 1: NestJS EventEmitter2 (in-process). Phase 3+: migrate to message broker only if/when modules are extracted from core-service.                                                        |
 | **Consequences** | **Easier**: Zero infrastructure, zero latency, simple debugging. **Harder**: Events are lost on process restart (acceptable for Phase 1 — events are not the system of record; database is). |
 
-### ADR-006: Feature-Based Frontend Modules
+### DD-6: Feature-Based Frontend Modules
 
 | Field            | Detail                                                                                                                                                                                            |
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

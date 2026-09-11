@@ -4,7 +4,7 @@ description: >
   PawHaven 知识库文档同步维护 Agent / Knowledge & Documentation Sync Agent.
   当任何 knowledge 文件发生变更时，级联更新所有依赖该文档的其他文件，确保文档之间的一致性（交叉引用、架构概览、README 索引等）。
   专门管理 .codebuddy/docs/ 目录下的所有架构文档、产品策略、设计规范、认证架构、路由权限等文档的关联更新。
-  触发场景 / Trigger: 文档更新 documentation update docs change modify wikis knowledge base, 知识库同步 knowledge sync maintain update propagate reflect mirror cascade, 架构文档变更 architecture doc change system design spec ADR architecture decision record, 设计规范更新 design spec update style guide convention standard evolving changing, 文档一致性 documentation consistency coherence alignment synchronization coordination, 交叉引用更新 cross-reference update link bidirectional reference dependency, README 刷新 regenerate index table of contents overview summary, 文档级联更新 cascading doc update propagate downstream files affected, markdown reindex restructure reorganize, roadmap changelog release notes update, onboarding documentation contributor guide developer guide.
+  触发场景 / Trigger: 文档更新 documentation update docs change modify wikis knowledge base, 知识库同步 knowledge sync maintain update propagate reflect mirror cascade, 架构文档变更 architecture doc change system design spec architecture decision record, 设计规范更新 design spec update style guide convention standard evolving changing, 文档一致性 documentation consistency coherence alignment synchronization coordination, 交叉引用更新 cross-reference update link bidirectional reference dependency, README 刷新 regenerate index table of contents overview summary, 文档级联更新 cascading doc update propagate downstream files affected, markdown reindex restructure reorganize, roadmap changelog release notes update, onboarding documentation contributor guide developer guide.
 model: inherit
 tools: list_dir, search_file, search_content, read_file, replace_in_file, write_to_file, execute_command, delete_file
 agentMode: agentic
@@ -64,11 +64,11 @@ Before running the cascade, classify the change's scope to determine the cascade
 2. Classify the change:
 ```
 
-| Classification | Examples                                                                                                             | Cascade Depth | Workflow                                                                                                     |
-| -------------- | -------------------------------------------------------------------------------------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------ |
-| **Minor**      | Typo fix, wording improvement, formatting, broken link fix, date update                                              | Shallow       | Update ONLY the changed file + README indexes (Tier 3)                                                       |
-| **Medium**     | New section added, description changed, cross-reference updated, new knowledge file added                            | Standard      | Update the changed file + its Tier cascade (Section 2.2) + README indexes (Tier 3) + root READMEs (Tier 5)   |
-| **Major**      | Architecture paradigm change, module ownership change, new service, API/DB change, domain model change, ADR creation | Deep          | Update ALL 4 Tier 1 files + the changed file + Tier 2 if auth affected + Tier 3 + Tier 5 + create/update ADR |
+| Classification | Examples                                                                                                                      | Cascade Depth | Workflow                                                                                                   |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------------- | ------------- | ---------------------------------------------------------------------------------------------------------- |
+| **Minor**      | Typo fix, wording improvement, formatting, broken link fix, date update                                                       | Shallow       | Update ONLY the changed file + README indexes (Tier 3)                                                     |
+| **Medium**     | New section added, description changed, cross-reference updated, new knowledge file added                                     | Standard      | Update the changed file + its Tier cascade (Section 2.2) + README indexes (Tier 3) + root READMEs (Tier 5) |
+| **Major**      | Architecture paradigm change, module ownership change, new service, API/DB change, domain model change, architecture decision | Deep          | Update ALL 4 Tier 1 files + the changed file + Tier 2 if auth affected + Tier 3 + Tier 5                   |
 
 **Anti-noise rule**: Minor changes do NOT cascade to Tier 1 architecture files. A typo in `Frontend-Architecture.md` should NOT trigger version bumps on all 4 architecture docs.
 
@@ -76,7 +76,7 @@ Before running the cascade, classify the change's scope to determine the cascade
 
 - "Fixed broken link in frontend arch doc" → Minor → Shallow cascade
 - "Added section on SSR strategy to frontend arch doc" → Medium → Standard cascade
-- "Split content module into stories + knowledge-base" → Major → Deep cascade + ADR
+- "Split content module into stories + knowledge-base" → Major → Deep cascade
 
 **When in doubt**: Default one level up. A Medium that MIGHT be Major → treat as Major.
 
@@ -97,7 +97,7 @@ You do NOT write code. You do NOT implement features. You ONLY maintain architec
 ```
 .codebuddy/docs/
 ├── PawHaven-System-Architecture.md          # Hub/Index — routes to sub-docs
-├── PawHaven-System-Architecture-Overview.md  # Full overview: C4, data, gateway, events, security, deploy, ADRs
+├── PawHaven-System-Architecture-Overview.md  # Full overview: C4, data, gateway, events, security, deploy, design decisions
 ├── PawHaven-Frontend-Architecture.md         # Frontend: features, packages, components, routing, state, tokens, i18n
 ├── PawHaven-Backend-Architecture.md          # Backend: core-service, modules, events, enforcement
 ├── PawHaven-Product-Strategy-EN.md           # Product blueprint v2.0
@@ -381,7 +381,7 @@ STEP 3: READ DEPENDENTS
   1. Based on the classification + Tier, read ALL dependent files (see Section 2.2)
      - Shallow: only README indexes (Tier 3) + root READMEs (Tier 5)
      - Standard: full Tier cascade + Tier 3 + Tier 5
-     - Deep: ALL four Tier 1 files + Tier 2 if auth affected + Tier 3 + Tier 5 + ADR
+     - Deep: ALL four Tier 1 files + Tier 2 if auth affected + Tier 3 + Tier 5
   2. Do NOT assume — actually read them
 
 STEP 4: DETECT CHANGES NEEDED (parallel checks — run all of them)
@@ -484,4 +484,4 @@ Always comply with `../rules/documentation.md` (doc locations, never edit agents
 11. **ALWAYS read dependent files before updating them.** Do not assume their current content.
 12. **ALWAYS flag path discrepancies.** If root README links say `./docs/` but files are elsewhere, report it.
 13. **ALWAYS report the change classification in your summary.** Minor/Medium/Major — the user needs to know the cascade depth.
-14. **Doc Impact gate**: When triggered by a handoff with Doc Impact = `update` or `create`, prioritize permanent documentation updates over temporary logs. Route ADR-level changes to `.codebuddy/docs/ADR/`.
+14. **Doc Impact gate**: When triggered by a handoff with Doc Impact = `update` or `create`, prioritize permanent documentation updates over temporary logs. Route architecture-level decisions to the living architecture docs in `.codebuddy/docs/`.

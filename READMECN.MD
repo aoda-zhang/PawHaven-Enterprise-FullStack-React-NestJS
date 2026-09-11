@@ -77,16 +77,22 @@ PawHaven 是一个开放且持续发展的项目，欢迎对动物救援、开�
 | 文档                                                                 | 说明                                                    |
 | -------------------------------------------------------------------- | ------------------------------------------------------- |
 | [产品策略](./.codebuddy/docs/PawHaven-Product-Strategy-EN.md) (英文) | 完整产品全景设计 — 7 个模块、用户画像、价值闭环、路线图 |
-| [系统架构](./.codebuddy/docs/PawHaven-System-Architecture.md)        | 5 服务架构、模块化单体、DDD、事件驱动、架构决策记录     |
+| [系统架构](./.codebuddy/docs/PawHaven-System-Architecture.md)        | 5 服务架构、模块化单体、DDD、事件驱动、设计决策         |
 | [设计系统](./packages/design-system/README.MD)                       | Design tokens、Tailwind v4 主题、CSS 工具类             |
+
+### 认证一览
+
+浏览器 JWT / Cookie 只由 **网关** 持有。网关按请求解析调用者身份（F1–F4）、必要时刷新，并针对目标服务签发一个短时效的 **HS256 内部 JWT**，写入 `x-gateway-jwt` 头。下游服务永远看不到浏览器 token —— 由全局 `InternalJwtGuard` 校验内部 JWT（fail-closed），handler 通过 `@InternalJwt()` 读取身份，端点策略用 `@Public()` / `@OptionalAuth()` / 默认需认证表达。
+
+→ 完整细节见 [身份认证与授权架构](./.codebuddy/docs/authentication-architecture.md)。
 
 ### 工程
 
-| 文档                                                                   | 说明                     |
-| ---------------------------------------------------------------------- | ------------------------ |
-| [Monorepo 与项目规范](./.codebuddy/docs/project_standards.md)          | 编码规范、工具链、工作流 |
+| 文档                                                                   | 说明                                                                     |
+| ---------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| [Monorepo 与项目规范](./.codebuddy/docs/project_standards.md)          | 编码规范、工具链、工作流                                                 |
 | [身份认证与授权架构](./.codebuddy/docs/authentication-architecture.md) | 网关持有的 Cookie JWT + 内部 HS256 JWT（InternalJwt）服务认证，RBAC 设计 |
-| [路由级认证](./.codebuddy/docs/route_authentication.md)                | 前端路由守卫实现         |
+| [路由级认证](./.codebuddy/docs/route_authentication.md)                | 前端路由守卫实现                                                         |
 
 ---
 

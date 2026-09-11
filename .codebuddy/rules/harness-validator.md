@@ -9,7 +9,7 @@ The .codebuddy is a living system. As agents edit docs, rename files, and update
 
 - Broken relative links (e.g., `../agents/pawhaven.md` that no longer exists)
 - Stale references to renamed files (e.g., `AGENT.md` → `agents/pawhaven.md`)
-- Missing directories referenced by docs (e.g., `ADR/`)
+- Missing directories referenced by docs (e.g., `docs/feature-workflows/`)
 - Agent names in docs that don't match actual `*.md` files in `<AGENT_DIR>/agents/` (where `<AGENT_DIR>` defaults to `.codebuddy`)
 - Workflow docs referencing steps that no longer exist
 
@@ -48,7 +48,6 @@ ls "$AGENT_DIR"/agents/*.md
 
 ### 4. Directory Existence
 
-- `<AGENT_DIR>/docs/ADR/` must exist (create with template if missing).
 - `<AGENT_DIR>/agents/` must contain at least: `frontend.md`, `backend.md`, `testing.md`, `code-review.md`, `architect.md`, `knowledge-update.md`.
 - `<AGENT_DIR>/workflows/` must contain at least: `feature-development.md`, `bug-fix.md`, `handoff.md`.
 
@@ -161,7 +160,7 @@ fi
 
 # 3. Check required directories exist
 echo "[3/6] Checking required directories..."
-for dir in "$AGENT_DIR/docs/ADR" "$AGENT_DIR/agents" "$AGENT_DIR/workflows" "$AGENT_DIR/rules"; do
+for dir in "$AGENT_DIR/agents" "$AGENT_DIR/workflows" "$AGENT_DIR/rules"; do
   if [ ! -d "$dir" ]; then
     echo "  FAIL: $dir does not exist"
     ERRORS=$((ERRORS + 1))

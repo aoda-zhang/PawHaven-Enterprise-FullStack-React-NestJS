@@ -13,7 +13,7 @@ import type {
   AuthenticatedInternalJwt,
   SessionDto,
 } from '@pawhaven/shared/types';
-import { httpBusinessMappingCodes } from '@pawhaven/backend-core/constants';
+import { httpBusinessMappingCodes } from '@pawhaven/shared';
 import { Public } from '@pawhaven/backend-core/decorators';
 import { InternalJwt } from '@pawhaven/backend-core/internal-jwt';
 

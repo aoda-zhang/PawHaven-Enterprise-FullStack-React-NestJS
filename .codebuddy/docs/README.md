@@ -18,9 +18,8 @@
 
 | File                                                                                   | Description                                                                                                      |
 | -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| [PawHaven-System-Architecture.md](./PawHaven-System-Architecture.md)                   | System architecture design v3.4 — service decomposition, modular monolith, deployment topology, data flow        |
-| [PawHaven-System-Architecture-Overview.md](./PawHaven-System-Architecture-Overview.md) | System architecture v3.4 — 5 services, API gateway routing (internal-JWT auth), event catalog, data architecture |
-| [ADR/](./ADR/)                                                                         | Architecture Decision Records — why decisions were made, not just what was decided                               |
+| [PawHaven-System-Architecture.md](./PawHaven-System-Architecture.md)                   | System architecture design v3.5 — service decomposition, modular monolith, deployment topology, data flow        |
+| [PawHaven-System-Architecture-Overview.md](./PawHaven-System-Architecture-Overview.md) | System architecture v3.5 — 5 services, API gateway routing (internal-JWT auth), event catalog, data architecture |
 
 **Key contents**: Monorepo structure (`apps/backend/*` + `apps/frontend/*` + `packages/*` + `libs/*`), pragmatic service decomposition philosophy, modular monolith design inside core-service, API Gateway routing rules, inter-service communication patterns.
 
@@ -38,13 +37,12 @@
 
 ## 4. Design System
 
-| File                                                               | Type                   | Description                                                                                      |
-| ------------------------------------------------------------------ | ---------------------- | ------------------------------------------------------------------------------------------------ |
-| [design-system.html](../packages/design-system/design-system.html) | HTML (open in browser) | Visual design system — Colors, Typography, Layout, Icons, and Images rendered with actual styles |
-| [tokens/](../packages/design-system/src/tokens/)                   | CSS                    | 12 design token CSS variable files                                                               |
-| [theme.css](../packages/design-system/src/theme.css)               | CSS                    | Global theme definitions                                                                         |
-| [utilities.css](../packages/design-system/src/utilities.css)       | CSS                    | Utility classes                                                                                  |
-| [src/](../packages/design-system/src/)                             | TypeScript             | Design system source code                                                                        |
+| File                                                            | Type       | Description                        |
+| --------------------------------------------------------------- | ---------- | ---------------------------------- |
+| [tokens/](../../packages/design-system/src/tokens/)             | CSS        | 12 design token CSS variable files |
+| [theme.css](../../packages/design-system/src/theme.css)         | CSS        | Global theme definitions           |
+| [utilities.css](../../packages/design-system/src/utilities.css) | CSS        | Utility classes                    |
+| [src/](../../packages/design-system/src/)                       | TypeScript | Design system source code          |
 
 **Key contents**: `#f7823a` warm orange primary, Fraunces + Plus Jakarta Sans type system, Badge / Button / Card component specs, Lucide icon mapping, Unsplash image size standards.
 
@@ -92,14 +90,14 @@
 
 ## 8. Key Project Files
 
-| File                                          | Description                                                                                                        |
-| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| [pawhaven.md](../agents/pawhaven.md)          | AI Agent orchestration rules — complexity classification, workflow selection, agent dispatch, operating principles |
-| [README.MD](../README.MD)                     | Project README (English) — see also `.codebuddy/README.md` for .codebuddy-specific docs                            |
-| [READMECN.MD](../READMECN.MD)                 | Project README (中文)                                                                                              |
-| [package.json](../package.json)               | Monorepo root config (pnpm workspace)                                                                              |
-| [turbo.json](../turbo.json)                   | Turborepo build orchestration config                                                                               |
-| [pnpm-workspace.yaml](../pnpm-workspace.yaml) | pnpm workspace declaration                                                                                         |
+| File                                             | Description                                                                                                        |
+| ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
+| [pawhaven.md](../agents/pawhaven.md)             | AI Agent orchestration rules — complexity classification, workflow selection, agent dispatch, operating principles |
+| [README.MD](../../README.MD)                     | Project README (English) — see also `.codebuddy/README.md` for .codebuddy-specific docs                            |
+| [READMECN.MD](../../READMECN.MD)                 | Project README (中文)                                                                                              |
+| [package.json](../../package.json)               | Monorepo root config (pnpm workspace)                                                                              |
+| [turbo.json](../../turbo.json)                   | Turborepo build orchestration config                                                                               |
+| [pnpm-workspace.yaml](../../pnpm-workspace.yaml) | pnpm workspace declaration                                                                                         |
 
 ---
 
@@ -126,9 +124,6 @@ project_standards.md ───────────────────�
                                                         │
 pawhaven.md ───────────────────────────────────────────┘
   (AI Agent Orchestration)
-
-ADR/ ───────────────────────────────────────────────────┐
-  (Architecture Decision Records)
 ```
 
-> **Suggested reading order**: Step 1 Product Strategy → Step 2 System Architecture → Step 3 Figma Design → Step 4 Design System → Step 5 Auth Architecture → Step 6 Engineering Standards → Step 7 Feature Workflows (load the relevant feature doc when building) → Step 8 ADRs (for architectural context)
+> **Suggested reading order**: Step 1 Product Strategy → Step 2 System Architecture → Step 3 Figma Design → Step 4 Design System → Step 5 Auth Architecture → Step 6 Engineering Standards → Step 7 Feature Workflows (load the relevant feature doc when building)

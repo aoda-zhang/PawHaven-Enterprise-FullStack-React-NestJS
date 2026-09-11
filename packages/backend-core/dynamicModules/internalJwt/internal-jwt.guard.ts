@@ -6,9 +6,9 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Reflector } from '@nestjs/core';
+import { httpBusinessMappingCodes } from '@pawhaven/shared';
 import { InternalJwtKind, type InternalJwt } from '@pawhaven/shared/types';
 
-import { httpBusinessMappingCodes } from '../../constants';
 import { AuthMetadataKey } from '../../decorators/auth-mode.decorator';
 
 import { InternalJwtVerificationError } from './errors';

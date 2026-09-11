@@ -11,7 +11,7 @@ A design decision is an architecture, data model, or API choice with competing o
 3. **Settle empirical forks by observing.** If the choice is settled by behavior, layout, timing, or output, prototype it and let the result decide, per **principle-never-block-on-the-human**. The ask is the slow path; a throwaway probe hands the human a result to react to.
 4. **Check the boundaries.** For each option, where are the guards, what is trusted, what breaks (API contract, i18n keys, storage, existing consumers across `apps/` and `packages/`)? Per **principle-boundary-discipline** and **principle-migrate-callers-then-delete-legacy-apis**, an option that strands legacy is worse than one that migrates it.
 5. **Decide, and name the tradeoff you accepted.** Every decision gives something up. State what the losing options were and why they lost. If the decision is contested or high-stakes, route it through adversarial review (`agents/code-review.md`) before committing.
-6. **Write the decision.** If it changes the architecture or a shared contract, record it in `docs/` (ADR-style) so future sessions inherit the reasoning, per the documentation rule.
+6. **Write the decision.** If it changes the architecture or a shared contract, update the living architecture docs in `.codebuddy/docs/` so future sessions inherit the reasoning, per the documentation rule. No ADR records.
 
 ## Reply
 

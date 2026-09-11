@@ -1,6 +1,6 @@
 # PawHaven — Backend Architecture
 
-> **Version**: v3.4 | **Date**: 2026-09-10
+> **Version**: v3.5 | **Date**: 2026-09-10
 > **Related Docs**: [System Architecture Overview](./PawHaven-System-Architecture-Overview.md) | [Frontend Architecture](./PawHaven-Frontend-Architecture.md)
 
 ---
@@ -471,7 +471,7 @@ opt-in per service.
 
 | Category               | Technology                                                    | Notes                                                                 |
 | ---------------------- | ------------------------------------------------------------- | --------------------------------------------------------------------- |
-| **Browser sessions**   | Cookie-based JWT — owned by gateway `InternalJwtService` only | Access 15min, Refresh 7d (httpOnly cookies)                           |
+| **Browser sessions**   | Cookie-based JWT — owned by gateway `InternalJwtService` only | Access 3min prod / 5min dev, Refresh 7d                               |
 | **Service-to-service** | HS256 internal JWT `InternalJwt` in `x-gateway-jwt` (45s TTL) | Verified by downstream `InternalJwtGuard`; no `x-auth-*` header trust |
 | **Authorization**      | RBAC                                                          | Role + permission checks                                              |
 | **Rate Limiting**      | Token bucket                                                  | Per IP + per user at gateway                                          |

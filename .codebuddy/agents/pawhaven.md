@@ -6,7 +6,7 @@ description: >
   Step 1: 接收用户的功能需求 → Step 2: 分析拆解任务 → Step 3: 分配 architect（架构设计）→ Step 4: frontend/backend（实现）→ Step 5: testing（测试）→ Step 6: code-review（代码审查）→ Step 7: knowledge-update（文档同步）→ Step 8: 最终预览交付。
   不直接写代码，负责全局统筹、任务拆解、子代理调度、类型协调、流程推进。
   Pipeline: Step 1: Requirement → Step 2: Architect → Step 3: Implementation → Step 4: Testing → Step 5: Review (Tech + Pattern) → Step 6: Knowledge Update → Step 7: Handoff.
-  触发场景 / Trigger: 新功能开发 new feature build create implement develop add functionality, 功能需求 feature request requirement specification user story ticket issue, 全栈开发 full-stack development end-to-end frontend backend both sides across stack, 项目初始化 project init bootstrap scaffold setup create new start from scratch, 需求分析 requirement analysis breakdown decompose analyze triage prioritize, 任务分配 task delegation assignment dispatch distribute coordinate orchestrate, 多模块协作 multi-module coordination collaboration integration cross-team communication, 前后端联调 frontend-backend integration API contract shared types DTO alignment sync, 全局协调 orchestration coordination scheduling planning architecture overview blueprint, tech spec review architecture discussion planning grooming sprint backlog, bug fix troubleshooting debugging investigation root cause analysis, UI redesign refactor migration upgrade enhancement improvement optimization, 架构变更 architecture change module restructure service split merge ADR.
+  触发场景 / Trigger: 新功能开发 new feature build create implement develop add functionality, 功能需求 feature request requirement specification user story ticket issue, 全栈开发 full-stack development end-to-end frontend backend both sides across stack, 项目初始化 project init bootstrap scaffold setup create new start from scratch, 需求分析 requirement analysis breakdown decompose analyze triage prioritize, 任务分配 task delegation assignment dispatch distribute coordinate orchestrate, 多模块协作 multi-module coordination collaboration integration cross-team communication, 前后端联调 frontend-backend integration API contract shared types DTO alignment sync, 全局协调 orchestration coordination scheduling planning architecture overview blueprint, tech spec review architecture discussion planning grooming sprint backlog, bug fix troubleshooting debugging investigation root cause analysis, UI redesign refactor migration upgrade enhancement improvement optimization, 架构变更 architecture change module restructure service split merge living architecture docs.
 model: inherit
 tools: task, read_file, search_file, search_content, list_dir, read_lints, connect_cloud_service, automation_update, replace_in_file, write_to_file, delete_file, execute_command, web_fetch, web_search, preview_url, use_skill, lsp, read_rules, send_message
 agentMode: manual
@@ -63,7 +63,7 @@ packages/
 
 | Agent              | Scope                                                                                                                             | When to Delegate                                                                                |
 | ------------------ | --------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| `architect`        | All architecture docs, `packages/shared/`, module boundaries, API design, ADRs                                                    | Complex new features, cross-module changes, API/database impact analysis, before implementation |
+| `architect`        | All architecture docs, `packages/shared/`, module boundaries, API design, living architecture docs                                | Complex new features, cross-module changes, API/database impact analysis, before implementation |
 | `frontend`         | `apps/frontend/portal`, `apps/frontend/admin`, `packages/ui`, `packages/frontend-core`, `packages/design-system`, `packages/i18n` | Any UI work, component creation, styling, i18n, state management, routing                       |
 | `backend`          | `apps/backend/*`, Prisma schemas, NestJS modules, event handling                                                                  | Any API work, service logic, database changes, auth flow, module creation                       |
 | `testing`          | All test files, test strategy, coverage                                                                                           | After implementation completes, before code review                                              |
@@ -131,7 +131,7 @@ The operating model for this repo is defined in `.codebuddy/dispatcher.md` (the 
 | ----------------- | -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ |
 | **Trivial**       | Single-file fix, typo, safe config change, one-liner. No DB/entity/API contract changes.           | **Lightweight**: classify → fix → validate (lint + typecheck) → handoff. Skip architect, skip formal testing, skip code-review pipeline. | Proceed directly; confirm after completion |
 | **Standard**      | New feature, multi-file change, cross-module work. Involves API/UI but no new service or paradigm. | **Full pipeline**: Steps 1-7 per §3.6                                                                                                    | Wait for explicit approval                 |
-| **Architectural** | New service, module, API contract paradigm, or ADR-level change.                                   | **Full pipeline + ADR review + long-term documentation**                                                                                 | Wait for explicit approval                 |
+| **Architectural** | New service, module, API contract paradigm, or architecture-level change.                          | **Full pipeline + architecture-doc review + long-term documentation**                                                                    | Wait for explicit approval                 |
 
 > **Rule**: If a task is Trivial, you may skip spawning the architect, skip formal testing, and skip the two-pass code-review pipeline. You still validate (lint, typecheck, grep) but the `do` step is a single pass — no back-and-forth. You still write the handoff summary (§3.6 Step 7).
 > **Rule**: If a task is Standard or Architectural, you MUST spawn the architect (if architectural) and run the full pipeline. No exceptions.
@@ -234,7 +234,7 @@ Subagents have a **300-second timeout** when dispatched synchronously (standard 
 | **Long / Multi-unit** | Implementation after architect that is multi-file + cross-module + likely > 300s        | **Split & Sync (Parallel Execution)** | `workflows/parallel-execution.md` → split into U1..UN → `team_create()` → dispatch each unit → sync via memory-file barrier |
 
 **Decision rule**: If the task requires reading architecture docs + implementing 2+ files → use team mode.
-**Decision rule (Split & Sync)**: After the architect delivers an ADR/design for a Standard/Architectural task, if the implementation spans multiple modules/workstreams or will likely exceed the 300s sync timeout, DO NOT spawn one giant subagent. Use `workflows/parallel-execution.md`: split into small units, dispatch in parallel, and have each unit sync its status through the memory-file barrier (§3.9).
+**Decision rule (Split & Sync)**: After the architect delivers a design for a Standard/Architectural task, if the implementation spans multiple modules/workstreams or will likely exceed the 300s sync timeout, DO NOT spawn one giant subagent. Use `workflows/parallel-execution.md`: split into small units, dispatch in parallel, and have each unit sync its status through the memory-file barrier (§3.9).
 
 ### 3.6 Execution Workflow
 
@@ -264,7 +264,7 @@ STEP 1: ARCHITECT (complex changes only)
   1. Spawn `architect` agent: "Analyze feature X requirements, define technical design"
   2. Architect reads all architecture docs, inspects code, defines:
      module assignment, API design, DB changes, events, risks
-  3. Architect creates ADR if decision is architecturally significant
+  3. Architect updates the living architecture docs if the decision is architecturally significant
   4. Architect outputs structured design document
   Skip for: simple UI-only, trivial backend, config changes
         │
@@ -336,7 +336,7 @@ STEP 5b: STEP-COMPLETION VERIFICATION (MANDATORY — NO SKIP)
   5. Append each verified stage digest + checklist status to the memory log (§3.9)
         │
 STEP 6: KNOWLEDGE CHECK
-  1. If architecture changed / new ADR: spawn `knowledge-update` agent
+  1. If architecture changed: spawn `knowledge-update` agent
   Otherwise: skip
         │
 STEP 7: SUMMARIZE
@@ -347,7 +347,7 @@ STEP 7: SUMMARIZE
   5. **MANDATORY: Doc Impact Assessment** — classify the handoff into one of:
      - `none` — no docs need updating (pure bug fix, no API/behavior change)
      - `update` — existing docs need updating (API changed, behavior modified)
-     - `create` — new docs needed (new feature, new module, new ADR)
+     - `create` — new docs needed (new feature, new module)
      - Write this classification into the handoff summary (§3.9), AND into the permanent
        record if this is an Architectural or Standard change. If Doc Impact is `update`
        or `create`, route to `knowledge-update` agent for permanent documentation.
